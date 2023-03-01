@@ -1,6 +1,9 @@
 package com.example.loginapp;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.os.Bundle;
@@ -11,7 +14,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import androidx.activity.result.ActivityResultLauncher;
+
 import com.google.zxing.WriterException;
+import com.journeyapps.barcodescanner.ScanContract;
+import com.journeyapps.barcodescanner.ScanOptions;
 
 import androidmads.library.qrgenearator.QRGContents;
 import androidmads.library.qrgenearator.QRGEncoder;
@@ -76,20 +83,37 @@ public class WelcomeActivity extends BaseActivity {
         QR_Scanner_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                scanCode();
 
+              /*  Intent i =new Intent(WelcomeActivity.this,QRScanner_Activity.class);
+                startActivity(i);
+                finish();*/
             }
         });
-     /*   user_name.setText(appPreferences.getString(AppPreferences.USER_NAME));
-        user_id.setText(appPreferences.getString(AppPreferences.USER_ID));
-
-        Picasso.get().load(appPreferences.getString(AppPreferences.PROFILE_PIC)).into(profilephoto);*/
     }
-   /* public void onTokenReceived(String auth_token) {
+    private void scanCode()
+    {
+        ScanOptions options = new ScanOptions();
+        options.setPrompt("Volume up to flash on");
+        options.setBeepEnabled(true);
+        options.setOrientationLocked(true);
+        options.setCaptureActivity(CaptureAct.class);
+        barLauncher.launch(options);
+    }
+    ActivityResultLauncher<ScanOptions> barLauncher = registerForActivityResult(new ScanContract(),result->
+    {
+       if (result.getContents() != null)
+       {
+           AlertDialog.Builder builder = new AlertDialog.Builder(WelcomeActivity.this);
+           builder.setTitle("Result");
+           builder.setMessage(result.getContents());
+           builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+               @Override
+               public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+               }
+           }).show();
 
-        if (auth_token == null)
-            return;
-        appPreferences.putString(AppPreferences.TOKEN, auth_token);
-        token = auth_token;
-        getUserInfoByAccessToken(token);
-    }*/
+       }
+    });
 }
