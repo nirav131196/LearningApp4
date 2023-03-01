@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/backgroundimage2"
+    tools:context=".WelcomeActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbarlayout3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:navigationIcon="?attr/homeAsUpIndicator"
+            android:background="#e3e6e4">
+
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+   <!-- <ImageView
+        android:id="@+id/profilephoto"
+        android:layout_width="170dp"
+        android:layout_height="170dp"
+        android:layout_marginTop="100dp"
+        app:srcCompat="@drawable/login"
+        android:layout_gravity="center"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appbarlayout3"/>
+-->
+   <!-- <TextView
+        android:id="@+id/user_id"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Welcome"
+        android:textSize="35dp"
+        android:textColor="@color/yellow"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@+id/profilephoto"/>
+
+    <TextView
+        android:id="@+id/user_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="User"
+        android:textSize="35dp"
+        android:textColor="@color/yellow"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@+id/user_id"/>-->
+
+    <ImageView
+        android:id="@+id/QR_CODE_GENERATOR"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_gravity="center"
+        android:layout_margin="30dp"
+        android:background="@drawable/editext_design4"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appbarlayout3" />
+
+    <EditText
+        android:id="@+id/edittext_for_qrcode"
+        android:layout_width="match_parent"
+        android:layout_margin="15dp"
+        android:hint="Enter text"
+        android:textColor="@color/yellow"
+        android:paddingLeft="15dp"
+        android:layout_height="50dp"
+        android:background="@drawable/editext_design2"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/QR_CODE_GENERATOR" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/QRCODE_GENERATOR_BUTTON"
+        android:layout_width="200dp"
+        android:layout_margin="25dp"
+        android:background="@drawable/editext_design3"
+        android:text="GENERATE QR CODE"
+        android:textSize="17dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edittext_for_qrcode" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/QRCODE_SCANNER_BUTTON"
+        android:layout_width="200dp"
+        android:layout_margin="15dp"
+        android:background="@drawable/editext_design3"
+        android:text="QR SCANNER"
+        android:textSize="17dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/QRCODE_GENERATOR_BUTTON" />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
