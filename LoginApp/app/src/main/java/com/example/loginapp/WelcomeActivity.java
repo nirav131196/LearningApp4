@@ -26,9 +26,9 @@ import androidmads.library.qrgenearator.QRGEncoder;
 
 public class WelcomeActivity extends BaseActivity {
 
-    private ImageView QRCodeGenerator;
-    private EditText qr_Text;
-    private Button qr_button,QR_Scanner_button;
+    private ImageView IVQRCodeGenerator;
+    private EditText edtQRText;
+    private Button btnQRGenerator,btnQRScanner;
     private Bitmap bitmap;
     private QRGEncoder qrgEncoder;
 
@@ -38,16 +38,24 @@ public class WelcomeActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
 
-        QRCodeGenerator =(ImageView) findViewById(R.id.QR_CODE_GENERATOR);
-        qr_Text = (EditText)findViewById(R.id.edittext_for_qrcode);
-        qr_button = (Button)findViewById(R.id.QRCODE_GENERATOR_BUTTON);
-        QR_Scanner_button = (Button)findViewById(R.id.QRCODE_SCANNER_BUTTON);
-
-        qr_button.setOnClickListener(new View.OnClickListener() {
+        initView();
+        ClickEventQRGenerator();
+        ClickEventQRScanner();
+    }
+    private void ClickEventQRScanner() {
+        btnQRScanner.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                scanCode();
+            }
+        });
+    }
+    private void ClickEventQRGenerator() {
+        btnQRGenerator.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
-                String qr_text2 = qr_Text.getText().toString().trim();
+                String qr_text2 = edtQRText.getText().toString().trim();
                 if(qr_text2.isEmpty())
                 {
                     showToast("Please Enter Text");
@@ -62,13 +70,13 @@ public class WelcomeActivity extends BaseActivity {
                     int height = point.y;
                     int dimen = width<height ? width:height;
                     dimen = dimen  * 3/4;
-                    qr_Text.setText("");
+                    edtQRText.setText("");
                     qrgEncoder = new QRGEncoder(qr_text2,null, QRGContents.Type.TEXT,dimen);
 
                     try
                     {
                         bitmap  = qrgEncoder.getBitmap();
-                        QRCodeGenerator.setImageBitmap(bitmap);
+                        IVQRCodeGenerator.setImageBitmap(bitmap);
                     }
                     catch(Exception ex)
                     {
@@ -77,13 +85,15 @@ public class WelcomeActivity extends BaseActivity {
                 }
             }
         });
-        QR_Scanner_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                scanCode();
-            }
-        });
     }
+
+    private void initView() {
+        IVQRCodeGenerator =(ImageView) findViewById(R.id.QR_CODE_GENERATOR);
+        edtQRText = (EditText)findViewById(R.id.edittext_for_qrcode);
+        btnQRGenerator = (Button)findViewById(R.id.QRCODE_GENERATOR_BUTTON);
+        btnQRScanner = (Button)findViewById(R.id.QRCODE_SCANNER_BUTTON);
+    }
+
     private void scanCode()
     {
         ScanOptions options = new ScanOptions();
