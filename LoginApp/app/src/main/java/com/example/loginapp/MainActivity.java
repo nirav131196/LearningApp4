@@ -106,6 +106,7 @@ public class MainActivity extends BaseActivity
                 {
                     Toast.makeText(MainActivity.this, "Exception : "+ex, Toast.LENGTH_SHORT).show();
                 }
+
             }
         });
     }
@@ -117,6 +118,7 @@ public class MainActivity extends BaseActivity
                 Intent i =new Intent(MainActivity.this,LoginActivity.class);
                 startActivity(i);
                   finish();
+
             }
         });
     }

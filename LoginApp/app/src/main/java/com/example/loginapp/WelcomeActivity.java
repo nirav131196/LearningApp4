@@ -47,6 +47,7 @@ public class WelcomeActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 scanCode();
+
             }
         });
     }
@@ -86,14 +87,12 @@ public class WelcomeActivity extends BaseActivity {
             }
         });
     }
-
     private void initView() {
         IVQRCodeGenerator =(ImageView) findViewById(R.id.QR_CODE_GENERATOR);
         edtQRText = (EditText)findViewById(R.id.edittext_for_qrcode);
         btnQRGenerator = (Button)findViewById(R.id.QRCODE_GENERATOR_BUTTON);
         btnQRScanner = (Button)findViewById(R.id.QRCODE_SCANNER_BUTTON);
     }
-
     private void scanCode()
     {
         ScanOptions options = new ScanOptions();
@@ -116,7 +115,6 @@ public class WelcomeActivity extends BaseActivity {
                     dialog.dismiss();
                }
            }).show();
-
        }
     });
 }

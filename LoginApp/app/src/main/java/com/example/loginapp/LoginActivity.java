@@ -139,6 +139,7 @@ public class LoginActivity extends BaseActivity implements  AuthenticationListen
                 {
                     showToast("Please Enter All Details"+e);
                 }
+
             }
         });
     }
@@ -168,6 +169,7 @@ public class LoginActivity extends BaseActivity implements  AuthenticationListen
                 Intent i =new Intent(LoginActivity.this,MainActivity.class);
                 startActivity(i);
                 finish();
+
             }
         });
 
@@ -188,6 +190,7 @@ public class LoginActivity extends BaseActivity implements  AuthenticationListen
                 {
                     showToast("Error 1 "+ex);
                 }
+
             }
         });
     }
@@ -198,6 +201,7 @@ public class LoginActivity extends BaseActivity implements  AuthenticationListen
             public void onClick(View view) {
                 LoginManager.getInstance().logInWithReadPermissions(LoginActivity.this, Arrays.asList("public_profile"));
                 //    finish();
+
             }
         });
     }
@@ -206,6 +210,7 @@ public class LoginActivity extends BaseActivity implements  AuthenticationListen
             @Override
             public void onClick(View view) {
                 signIn();
+
 
             }
         });
