@@ -20,8 +20,6 @@ public class AuthenticationDialog  extends Dialog {
     private final String redirect_url;
     private final String request_url;
     public AuthenticationListener listener;
-
-
     public AuthenticationDialog(@NonNull Context context, AuthenticationListener listener)
     {
         super(context);
@@ -32,7 +30,6 @@ public class AuthenticationDialog  extends Dialog {
             "&redirect_uri=" + redirect_url +
             "&response_type=token&display=touch&scope=public_content";
     }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +44,6 @@ public class AuthenticationDialog  extends Dialog {
     }
     WebViewClient webViewClient = new WebViewClient()
     {
-
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
 
@@ -71,7 +67,6 @@ public class AuthenticationDialog  extends Dialog {
                 listener.onTokenReceived(access_token);
                 Toast.makeText(getApplicationContext(),"Success",Toast.LENGTH_LONG).show();
                 dismiss();
-
             }
             else if(url.contains("!error"))
             {

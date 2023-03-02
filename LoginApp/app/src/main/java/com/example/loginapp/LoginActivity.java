@@ -60,14 +60,14 @@ public class LoginActivity extends BaseActivity implements  AuthenticationListen
     private static int RC_SIGN_IN = 100;
     private String token = null;
     AppPreferences appPreferences = null;
-    ImageView profilephoto;
-    TextView user_id,user_name;
-    EditText email,pasword;
-    Button loginbutton;
-    TextView signuptv;
+    ImageView profilePhoto;
+    TextView txtUserid,txtUsername;
+    EditText edtEmail,edtPassword;
+    Button btnLogin;
+    TextView txtSignuptv;
     String email_login,password_login;
-    ImageView goggle_logo,facebook_logo,instagram_logo;
-    GoogleSignInClient mGoogleSignInClient; // FOR GOGGLE
+    ImageView IVGogglelogo,IVFacebooklogo,IVInstagramlogo;
+    GoogleSignInClient mGoogleSignInClient; // FOR GOOGLE
     CallbackManager callbackManager; // FOR FACEBOOK
 
     AuthenticationDialog  authenticationDialog = null;  // FOR INSTAGRAM
@@ -79,106 +79,30 @@ public class LoginActivity extends BaseActivity implements  AuthenticationListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        callbackManager = CallbackManager.Factory.create();
-        callbackManager = CallbackManager.Factory.create();
+      /*  callbackManager = CallbackManager.Factory.create();*/
 
-        profilephoto =findViewById(R.id.profilephoto);
-        user_id = findViewById(R.id.user_id);
-        user_name = findViewById(R.id.user_name);
+        initView();
 
-        LoginManager.getInstance().registerCallback(callbackManager,     // FOR FACEBOOK
-                new FacebookCallback<LoginResult>() {
-                    @Override
-                    public void onSuccess(LoginResult loginResult) {
-                        // App code
-                        startActivity(new Intent(LoginActivity.this,WelcomeActivity.class));
+        FaceBookManager();
 
-                        showToast("Log In Successfully");
-                    }
+        ClickEventGoogle();
+        ClickEventFacebook();
+        ClickEventInstagram();
+        ClickEventTextView();
 
-                    @Override
-                    public void onCancel() {
-                        // App code
-                    }
+        GoogleConfiguration();
 
-                    @Override
-                    public void onError(FacebookException exception) {
-                        // App code
-                    }
-                });
-
-        email =findViewById(R.id.edittext_emailaddress_login);
-        pasword =findViewById(R.id.edittextpassword);
-        signuptv =findViewById(R.id.linkforlogin2);
-        loginbutton =findViewById(R.id.login_button);
-        goggle_logo =findViewById(R.id.googlelogo);
-        facebook_logo =findViewById(R.id.facebooklogo);
-        instagram_logo = findViewById(R.id.instagramlogo);
-
-        goggle_logo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                signIn();
-
-            }
-        });
-        facebook_logo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                LoginManager.getInstance().logInWithReadPermissions(LoginActivity.this, Arrays.asList("public_profile"));
-            //    finish();
-
-
-            }
-        });
-        instagram_logo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view)
-            {
-                try
-                {
-                    authenticationDialog = new AuthenticationDialog(LoginActivity.this,
-                            listener);
-                    authenticationDialog.setCancelable(true);
-                    authenticationDialog.show();
-                }
-                catch (Exception ex)
-                {
-                    showToast("Error 1 "+ex);
-                }
-            }
-        });
-        // Configure sign-in to request the user's ID, email address, and basic
-        // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
-        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestEmail()
-                .build();
-
-        // Build a GoogleSignInClient with the options specified by gso.
-        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
-
-        // Check for existing Google Sign In account, if the user is already signed in
-        // the GoogleSignInAccount will be non-null.
-
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-
-        signuptv.setOnClickListener(new View.OnClickListener() {  // CLICK EVENT OF SIGN UP (LINK OF SIGN UP)
-            @Override
-            public void onClick(View v) {
-
-                Intent i =new Intent(LoginActivity.this,MainActivity.class);
-                startActivity(i);
-                finish();
-            }
-        });
-        loginbutton.setOnClickListener(new View.OnClickListener() {  // CLICK EVENT OF SIGN IN (LOG IN)
+        ClickEventLoginbutton();
+    }
+    private void ClickEventLoginbutton() {
+        btnLogin.setOnClickListener(new View.OnClickListener() {  // CLICK EVENT OF SIGN IN (LOG IN)
             @Override
             public void onClick(View v) {
 
                 try
                 {
-                    email_login = email.getText().toString().trim();
-                    password_login = pasword.getText().toString().trim();
+                    email_login = edtEmail.getText().toString().trim();
+                    password_login = edtPassword.getText().toString().trim();
 
                     if(email_login.length() > 0 && password_login.length() > 0)
                     {
@@ -218,6 +142,116 @@ public class LoginActivity extends BaseActivity implements  AuthenticationListen
             }
         });
     }
+
+    private void GoogleConfiguration() {
+        // Configure sign-in to request the user's ID, email address, and basic
+        // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+
+        // Build a GoogleSignInClient with the options specified by gso.
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
+        // Check for existing Google Sign In account, if the user is already signed in
+        // the GoogleSignInAccount will be non-null.
+
+        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
+
+    }
+
+    private void ClickEventTextView() {
+        txtSignuptv.setOnClickListener(new View.OnClickListener() {  // CLICK EVENT OF SIGN UP (LINK OF SIGN UP)
+            @Override
+            public void onClick(View v) {
+
+                Intent i =new Intent(LoginActivity.this,MainActivity.class);
+                startActivity(i);
+                finish();
+            }
+        });
+
+    }
+    private void ClickEventInstagram() {
+        IVInstagramlogo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                try
+                {
+                    authenticationDialog = new AuthenticationDialog(LoginActivity.this,
+                            listener);
+                    authenticationDialog.setCancelable(true);
+                    authenticationDialog.show();
+                }
+                catch (Exception ex)
+                {
+                    showToast("Error 1 "+ex);
+                }
+            }
+        });
+    }
+
+    private void ClickEventFacebook() {
+        IVFacebooklogo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LoginManager.getInstance().logInWithReadPermissions(LoginActivity.this, Arrays.asList("public_profile"));
+                //    finish();
+            }
+        });
+    }
+    private void ClickEventGoogle() {
+        IVGogglelogo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                signIn();
+
+            }
+        });
+    }
+    private void FaceBookManager() {
+        // FOR FACEBOOK
+        callbackManager = CallbackManager.Factory.create();
+        LoginManager.getInstance().registerCallback(callbackManager,
+                new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
+                        // App code
+                        startActivity(new Intent(LoginActivity.this,WelcomeActivity.class));
+
+                        showToast("Log In Successfully");
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        // App code
+                    }
+
+                    @Override
+                    public void onError(FacebookException exception) {
+                        // App code
+                    }
+                });
+    }
+
+    private void initView() {
+        profilePhoto =findViewById(R.id.profilephoto);
+
+        txtUserid = findViewById(R.id.user_id);
+        txtUsername = findViewById(R.id.user_name);
+
+        edtEmail =findViewById(R.id.edittext_emailaddress_login);
+        edtPassword =findViewById(R.id.edittextpassword);
+
+        txtSignuptv =findViewById(R.id.linkforlogin2);
+
+        btnLogin =findViewById(R.id.login_button);
+
+        IVGogglelogo =findViewById(R.id.googlelogo);
+        IVFacebooklogo =findViewById(R.id.facebooklogo);
+        IVInstagramlogo = findViewById(R.id.instagramlogo);
+    }
     private void postLoginData(String access_token)
     {
         try
@@ -249,6 +283,7 @@ public class LoginActivity extends BaseActivity implements  AuthenticationListen
                         {
                             String message = response.getString("message");
                             showToast(message);
+
                             JSONObject resobj = response.getJSONObject("data");
                             String id = resobj.getString("id");
                             String username = resobj.getString("username");
@@ -256,8 +291,10 @@ public class LoginActivity extends BaseActivity implements  AuthenticationListen
                             String email2 = resobj.getString("email");
                             String profile = resobj.getString("profile");
                             String api_key = resobj.getString("api_key");
-                            email.setText("");
-                            pasword.setText("");
+
+                            edtEmail.setText("");
+                            edtPassword.setText("");
+
                             Intent i = new Intent(LoginActivity.this,WelcomeActivity.class);
                             startActivity(i);
                             finish();
@@ -378,22 +415,10 @@ public class LoginActivity extends BaseActivity implements  AuthenticationListen
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
 
             GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
-            if (acct != null) {
-                String personName = acct.getDisplayName();
+            if (acct != null)
+            {
                 String personGivenName = acct.getGivenName();
-                String personFamilyName = acct.getFamilyName();
-                String personEmail = acct.getEmail();
-                String personId = acct.getId();
-                Uri personPhoto = acct.getPhotoUrl();
-
-               /* showToast("User Email : "+personEmail);
-                showToast("User Name : "+personName);
-                showToast("User FamilyName : "+personFamilyName);*/
-
-                showToast("GivenName : "+personGivenName + "Email : "+personEmail);
-/*
-                showToast("User personId : "+personId + " Email " + personEmail + " Name "+personName + " Given Name "+personGivenName + " Family Name "+personFamilyName);
-*/
+                showToast("Welcome "+personGivenName);
             }
             startActivity(new Intent(LoginActivity.this,WelcomeActivity.class));
 
@@ -406,7 +431,6 @@ public class LoginActivity extends BaseActivity implements  AuthenticationListen
 
         }
     }
-
     @Override
     public void onTokenReceived(String auth_token) {
         if (auth_token == null)
@@ -414,7 +438,6 @@ public class LoginActivity extends BaseActivity implements  AuthenticationListen
         appPreferences.putString(AppPreferences.TOKEN, auth_token);
         token = auth_token;
         getUserInfoByAccessToken(token);
-
     }
     private void getUserInfoByAccessToken(String token)
     {
@@ -425,11 +448,9 @@ public class LoginActivity extends BaseActivity implements  AuthenticationListen
         {
             showToast("Error 2 "+ex);
         }
-
     }
     private class RequestInstagramAPI extends AsyncTask<Void,String,String>
     {
-
         @Override
         protected String doInBackground(Void... voids) {
 
@@ -443,7 +464,6 @@ public class LoginActivity extends BaseActivity implements  AuthenticationListen
                 e.printStackTrace();
             }
             return null;
-
         }
         @Override
         protected void onPostExecute(String response)
@@ -468,26 +488,20 @@ public class LoginActivity extends BaseActivity implements  AuthenticationListen
             }
             else
             {
-                Toast toast = Toast.makeText(getApplicationContext(),"Login error!",Toast.LENGTH_LONG);
-                toast.show();
+                showToast("Login Error!");
             }
         }
     }
-    public void login()
+    public void login()  // FOR INSTAGRAM
     {
         try {
-            Picasso.get().load(appPreferences.getString(AppPreferences.PROFILE_PIC)).into(profilephoto);
-            user_id.setText(appPreferences.getString(AppPreferences.USER_ID));
-            user_name.setText(appPreferences.getString(AppPreferences.USER_NAME));
+            Picasso.get().load(appPreferences.getString(AppPreferences.PROFILE_PIC)).into(profilePhoto);
+            txtUserid.setText(appPreferences.getString(AppPreferences.USER_ID));
+            txtUsername.setText(appPreferences.getString(AppPreferences.USER_NAME));
         }
         catch (Exception ex)
         {
-            showToast("Error 3 "+ex);
+            showToast("Exception : "+ex);
         }
     }
-   /* @Override  // FOR FACEBOOK INTEGRATION
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        callbackManager.onActivityResult(requestCode, resultCode, data);
-        super.onActivityResult(requestCode, resultCode, data);
-    }*/
 }

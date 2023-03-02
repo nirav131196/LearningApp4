@@ -43,10 +43,7 @@ public class WelcomeActivity extends BaseActivity {
         qr_button = (Button)findViewById(R.id.QRCODE_GENERATOR_BUTTON);
         QR_Scanner_button = (Button)findViewById(R.id.QRCODE_SCANNER_BUTTON);
 
-
         qr_button.setOnClickListener(new View.OnClickListener() {
-
-
             @Override
             public void onClick(View v)
             {
@@ -84,10 +81,6 @@ public class WelcomeActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 scanCode();
-
-              /*  Intent i =new Intent(WelcomeActivity.this,QRScanner_Activity.class);
-                startActivity(i);
-                finish();*/
             }
         });
     }

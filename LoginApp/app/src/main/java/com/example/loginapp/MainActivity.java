@@ -37,9 +37,9 @@ import java.util.regex.Pattern;
 public class MainActivity extends BaseActivity
 {
 
-    EditText username_edt,password_edt,mobileno_edt,email_edt;
-    Button registerbutton;
-    TextView signIntv;
+    EditText edtUsername,edtPassword,edtMobileno,edtEmail;
+    Button btnRegister;
+    TextView txtSignIn;
     String username,password,mobileno,email;
 
     @Override
@@ -48,31 +48,20 @@ public class MainActivity extends BaseActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        username_edt = findViewById(R.id.edittextusername);
-        password_edt = findViewById(R.id.edittextpassword);
-        mobileno_edt = findViewById(R.id.edittextmobileno);
-        email_edt = findViewById(R.id.edittextemailaddress);
-        registerbutton = findViewById(R.id.registerbutton);
-        signIntv = findViewById(R.id.linkforlogin2);
+        initView();
+        ClickEventTextView();
+        ClickEventRegister();
 
-        signIntv.setOnClickListener(new View.OnClickListener() {
+    }
+    private void ClickEventRegister() {
+        btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Intent i =new Intent(MainActivity.this,LoginActivity.class);
-                startActivity(i);
-                //  finish();
-            }
-        });
-
-        registerbutton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                username = username_edt.getText().toString();
-                password = password_edt.getText().toString();
-                mobileno = mobileno_edt.getText().toString();
-                email = email_edt.getText().toString();
+                username = edtUsername.getText().toString().trim();
+                password = edtPassword.getText().toString().trim();
+                mobileno = edtMobileno.getText().toString().trim();
+                email = edtEmail.getText().toString().trim();
 
                 try
                 {
@@ -86,7 +75,7 @@ public class MainActivity extends BaseActivity
                                 {
                                     if(isValidPassword(password))
                                     {
-                                        token();
+                                        token();// CREATING TOKEN FOR REGISTRATION
                                     }
                                     else
                                     {
@@ -119,23 +108,41 @@ public class MainActivity extends BaseActivity
                 }
             }
         });
+    }
+    private void ClickEventTextView() {
+        txtSignIn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 
+                Intent i =new Intent(MainActivity.this,LoginActivity.class);
+                startActivity(i);
+                  finish();
+            }
+        });
+    }
+
+    private void initView()
+    {
+        edtUsername = findViewById(R.id.edittextusername);
+        edtPassword = findViewById(R.id.edittextpassword);
+        edtMobileno = findViewById(R.id.edittextmobileno);
+        edtEmail = findViewById(R.id.edittextemailaddress);
+        btnRegister = findViewById(R.id.registerbutton);
+        txtSignIn = findViewById(R.id.linkforlogin2);
     }
     private void postRegisterData(String access_token)
     {
-        Log.e("Error ","1");
         String url = "https://admin.p9bistro.com/index.php/SignUp";
 
-        RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
-        Log.e("Error ","2");
-        JSONObject req = new JSONObject();
+      /*  RequestQueue queue = Volley.newRequestQueue(MainActivity.this);*/
 
+        JSONObject req = new JSONObject();
         try
         {
-            req.put("username",username_edt.getText().toString());  // DATA OF field which we will enter while doing sign up
-            req.put("password",password_edt.getText().toString());
-            req.put("mobile_no",mobileno_edt.getText().toString());
-            req.put("email",email_edt.getText().toString());
+            req.put("username",edtUsername.getText().toString());  // DATA OF field which we will enter while doing sign up
+            req.put("password",edtPassword.getText().toString());
+            req.put("mobile_no",edtMobileno.getText().toString());
+            req.put("email",edtEmail.getText().toString());
             req.put("profile","nirav");
             req.put("register_by", 5);
         }
@@ -143,45 +150,35 @@ public class MainActivity extends BaseActivity
         {
             Toast.makeText( MainActivity.this, "Exception : "+ex, Toast.LENGTH_SHORT).show();
         }
-
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url,req, new Response.Listener<JSONObject>() {
 
             @Override
 
             public void onResponse(JSONObject response)
             {
-                Log.e("Error : ","2.1");
-
                 try
                 {
-                    Log.e("Error ","3");
-
-
                     if(response.getBoolean("status"))
                     {
-                        Log.e("Error ","4");
                         String message = response.getString("message");
                         Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT).show();
-                        Log.e("Error ","5");
+
                         JSONObject jsonData = response.getJSONObject("data");  // responses which we got after successful run
-                        Log.e("Error ","6");
+
                         String id = jsonData.getString("id");
                         String username = jsonData.getString("username");
                         String mobile_no = jsonData.getString("mobile_no");
                         String email = jsonData.getString("email");
                         String profile = jsonData.getString("profile");
                         String api_key = jsonData.getString("api_key");
-                        Log.e("Error ","7");
+
                         Log.e("Data",id + username + mobile_no + email + profile + api_key);
 
-                        username_edt.setText("");
-                        password_edt.setText("");
-                        mobileno_edt.setText("");
-                        email_edt.setText("");
-
+                        edtUsername.setText("");
+                        edtPassword.setText("");
+                        edtMobileno.setText("");
+                        edtEmail.setText("");
                     }
-
-                    Log.e("Error ","8");
                     Log.e("Check Data", username + password + email + mobileno);
 
                 } catch (Exception ex)
@@ -222,36 +219,33 @@ public class MainActivity extends BaseActivity
                 return params;
             }
         };
-        RequestQueue requestquese = Volley.newRequestQueue(getApplicationContext());
-        requestquese.add(request);
+        RequestQueue requestQuese = Volley.newRequestQueue(getApplicationContext());
+        requestQuese.add(request);
 
     }
+    //Generating Token For Registration
     private void token()
     {
-
         String url = "https://admin.p9bistro.com/index.php/generate_auth_token";
 
-        Log.e("checklog", url + "");
+      /*  Log.e("checklog", url + "");*/
 
         StringRequest request =new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
-                Log.e("checklog", response + "");
+             /*   Log.e("checklog", response + "");*/
                 JSONObject jsonObject = null;
-                try {
-
-                    Log.e("Error :","10");
+                try
+                {
                     jsonObject = new JSONObject(response);
-                    Log.e("Error :","11");
                     String access_token = jsonObject.getString("access_token");
-                    Log.e("Error :","12");
                     Log.e("ACCESSTOKEN", access_token);
                     postRegisterData(access_token);
-                    Log.e("Error :","13");
-
-                } catch (JSONException je) {
-                    Toast.makeText(MainActivity.this, "Error 2 : " + je, Toast.LENGTH_SHORT).show();
+                }
+                catch (JSONException Je)
+                {
+                    Toast.makeText(MainActivity.this, "Error 2 : " + Je, Toast.LENGTH_SHORT).show();
                 }
             }
         }, new Response.ErrorListener() {   // I AM GETTING ERROR HERE
@@ -260,7 +254,6 @@ public class MainActivity extends BaseActivity
 
                 Log.e("checklog",error + "");
                 Toast.makeText(getApplicationContext(), "Timeout Error", Toast.LENGTH_LONG).show();
-
             }
         }){
             @Override
@@ -274,6 +267,7 @@ public class MainActivity extends BaseActivity
         RequestQueue requestquese = Volley.newRequestQueue(getApplicationContext());
         requestquese.add(request);
     }
+    // VALIDATING MOBILENO FUNCTIONALITY
     private boolean isValidMobile(String phone)
     {
         if(!Pattern.matches("[a-zA-Z]+[@#$%^&+=!.]+", phone)) {
@@ -281,6 +275,7 @@ public class MainActivity extends BaseActivity
         }
         return false;
     }
+    // VALIDATING PASSWORD FUNCTIONALITY
     public static boolean isValidPassword(final String password)  // 1 number , 1 Uppercase , 1 special symbol , 1 lowercase
     {
         Pattern pattern;
@@ -290,6 +285,4 @@ public class MainActivity extends BaseActivity
         matcher = pattern.matcher(password);
         return matcher.matches();
     }
-
-
 }

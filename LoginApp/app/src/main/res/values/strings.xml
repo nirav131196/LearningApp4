@@ -1,17 +1,14 @@
 <resources>
+
     <string name="app_name">LoginApp</string>
+
     <string name="facebook_app_id">593607785958442</string>
     <string name="fb_login_protocol_scheme">fb1234</string>
     <string name="facebook_client_token">56789</string>
 
     <string name="client_id">866952567928598</string>    <!--instagram app id from website-->
-    <string name="redirect_url">https://api.instagram.com/oauth/authorize?client_id=866952567928598,&amp;redirect_uri=https://socialsizzle.herokuapp.com/auth/,&amp;response_type=code,&amp;scope=user_profile,user_media</string>
-    <string name="base_url">https://graph.instagram.com/v16.0/10218560180051171/media</string>
+    <string name="redirect_url">https://api.instagram.com/oauth/authorize?client_id=866952567928598,&amp;redirect_uri=https://www.yahoo.com/auth/,&amp;response_type=code,&amp;scope=user_profile,user_media</string>
+    <string name="base_url">https://api.instagram.com/</string>
     <string name="get_user_info_url">https://api.instagram.com/v1/users/self/?access_token=</string>
-    <string name="get_user_info_url2">https://api.instagram.com/oauth/authorize?client_id={866952567928598}&amp;redirect_uri={https://www.instagram.com/}&amp;scope=user_profile,user_media&amp;response_type=code</string>
-
-    <string name="qr_code">qr_code</string>
-    <string name="enter_your_info">Enter your info</string>
-    <string name="generate_qr_code">Generate QR Code</string>
 
 </resources>

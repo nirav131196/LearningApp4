@@ -11,8 +11,6 @@ public class AppPreferences
     public static final String USER_NAME = "username";
 
     private SharedPreferences preferences;
-
-
     public AppPreferences(Context context)
     {
         this.preferences = context.getSharedPreferences(APP_PREFERENCES_FILE_NAME,Context.MODE_PRIVATE);
