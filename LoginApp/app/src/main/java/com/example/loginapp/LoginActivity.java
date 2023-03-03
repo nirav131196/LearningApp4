@@ -60,13 +60,18 @@ public class LoginActivity extends BaseActivity implements  AuthenticationListen
     private static int RC_SIGN_IN = 100;
     private String token = null;
     AppPreferences appPreferences = null;
-    ImageView profilePhoto;
+
+    ImageView profilePhoto,IVGogglelogo,IVFacebooklogo,IVInstagramlogo;
+
     TextView txtUserid,txtUsername;
     EditText edtEmail,edtPassword;
+
     Button btnLogin;
+
     TextView txtSignuptv;
+
     String email_login,password_login;
-    ImageView IVGogglelogo,IVFacebooklogo,IVInstagramlogo;
+
     GoogleSignInClient mGoogleSignInClient; // FOR GOOGLE
     CallbackManager callbackManager; // FOR FACEBOOK
 
@@ -98,7 +103,6 @@ public class LoginActivity extends BaseActivity implements  AuthenticationListen
         btnLogin.setOnClickListener(new View.OnClickListener() {  // CLICK EVENT OF SIGN IN (LOG IN)
             @Override
             public void onClick(View v) {
-
                 try
                 {
                     email_login = edtEmail.getText().toString().trim();
@@ -143,7 +147,6 @@ public class LoginActivity extends BaseActivity implements  AuthenticationListen
             }
         });
     }
-
     private void GoogleConfiguration() {
         // Configure sign-in to request the user's ID, email address, and basic
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.

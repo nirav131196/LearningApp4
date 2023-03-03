@@ -70,7 +70,7 @@
 
     <EditText
         android:id="@+id/edittext_for_qrcode"
-        android:layout_width="match_parent"
+        android:layout_width="350dp"
         android:layout_margin="15dp"
         android:hint="Enter text"
         android:textColor="@color/yellow"
@@ -83,7 +83,7 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/QRCODE_GENERATOR_BUTTON"
-        android:layout_width="200dp"
+        android:layout_width="350dp"
         android:layout_margin="25dp"
         android:background="@drawable/editext_design3"
         android:text="GENERATE QR CODE"
@@ -95,7 +95,7 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/QRCODE_SCANNER_BUTTON"
-        android:layout_width="200dp"
+        android:layout_width="350dp"
         android:layout_margin="15dp"
         android:background="@drawable/editext_design3"
         android:text="QR SCANNER"
@@ -105,6 +105,26 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/QRCODE_GENERATOR_BUTTON" />
 
-
-
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/OPEN_CAMERA"
+        android:layout_width="350dp"
+        android:layout_margin="15dp"
+        android:background="@drawable/editext_design3"
+        android:text="CAMERA"
+        android:textSize="17dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/QRCODE_SCANNER_BUTTON" />
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/STORE_IMAGE"
+        android:layout_width="350dp"
+        android:layout_margin="15dp"
+        android:background="@drawable/editext_design3"
+        android:text="SAVE"
+        android:textSize="17dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/OPEN_CAMERA" />
 </androidx.constraintlayout.widget.ConstraintLayout>
