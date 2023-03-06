@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     android:background="@drawable/backgroundimage2"
     tools:context=".WelcomeActivity">
-
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbarlayout3"
         android:layout_width="0dp"

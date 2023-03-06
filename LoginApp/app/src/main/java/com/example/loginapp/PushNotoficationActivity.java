@@ -50,7 +50,6 @@ public class PushNotoficationActivity extends BaseActivity {
 
                 title = edtTitle.getText().toString().trim();
                 description = edtDescription.getText().toString().trim();
-
                 try
                 {
                     if (title.isEmpty() || description.isEmpty())
@@ -72,9 +71,6 @@ public class PushNotoficationActivity extends BaseActivity {
                                 .setContentIntent(pi)
                                 .setLargeIcon(bitmap)
                                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-
-
-
                        /* Vibrator phone = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
                         // Vibrate for 500 milliseconds
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -111,7 +107,6 @@ public class PushNotoficationActivity extends BaseActivity {
                 {
                     showToast("Exception "+ex);
                 }
-
             }
         });
     }

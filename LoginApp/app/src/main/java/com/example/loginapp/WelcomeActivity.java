@@ -4,6 +4,7 @@ package com.example.loginapp;
 
 import static android.Manifest.permission.CAMERA;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -15,8 +16,10 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.Display;
@@ -33,11 +36,9 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import com.journeyapps.barcodescanner.ScanContract;
 import com.journeyapps.barcodescanner.ScanOptions;
-
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
-
 import androidmads.library.qrgenearator.QRGContents;
 import androidmads.library.qrgenearator.QRGEncoder;
 
@@ -52,8 +53,8 @@ public class WelcomeActivity extends BaseActivity {
     private static final int CAMERA_PERMISSION_CODE = 100;
     private static final int pic_id = 123;
     private static final int STORAGE_PERMISSION_CODE = 101;
-    String[] permission = {"android.permission.CAMERA"};
 
+    FileOutputStream outputStream;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -67,50 +68,62 @@ public class WelcomeActivity extends BaseActivity {
         ClickEventCameraButton();
         ClickEventSaveButton();
     }
-
     private void ClickEventSaveButton() {
 
         btnStore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
             {
-                try
-                {
-                    BitmapDrawable drawable =(BitmapDrawable) IVQRCodeGenerator.getDrawable();
-                    Bitmap bitmap = drawable.getBitmap();
-
-                    ContextWrapper cw =new ContextWrapper(getApplicationContext());
-                    File directory =cw.getDir("imageDir", Context.MODE_PRIVATE);
-                    File file = new File(directory,"UniqueFileName" + ".jgp");
-                    if(file.exists())
+                String STORAGE_PERMISSION = Manifest.permission.WRITE_EXTERNAL_STORAGE;
+                    try
                     {
-                        Log.d("path ", file.toString());
-                        FileOutputStream fos = null;
-                        try {
-                            fos = new FileOutputStream(file);
-                            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
-                            fos.flush();
-                            fos.close();
-                            showToast("Saved "+file.toString());
-                        }
-                        catch (java.io.IOException e)
+                        if(ContextCompat.checkSelfPermission(getApplicationContext(),STORAGE_PERMISSION) == PackageManager.PERMISSION_GRANTED)  // GRANTED
                         {
-                            e.printStackTrace();
+
+                            // IMAGE STORAGE METHOD
+                            saveImage();
+
+                        }
+                        else  // NOT GRANTED
+                        {
+                            ActivityCompat.requestPermissions(WelcomeActivity.this,new String[] {STORAGE_PERMISSION},STORAGE_PERMISSION_CODE);
                         }
                     }
-                    else
+                    catch (Exception e)
                     {
-                        showToast("File exists");
+                        e.printStackTrace();
                     }
-                }
-                catch (Exception ex)
-                {
-                    showToast("Exception : "+ex);
-                }
             }
         });
     }
+    public void saveImage()
+    {
+        BitmapDrawable drawable =(BitmapDrawable) IVQRCodeGenerator.getDrawable();
+        Bitmap bitmap = drawable.getBitmap();
 
+        if(bitmap == null)
+        {
+            File filepath = Environment.getExternalStorageDirectory();
+            File dir = new File(filepath.getAbsolutePath()+"/Demo/");
+            dir.mkdir();
+            File file = new File(dir,System.currentTimeMillis()+".jpg");
+            try
+            {
+                outputStream = new FileOutputStream(file);
+            }
+            catch (FileNotFoundException fe)
+            {
+                fe.printStackTrace();
+            }
+            bitmap.compress(Bitmap.CompressFormat.JPEG,100,outputStream);
+            showToast("Image Successfully Saved");
+            IVQRCodeGenerator.setImageResource(R.drawable.editext_design4);
+        }
+        else
+        {
+
+        }
+    }
     private void ClickEventCameraButton()
     {
         btnCamera.setOnClickListener(new View.OnClickListener() {
@@ -128,12 +141,17 @@ public class WelcomeActivity extends BaseActivity {
             }
         });
     }
+    // CAMERA PERMISSION CHCEKING OR REQUESTING
     private void  checkPermission(String permission,int requestCode)
     {
         if(ContextCompat.checkSelfPermission(this,permission) == PackageManager.PERMISSION_GRANTED)  // GRANTED
         {
-            Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-            startActivityForResult(camera,pic_id);
+            // FOR CAMERA
+         /*   Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            startActivityForResult(camera,pic_id);*/
+            // FOR GALLERY
+            Intent pickphoto = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+             startActivityForResult(pickphoto,pic_id);
         }
         else  // NOT GRANTED
         {
@@ -191,7 +209,6 @@ public class WelcomeActivity extends BaseActivity {
         btnQRScanner = (Button)findViewById(R.id.QRCODE_SCANNER_BUTTON);
         btnCamera = (Button)findViewById(R.id.OPEN_CAMERA);
         btnStore = (Button)findViewById(R.id.STORE_IMAGE);
-
     }
     private void scanCode()
     {
@@ -224,8 +241,13 @@ public class WelcomeActivity extends BaseActivity {
 
         if(requestCode == pic_id)
         {
-            Bitmap photo = (Bitmap) data.getExtras().get("data");
-            IVQRCodeGenerator.setImageBitmap(photo);
+            // FOR CAMERA
+          /*  Bitmap photo = (Bitmap) data.getExtras().get("data");
+            IVQRCodeGenerator.setImageBitmap(photo);*/
+
+            // FOR GALLREY
+            Uri selectedImage = data.getData();
+            IVQRCodeGenerator.setImageURI(selectedImage);
         }
     }
     @Override
@@ -239,6 +261,17 @@ public class WelcomeActivity extends BaseActivity {
                 showToast("Camera Permission Granted");
                 Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 startActivityForResult(camera,pic_id);
+            }
+            else
+            {
+                showToast("Camera Permission Denied");
+            }
+        }
+        else if(requestCode == STORAGE_PERMISSION_CODE)
+        {
+            if(grantResults.length > 0 &&  grantResults[0] == PackageManager.PERMISSION_GRANTED)
+            {
+                saveImage();
             }
             else
             {
