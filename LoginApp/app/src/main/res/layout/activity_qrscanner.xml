@@ -145,6 +145,25 @@
                 android:background="@drawable/editext_design3"
                 android:text="Get Current Location"
                 android:textSize="17dp" />
+
+            <androidx.appcompat.widget.AppCompatButton
+
+                android:id="@+id/google_map_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/editext_design3"
+                android:text="Get Location on Map"
+                android:textSize="17dp" />
+
+            <fragment
+                android:id="@+id/google_map"
+                android:layout_width="match_parent"
+                android:layout_height="280dp"
+                android:layout_margin="30dp"
+                android:name="com.google.android.gms.maps.SupportMapFragment">
+
+            </fragment>
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

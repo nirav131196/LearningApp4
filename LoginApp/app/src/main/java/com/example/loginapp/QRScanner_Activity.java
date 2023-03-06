@@ -3,6 +3,7 @@ package com.example.loginapp;
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -22,26 +23,132 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+
 import java.util.List;
 import java.util.Locale;
 
 public class QRScanner_Activity extends BaseActivity {
 
-    TextView txtLatitude,txtLongitude,txtLocationAddress;
-    Button btnLocation;
-    private static final int REQUEST_LOCATION  = 1;
+    TextView txtLatitude, txtLongitude, txtLocationAddress;
+    Button btnLocation, btnGoogleMap;
+    private static final int REQUEST_LOCATION = 1;
     LocationManager locationManager;
-    String latitude,longitude;
+    String latitude, longitude;
+
+    SupportMapFragment supportMapFragment;
+    FusedLocationProviderClient client;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qrscanner);
 
-        ActivityCompat.requestPermissions(this,new String[]{ACCESS_FINE_LOCATION},REQUEST_LOCATION);
+        // FOR LAT LONG
+        ActivityCompat.requestPermissions(this, new String[]{ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
+
+        // FOR GOOGLE MAP , Assign variable
+        supportMapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.google_map);
+
+        //Initialize fused location
+        client = LocationServices.getFusedLocationProviderClient(this);
 
         initView();
         ClickEventLocationButton();
+        ClickEventGoogleMapButton();
+    }
+
+    private void getCurrentlocation() {
+
+        //Initializing task location
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return;
+        }
+        Task<Location> task = client.getLastLocation();
+        task.addOnSuccessListener(new OnSuccessListener<Location>() {
+            @Override
+            public void onSuccess(Location location) {
+                if(location != null)
+                {
+                    supportMapFragment.getMapAsync(new OnMapReadyCallback() {
+                        @Override
+                        public void onMapReady(@NonNull GoogleMap googleMap) {
+
+                            //Initializing lat lng
+                            LatLng latLng =new LatLng(location.getLatitude(),location.getLongitude());
+
+                            //Creating marker options
+                            MarkerOptions options = new MarkerOptions().position(latLng).title("NIRAV GIRNARI");
+
+                            //zoom map
+                            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng,10));
+
+                            //add marker on map
+                            googleMap.addMarker(options);
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == 44)
+        {
+            if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+            {
+                getCurrentlocation();
+            }
+            else
+            {
+                showToast("Permission Denied");
+            }
+        }
+    }
+
+    private void ClickEventGoogleMapButton() {
+
+        btnGoogleMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try
+                {
+                    //checking permission
+                    if (ActivityCompat.checkSelfPermission(QRScanner_Activity.this, ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
+                    {
+                        getCurrentlocation();
+                    }
+                    else
+                    {
+                        ActivityCompat.requestPermissions(QRScanner_Activity.this,new String[]{ACCESS_FINE_LOCATION},44);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    showToast("Exception : "+ex);
+                }
+            }
+        });
     }
     private void ClickEventLocationButton() {
         btnLocation.setOnClickListener(new View.OnClickListener() {
@@ -137,5 +244,6 @@ public class QRScanner_Activity extends BaseActivity {
         txtLongitude =(TextView) findViewById(R.id.Location_Longitude);
         txtLocationAddress =(TextView) findViewById(R.id.Location_Address);
         btnLocation=(Button) findViewById(R.id.location_button);
+        btnGoogleMap=(Button) findViewById(R.id.google_map_button);
     }
 }
