@@ -5,16 +5,22 @@ import static android.content.ContentValues.TAG;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,6 +57,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -60,22 +67,18 @@ public class LoginActivity extends BaseActivity implements  AuthenticationListen
     private static int RC_SIGN_IN = 100;
     private String token = null;
     AppPreferences appPreferences = null;
-
     ImageView profilePhoto,IVGogglelogo,IVFacebooklogo,IVInstagramlogo;
-
     TextView txtUserid,txtUsername;
     EditText edtEmail,edtPassword;
-
     Button btnLogin;
-
     TextView txtSignuptv;
-
     String email_login,password_login;
-
     GoogleSignInClient mGoogleSignInClient; // FOR GOOGLE
     CallbackManager callbackManager; // FOR FACEBOOK
-
     AuthenticationDialog  authenticationDialog = null;  // FOR INSTAGRAM
+
+    Spinner spinner;
+    public static final String[] languages = {"select language","Hindi","English"};
     public AuthenticationListener listener;
 
     @SuppressLint("MissingInflatedId")
@@ -94,10 +97,82 @@ public class LoginActivity extends BaseActivity implements  AuthenticationListen
         ClickEventFacebook();
         ClickEventInstagram();
         ClickEventTextView();
-
         GoogleConfiguration();
-
         ClickEventLoginbutton();
+        SpinnerForLanguage();
+    }
+
+    private void SpinnerForLanguage() {
+        try
+        {
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,languages);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spinner.setAdapter(adapter);
+            spinner.setSelection(0);
+            spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                    String selectedLang = parent.getItemAtPosition(position).toString();
+
+                    if(selectedLang.equals("English"))
+                    {
+                        setLocal(LoginActivity.this,"en");
+                        finish();
+                        startActivity(getIntent());
+                    }
+                    else if (selectedLang.equals("Hindi"))
+                    {
+                        setLocal(LoginActivity.this,"hi");
+                        finish();
+                        startActivity(getIntent());
+                    }
+                }
+                @Override
+                public void onNothingSelected(AdapterView<?> parent) {
+
+                }
+            });
+        }
+        catch (Exception ex)
+        {
+            showToast("Exception : "+ex);
+        }
+    }
+    public  void setLocal(Activity activity,String langCode)
+    {
+        try
+        {
+            Locale locale = new  Locale(langCode);
+            locale.setDefault(locale);
+            Resources resources = activity.getResources();
+            Configuration config = resources.getConfiguration();
+            config.setLocale(locale);
+            resources.updateConfiguration(config,resources.getDisplayMetrics());
+        }
+        catch (Exception ex)
+        {
+            showToast("Exception 2 : "+ex);
+        }
+
+    }
+    private void initView() {
+        profilePhoto =findViewById(R.id.profilephoto);
+
+        txtUserid = findViewById(R.id.user_id);
+        txtUsername = findViewById(R.id.user_name);
+
+        edtEmail =findViewById(R.id.edittext_emailaddress_login);
+        edtPassword =findViewById(R.id.edittextpassword);
+
+        txtSignuptv =findViewById(R.id.linkforlogin2);
+
+        btnLogin =findViewById(R.id.login_button);
+
+        IVGogglelogo =findViewById(R.id.googlelogo);
+        IVFacebooklogo =findViewById(R.id.facebooklogo);
+        IVInstagramlogo = findViewById(R.id.instagramlogo);
+        spinner = findViewById(R.id.spinner_language);
     }
     private void ClickEventLoginbutton() {
         btnLogin.setOnClickListener(new View.OnClickListener() {  // CLICK EVENT OF SIGN IN (LOG IN)
@@ -241,24 +316,6 @@ public class LoginActivity extends BaseActivity implements  AuthenticationListen
                         // App code
                     }
                 });
-    }
-
-    private void initView() {
-        profilePhoto =findViewById(R.id.profilephoto);
-
-        txtUserid = findViewById(R.id.user_id);
-        txtUsername = findViewById(R.id.user_name);
-
-        edtEmail =findViewById(R.id.edittext_emailaddress_login);
-        edtPassword =findViewById(R.id.edittextpassword);
-
-        txtSignuptv =findViewById(R.id.linkforlogin2);
-
-        btnLogin =findViewById(R.id.login_button);
-
-        IVGogglelogo =findViewById(R.id.googlelogo);
-        IVFacebooklogo =findViewById(R.id.facebooklogo);
-        IVInstagramlogo = findViewById(R.id.instagramlogo);
     }
     private void postLoginData(String access_token)
     {

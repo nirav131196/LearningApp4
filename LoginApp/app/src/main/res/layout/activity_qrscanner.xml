@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
                 android:gravity="center"
-                android:text="Location"
+                android:text="@string/current_location"
                 android:textSize="25dp"
                 android:layout_margin="15dp"
                 android:textStyle="bold"
@@ -52,18 +52,16 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/Location"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
                     android:gravity="center"
-                    android:text="Latitude :"
+                    android:text="@string/latitude"
                     android:textSize="20dp"
-                    android:layout_margin="5dp"
+                    android:layout_margin="8dp"
                     android:textStyle="bold"
                     android:textColor="@color/yellow" />
                 <TextView
@@ -81,20 +79,18 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
                 android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/Location2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="15dp"
-                    android:gravity="center"
-                    android:text="Longitude :"
+                    android:layout_margin="8dp"
+                    android:text="@string/longitude"
+                    android:textColor="@color/yellow"
                     android:textSize="20dp"
-                    android:layout_margin="5dp"
-                    android:textStyle="bold"
-                    android:textColor="@color/yellow" />
+                    android:textStyle="bold" />
+
                 <TextView
                     android:id="@+id/Location_Longitude"
                     android:layout_width="match_parent"
@@ -109,26 +105,23 @@
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
                     android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/Location4"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="5dp"
-                        android:layout_marginTop="15dp"
-                        android:gravity="center"
-                        android:text="Location Address : "
+                        android:layout_margin="8dp"
+                        android:text="@string/address"
                         android:textColor="@color/yellow"
                         android:textSize="20dp"
                         android:textStyle="bold" />
+
                     <TextView
                         android:id="@+id/Location_Address"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="5dp"
-                        android:gravity="center"
                         android:text=""
                         android:textSize="20dp"
                         android:textStyle="bold"
@@ -141,11 +134,19 @@
                 android:id="@+id/location_button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="15dp"
+                android:layout_margin="10dp"
                 android:background="@drawable/editext_design3"
-                android:text="Get Current Location"
+                android:text="@string/get_current_location"
                 android:textSize="17dp" />
 
+
+            <fragment
+                android:id="@+id/google_map"
+                android:layout_width="match_parent"
+                android:layout_height="280dp"
+                android:layout_margin="15dp"
+                android:name="com.google.android.gms.maps.SupportMapFragment">
+            </fragment>
             <androidx.appcompat.widget.AppCompatButton
 
                 android:id="@+id/google_map_button"
@@ -153,17 +154,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:background="@drawable/editext_design3"
-                android:text="Get Location on Map"
+                android:text="@string/get_location_on_map"
                 android:textSize="17dp" />
-
-            <fragment
-                android:id="@+id/google_map"
-                android:layout_width="match_parent"
-                android:layout_height="280dp"
-                android:layout_margin="30dp"
-                android:name="com.google.android.gms.maps.SupportMapFragment">
-
-            </fragment>
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

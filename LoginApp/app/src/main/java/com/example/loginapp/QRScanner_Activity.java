@@ -22,6 +22,7 @@ import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -48,13 +49,12 @@ public class QRScanner_Activity extends BaseActivity {
     SupportMapFragment supportMapFragment;
     FusedLocationProviderClient client;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qrscanner);
 
-        // FOR LAT LONG
+        // FOR LAT LONG , CHECKING PERMISSION OF LOCATION
         ActivityCompat.requestPermissions(this, new String[]{ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
 
         // FOR GOOGLE MAP , Assign variable
@@ -66,8 +66,24 @@ public class QRScanner_Activity extends BaseActivity {
         initView();
         ClickEventLocationButton();
         ClickEventGoogleMapButton();
-    }
 
+       /* Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
+        getSupportActionBar(toolbar);
+        toolbar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showToast("HELLO");
+            }
+        });*/
+    }
+    private void initView()
+    {
+        txtLatitude =(TextView) findViewById(R.id.Location_Latitude);
+        txtLongitude =(TextView) findViewById(R.id.Location_Longitude);
+        txtLocationAddress =(TextView) findViewById(R.id.Location_Address);
+        btnLocation=(Button) findViewById(R.id.location_button);
+        btnGoogleMap=(Button) findViewById(R.id.google_map_button);
+    }
     private void getCurrentlocation() {
 
         //Initializing task location
@@ -237,13 +253,5 @@ public class QRScanner_Activity extends BaseActivity {
         });
         final AlertDialog alertDialog = builder.create();
         alertDialog.show();
-    }
-    private void initView()
-    {
-        txtLatitude =(TextView) findViewById(R.id.Location_Latitude);
-        txtLongitude =(TextView) findViewById(R.id.Location_Longitude);
-        txtLocationAddress =(TextView) findViewById(R.id.Location_Address);
-        btnLocation=(Button) findViewById(R.id.location_button);
-        btnGoogleMap=(Button) findViewById(R.id.google_map_button);
     }
 }
