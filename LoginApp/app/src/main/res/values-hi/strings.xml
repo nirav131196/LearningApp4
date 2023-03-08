@@ -46,4 +46,9 @@
 कैमरा</string>
     <string name="save">
 फोटो सेव करें</string>
+
+    <string name="qr_and_camera">क्यूआर कोड और कैमरा</string>
+    <string name="location">
+जगह</string>
+    <string name="push_notification">अधिसूचना</string>
 </resources>

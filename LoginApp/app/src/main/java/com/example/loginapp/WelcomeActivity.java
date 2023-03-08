@@ -124,6 +124,16 @@ public class WelcomeActivity extends BaseActivity {
 
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        Intent i =new Intent(WelcomeActivity.this,Welcome_Main.class);
+        startActivity(i);
+        finish();
+    }
+
     private void ClickEventCameraButton()
     {
         btnCamera.setOnClickListener(new View.OnClickListener() {

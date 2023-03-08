@@ -110,6 +110,14 @@ public class PushNotoficationActivity extends BaseActivity {
             }
         });
     }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        Intent i =new Intent(PushNotoficationActivity.this,Welcome_Main.class);
+        startActivity(i);
+        finish();
+    }
     private void initView() {
         edtTitle = findViewById(R.id.editTextTitle);
         edtDescription = findViewById(R.id.editTextDescription);

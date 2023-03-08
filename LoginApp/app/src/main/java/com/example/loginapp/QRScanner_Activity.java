@@ -84,6 +84,14 @@ public class QRScanner_Activity extends BaseActivity {
         btnLocation=(Button) findViewById(R.id.location_button);
         btnGoogleMap=(Button) findViewById(R.id.google_map_button);
     }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+
+        Intent i =new Intent(QRScanner_Activity.this,Welcome_Main.class);
+        startActivity(i);
+        finish();
+    }
     private void getCurrentlocation() {
 
         //Initializing task location

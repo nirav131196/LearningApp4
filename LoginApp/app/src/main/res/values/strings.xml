@@ -43,4 +43,7 @@
     <string name="qr_scanner">QR SCANNER</string>
     <string name="camera">CAMERA</string>
     <string name="save">SAVE</string>
+    <string name="qr_and_camera">QR AND CAMERA</string>
+    <string name="location">LOCATION</string>
+    <string name="push_notification">PUSH NOTIFICATION</string>
 </resources>

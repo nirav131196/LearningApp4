@@ -301,7 +301,7 @@ public class LoginActivity extends BaseActivity implements  AuthenticationListen
                     @Override
                     public void onSuccess(LoginResult loginResult) {
                         // App code
-                        startActivity(new Intent(LoginActivity.this,WelcomeActivity.class));
+                        startActivity(new Intent(LoginActivity.this,Welcome_Main.class));
 
                         showToast("Log In Successfully");
                     }
@@ -360,7 +360,7 @@ public class LoginActivity extends BaseActivity implements  AuthenticationListen
                             edtEmail.setText("");
                             edtPassword.setText("");
 
-                            Intent i = new Intent(LoginActivity.this,WelcomeActivity.class);
+                            Intent i = new Intent(LoginActivity.this,Welcome_Main.class);
                             startActivity(i);
                             finish();
 
@@ -485,7 +485,7 @@ public class LoginActivity extends BaseActivity implements  AuthenticationListen
                 String personGivenName = acct.getGivenName();
                 showToast("Welcome "+personGivenName);
             }
-            startActivity(new Intent(LoginActivity.this,WelcomeActivity.class));
+            startActivity(new Intent(LoginActivity.this,Welcome_Main.class));
 
             // Signed in successfully, show authenticated UI.
 
