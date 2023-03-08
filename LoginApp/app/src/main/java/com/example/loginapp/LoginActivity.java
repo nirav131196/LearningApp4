@@ -2,6 +2,7 @@ package com.example.loginapp;
 
 import static android.content.ContentValues.TAG;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
@@ -15,6 +16,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
+import android.view.textclassifier.TextClassifierEvent;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -42,7 +44,12 @@ import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.OAuthProvider;
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.HttpEntity;
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.HttpResponse;
 import com.google.firebase.crashlytics.buildtools.reloc.org.apache.http.client.HttpClient;
@@ -67,7 +74,7 @@ public class LoginActivity extends BaseActivity implements  AuthenticationListen
     private static int RC_SIGN_IN = 100;
     private String token = null;
     AppPreferences appPreferences = null;
-    ImageView profilePhoto,IVGogglelogo,IVFacebooklogo,IVInstagramlogo;
+    ImageView profilePhoto,IVGogglelogo,IVFacebooklogo,IVInstagramlogo,IVTwitterlogo;
     TextView txtUserid,txtUsername;
     EditText edtEmail,edtPassword;
     Button btnLogin;
@@ -81,16 +88,17 @@ public class LoginActivity extends BaseActivity implements  AuthenticationListen
     public static final String[] languages = {"select language","Hindi","English"};
     public AuthenticationListener listener;
 
+    FirebaseAuth firebaseAuth;  // FOR TWITTER
+
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-      /*  callbackManager = CallbackManager.Factory.create();*/
+        firebaseAuth = FirebaseAuth.getInstance();
 
         initView();
-
         FaceBookManager();
 
         ClickEventGoogle();
@@ -100,8 +108,90 @@ public class LoginActivity extends BaseActivity implements  AuthenticationListen
         GoogleConfiguration();
         ClickEventLoginbutton();
         SpinnerForLanguage();
+        ClickEventTwitter();
     }
 
+    private void ClickEventTwitter() {
+
+        IVTwitterlogo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try
+                {
+                    OAuthProvider.Builder provider = OAuthProvider.newBuilder("twitter.com");
+                    provider.addCustomParameter("lang", "fr");
+
+                    Task<AuthResult> pendingResultTask = firebaseAuth.getPendingAuthResult();
+                    if (pendingResultTask != null) {
+                        // There's something already here! Finish the sign-in for your user.
+                        pendingResultTask
+                                .addOnSuccessListener(
+                                        new OnSuccessListener<AuthResult>() {
+                                            @Override
+                                            public void onSuccess(AuthResult authResult) {
+                                                Intent i =new Intent(LoginActivity.this,Welcome_Main.class);
+                                                startActivity(i);
+                                                finish();
+
+                                            }
+                                        })
+                                .addOnFailureListener(
+                                        new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                showToast("Exception : "+e);
+                                            }
+                                        });
+                    } else
+                    {
+                        firebaseAuth
+                                .startActivityForSignInWithProvider(/* activity= */ LoginActivity.this, provider.build())
+                                .addOnSuccessListener(
+                                        new OnSuccessListener<AuthResult>() {
+                                            @Override
+                                            public void onSuccess(AuthResult authResult) {
+                                                Intent i =new Intent(LoginActivity.this,Welcome_Main.class);
+                                                startActivity(i);
+                                                finish();
+                                            }
+                                        })
+                                .addOnFailureListener(
+                                        new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e)
+                                            {
+                                                showToast("Exception 2 "+e);
+                                            }
+                                        });
+                    }
+                }
+                catch (Exception ex)
+                {
+                    showToast("Exception : "+ex);
+                }
+            }
+        });
+    }
+    private void initView() {
+        profilePhoto =findViewById(R.id.profilephoto);
+
+        txtUserid = findViewById(R.id.user_id);
+        txtUsername = findViewById(R.id.user_name);
+
+        edtEmail =findViewById(R.id.edittext_emailaddress_login);
+        edtPassword =findViewById(R.id.edittextpassword);
+
+        txtSignuptv =findViewById(R.id.linkforlogin2);
+
+        btnLogin =findViewById(R.id.login_button);
+
+        IVGogglelogo =findViewById(R.id.googlelogo);
+        IVFacebooklogo =findViewById(R.id.facebooklogo);
+        IVInstagramlogo = findViewById(R.id.instagramlogo);
+        IVTwitterlogo = findViewById(R.id.twitterlogo);
+
+        spinner = findViewById(R.id.spinner_language);
+    }
     private void SpinnerForLanguage() {
         try
         {
@@ -155,24 +245,6 @@ public class LoginActivity extends BaseActivity implements  AuthenticationListen
             showToast("Exception 2 : "+ex);
         }
 
-    }
-    private void initView() {
-        profilePhoto =findViewById(R.id.profilephoto);
-
-        txtUserid = findViewById(R.id.user_id);
-        txtUsername = findViewById(R.id.user_name);
-
-        edtEmail =findViewById(R.id.edittext_emailaddress_login);
-        edtPassword =findViewById(R.id.edittextpassword);
-
-        txtSignuptv =findViewById(R.id.linkforlogin2);
-
-        btnLogin =findViewById(R.id.login_button);
-
-        IVGogglelogo =findViewById(R.id.googlelogo);
-        IVFacebooklogo =findViewById(R.id.facebooklogo);
-        IVInstagramlogo = findViewById(R.id.instagramlogo);
-        spinner = findViewById(R.id.spinner_language);
     }
     private void ClickEventLoginbutton() {
         btnLogin.setOnClickListener(new View.OnClickListener() {  // CLICK EVENT OF SIGN IN (LOG IN)
@@ -238,7 +310,6 @@ public class LoginActivity extends BaseActivity implements  AuthenticationListen
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
 
     }
-
     private void ClickEventTextView() {
         txtSignuptv.setOnClickListener(new View.OnClickListener() {  // CLICK EVENT OF SIGN UP (LINK OF SIGN UP)
             @Override
