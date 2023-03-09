@@ -23,4 +23,13 @@
         <item name="colorAccent">@color/white</item>
         <item name="android:singleLine">true</item>
     </style>
+
+    <style name="Theme.LoginApp.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="Theme.LoginApp.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.LoginApp.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

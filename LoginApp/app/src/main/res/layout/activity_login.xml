@@ -174,11 +174,11 @@
 
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:cardElevation="10dp"
-            app:cardCornerRadius="10dp"
+            android:layout_height="92dp"
             android:layout_margin="6dp"
             app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="10dp"
             app:cardMaxElevation="12dp"
             app:cardPreventCornerOverlap="true"
             app:cardUseCompatPadding="true">
@@ -186,7 +186,7 @@
             <ImageView
                 android:id="@+id/googlelogo"
                 android:layout_width="40dp"
-                android:layout_height="35dp"
+                android:layout_height="30dp"
                 android:layout_margin="10dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -197,7 +197,7 @@
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:cardElevation="1dp"
+            app:cardElevation="10dp"
             app:cardCornerRadius="10dp"
             android:layout_margin="6dp"
             app:cardBackgroundColor="@color/white"
@@ -219,7 +219,7 @@
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:cardElevation="1dp"
+            app:cardElevation="10dp"
             app:cardCornerRadius="10dp"
             android:layout_margin="6dp"
             app:cardBackgroundColor="@color/white"
@@ -241,7 +241,7 @@
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:cardElevation="1dp"
+            app:cardElevation="10dp"
             app:cardCornerRadius="10dp"
             android:layout_margin="6dp"
             app:cardBackgroundColor="@color/white"

@@ -46,4 +46,19 @@
     <string name="qr_and_camera">QR AND CAMERA</string>
     <string name="location">LOCATION</string>
     <string name="push_notification">PUSH NOTIFICATION</string>
+    <string name="title_activity_dashboard_p9" translatable="false"></string>
+    <string name="navigation_drawer_open" translatable="false">Open navigation drawer</string>
+    <string name="navigation_drawer_close" translatable="false">Close navigation drawer</string>
+    <string name="nav_header_title" translatable="false">Android Studio</string>
+    <string name="nav_header_subtitle" translatable="false">android.studio@android.com</string>
+    <string name="nav_header_desc" translatable="false">Navigation header</string>
+    <string name="action_settings" translatable="false">Settings</string>
+
+    <string name="menu_home" translatable="false">HOME</string>
+    <string name="menu_gallery" translatable="false">GALLERY</string>
+    <string name="menu_slideshow" translatable="false">SLIDESHOW</string>
+    <string name="title_activity_main2">MainActivity2</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
 </resources>

@@ -96,7 +96,7 @@ public class LoginActivity extends BaseActivity implements  AuthenticationListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        firebaseAuth = FirebaseAuth.getInstance();
+      //  firebaseAuth = FirebaseAuth.getInstance();  // FOR TWITTER
 
         initView();
         FaceBookManager();
@@ -132,7 +132,6 @@ public class LoginActivity extends BaseActivity implements  AuthenticationListen
                                                 Intent i =new Intent(LoginActivity.this,Welcome_Main.class);
                                                 startActivity(i);
                                                 finish();
-
                                             }
                                         })
                                 .addOnFailureListener(

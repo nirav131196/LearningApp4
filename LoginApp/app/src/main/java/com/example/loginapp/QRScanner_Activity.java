@@ -45,7 +45,6 @@ public class QRScanner_Activity extends BaseActivity {
     private static final int REQUEST_LOCATION = 1;
     LocationManager locationManager;
     String latitude, longitude;
-
     SupportMapFragment supportMapFragment;
     FusedLocationProviderClient client;
 
@@ -66,15 +65,6 @@ public class QRScanner_Activity extends BaseActivity {
         initView();
         ClickEventLocationButton();
         ClickEventGoogleMapButton();
-
-       /* Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
-        getSupportActionBar(toolbar);
-        toolbar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showToast("HELLO");
-            }
-        });*/
     }
     private void initView()
     {
