@@ -164,15 +164,14 @@
                 android:layout_marginBottom="3dp"/>
         </LinearLayout>
     </ScrollView>
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/login_button"
-        android:layout_width="350dp"
-        android:layout_height="wrap_content"
-        android:background="@drawable/editext_design3"
-        android:text="@string/login"
-        android:textSize="17dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scrollview"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+     <com.google.android.material.bottomnavigation.BottomNavigationView
+         android:id="@+id/bottom_navigation"
+         android:layout_width="match_parent"
+         android:layout_height="60dp"
+         app:itemBackground="@color/yellow"
+         app:itemIconTint="@drawable/selector"
+         app:itemTextColor="@drawable/selector"
+         app:menu="@menu/menu_navigation"
+         app:layout_constraintTop_toBottomOf="@+id/scrollview"
+         app:layout_constraintBottom_toBottomOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

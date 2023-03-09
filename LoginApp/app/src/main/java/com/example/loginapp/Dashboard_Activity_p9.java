@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.Menu;
 import android.widget.Toolbar;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
@@ -32,16 +33,47 @@ public class Dashboard_Activity_p9 extends AppCompatActivity {
         binding = ActivityDashboardP9Binding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        // BOTTOM NAVIGATION VIEW
+        BottomNavigationView bottomNavigationView =findViewById(R.id.bottom_navigation);
 
-
-        setSupportActionBar(binding.appBarDashboardActivityP9.toolbar);
-        binding.appBarDashboardActivityP9.fab.setOnClickListener(new View.OnClickListener() {
+        //set order id selected
+     /*   bottomNavigationView.setSelectedItemId(R.id.orderlist);
+        bottomNavigationView.setSelectedItemId(R.id.favourite);
+        bottomNavigationView.setSelectedItemId(R.id.history);
+        bottomNavigationView.setSelectedItemId(R.id.notification);*/
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                switch(item.getItemId())
+                {
+                    case  R.id.orderlist:
+                        Intent i =new Intent(Dashboard_Activity_p9.this,OrderList_Activity.class);
+                        startActivity(i);
+                        finish();
+                        return true;
+                    case R.id.favourite:
+                        Intent i2 =new Intent(Dashboard_Activity_p9.this,Favourite_Activity.class);
+                        startActivity(i2);
+                        finish();
+                        return true;
+                    case R.id.history:
+                        Intent i3 =new Intent(Dashboard_Activity_p9.this,OrderHistory.class);
+                        startActivity(i3);
+                        finish();
+                        return true;
+                    case R.id.notification:
+                        Intent i4 =new Intent(Dashboard_Activity_p9.this,Notification_Activity.class);
+                        startActivity(i4);
+                        finish();
+                        return true;
+
+                }
+                return false;
             }
         });
+
+        setSupportActionBar(binding.appBarDashboardActivityP9.toolbar);
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
         // Passing each menu ID as a set of Ids because each
@@ -76,7 +108,21 @@ public class Dashboard_Activity_p9 extends AppCompatActivity {
                 startActivity(i);
                 finish();
                 return true;
-
+            case R.id.nav_order:
+                Intent i2 =new Intent(Dashboard_Activity_p9.this,OrderList_Activity.class);
+                startActivity(i2);
+                finish();
+                return true;
+            case R.id.nav_history:
+                Intent i3 =new Intent(Dashboard_Activity_p9.this,OrderHistory.class);
+                startActivity(i3);
+                finish();
+                return true;
+            case R.id.nav_favourite:
+                Intent i4 =new Intent(Dashboard_Activity_p9.this,Favourite_Activity.class);
+                startActivity(i4);
+                finish();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
