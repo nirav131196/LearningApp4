@@ -85,6 +85,31 @@ public class Dashboard_Activity_p9 extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_dashboard_activity_p9);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                switch(item.getItemId())
+                {
+                    case R.id.nav_order:
+                        Intent i2 =new Intent(Dashboard_Activity_p9.this,OrderList_Activity.class);
+                        startActivity(i2);
+                        finish();
+                        return true;
+                    case R.id.nav_history:
+                        Intent i3 =new Intent(Dashboard_Activity_p9.this,OrderHistory.class);
+                        startActivity(i3);
+                        finish();
+                        return true;
+                    case R.id.nav_favourite:
+                        Intent i4 =new Intent(Dashboard_Activity_p9.this,Favourite_Activity.class);
+                        startActivity(i4);
+                        finish();
+                        return true;
+                }
+                return false;
+            }
+        });
     }
 
     private void setSupportActionBar(Toolbar toolbar) {
@@ -100,7 +125,6 @@ public class Dashboard_Activity_p9 extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-
         switch (item.getItemId())
         {
             case R.id.action_settings:
@@ -108,21 +132,7 @@ public class Dashboard_Activity_p9 extends AppCompatActivity {
                 startActivity(i);
                 finish();
                 return true;
-            case R.id.nav_order:
-                Intent i2 =new Intent(Dashboard_Activity_p9.this,OrderList_Activity.class);
-                startActivity(i2);
-                finish();
-                return true;
-            case R.id.nav_history:
-                Intent i3 =new Intent(Dashboard_Activity_p9.this,OrderHistory.class);
-                startActivity(i3);
-                finish();
-                return true;
-            case R.id.nav_favourite:
-                Intent i4 =new Intent(Dashboard_Activity_p9.this,Favourite_Activity.class);
-                startActivity(i4);
-                finish();
-                return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }

@@ -34,24 +34,6 @@ public class GalleryFragment extends Fragment {
         galleryViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);*/
         return root;
     }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
-
-        switch (item.getItemId())
-        {
-            case R.id.nav_gallery:
-                Intent i =new Intent(GalleryFragment.this, OrderHistory.class);
-                startActivity(i);
-                finish();
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
