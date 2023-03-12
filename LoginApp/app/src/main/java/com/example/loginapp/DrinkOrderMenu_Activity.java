@@ -48,6 +48,91 @@ public class DrinkOrderMenu_Activity extends BaseActivity implements NavigationV
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(DrinkOrderMenu_Activity.this));
     }
+
+    private void getProductData(String access_token)
+    {
+        try
+        {
+            String url = "https://admin.p9bistro.com/index.php/getCategoryListondeptIds?deptids=[1]";
+
+            JSONObject req = new JSONObject();
+            try
+            {
+                req.put("deptids",1);
+            }
+            catch(Exception ex)
+            {
+                showToast("Exception "+ex);
+            }
+            JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url,req, response -> {
+                try
+                {
+                    if(response.getBoolean("status"))
+                    {
+                        Log.e("position","position");
+                        String message = response.getString("message");
+
+                        JSONObject resobj = response.getJSONObject("data");
+
+                        String id = resobj.getString("id");
+                        String categoryId = resobj.getString("category_id");
+                        String departmentId = resobj.getString("department_id");
+                        String categoryTypeId = resobj.getString("category_type_id");
+                        String catName = resobj.getString("cat_name");
+                        String image = resobj.getString("image");
+                        String catRank = resobj.getString("cat_rank");
+                        String hasCategory = resobj.getString("has_category");
+                        String isActive = resobj.getString("is_active");
+                        String createdDate = resobj.getString("created_date");
+                        String updatedDate = resobj.getString("updated_date");
+
+                      //  Toast.makeText(getApplicationContext(),"Id ",Toast.LENGTH_LONG).show();
+
+                      /*  List<Product_Data> list = new ArrayList<>();
+
+                        list.add(new Product_Data(id,categoryId,departmentId,catName));
+                        showToast(id + categoryId + departmentId + categoryTypeId + catName + image + catRank + hasCategory + isActive + createdDate + updatedDate);*/
+
+                        Log.d("RESPONSE GOT : ", id + categoryId + departmentId + categoryTypeId + catName + image + catRank + hasCategory + isActive + createdDate + updatedDate);
+                    }
+                    else
+                    {
+                        showToast("Response false");
+                    }
+                }
+                catch (JSONException ex)
+                {
+                    showToast("Error : "+ex);
+                    ex.printStackTrace();
+                }
+             //   showToast("Details Fetched");
+            }, error -> showToast("Fail to get Response : "+error)){
+                /*@Override
+                protected Map<String,String>getParams()
+                {
+                    Map<String,String> params = new HashMap<String,String>();
+                    params.put("email",email_login);
+                    params.put("password",password_login);
+                    params.put("login_by", String.valueOf(5));
+                    return params;
+                }*/
+                @Override
+                public Map<String,String> getHeaders()throws AuthFailureError
+                {
+                    Map<String,String>params = new HashMap<String ,String>();
+                    params.put("authorization",access_token);
+                    params.put("Content-Type", "application/json");
+                    return params;
+                }
+            };
+            RequestQueue requestQueue =Volley.newRequestQueue(getApplicationContext());
+            requestQueue.add(request);
+        }
+        catch (Exception ex)
+        {
+            Toast.makeText(DrinkOrderMenu_Activity.this, "Error 3 : "+ex, Toast.LENGTH_SHORT).show();
+        }
+    }
     private void token() {
         String url = "https://admin.p9bistro.com/index.php/generate_auth_token";
         Log.e("checklog", url + "");
@@ -75,7 +160,6 @@ public class DrinkOrderMenu_Activity extends BaseActivity implements NavigationV
 
                 Log.e("checklog",error + "");
                 Toast.makeText(getApplicationContext(), "Timeout Error", Toast.LENGTH_LONG).show();
-
             }
         }){
             @Override
@@ -88,98 +172,6 @@ public class DrinkOrderMenu_Activity extends BaseActivity implements NavigationV
         RequestQueue requestquese = Volley.newRequestQueue(getApplicationContext());
         requestquese.add(stringRequest);
     }
-    private void getProductData(String access_token)
-    {
-        try
-        {
-            String url = "https://admin.p9bistro.com/index.php/getCategoryListondeptIds?deptids=[1]";
-
-            JSONObject req = new JSONObject();
-            try
-            {
-                req.put("deptids",1);
-            }
-            catch(Exception ex)
-            {
-                showToast("Exception "+ex);
-            }
-            JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url,req,new Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject response)
-                {
-                    try
-                    {
-                        if(response.getBoolean("status"))
-                        {
-                            String message = response.getString("message");
-                          //  showToast(message);
-
-                            JSONObject resobj = response.getJSONObject("data");
-
-                            String id = resobj.getString("id");
-                            String categoryId = resobj.getString("category_id");
-                            String departmentId = resobj.getString("department_id");
-                            String categoryTypeId = resobj.getString("category_type_id");
-                            String catName = resobj.getString("cat_name");
-                            String image = resobj.getString("image");
-                            String catRank = resobj.getString("cat_rank");
-                            String hasCategory = resobj.getString("has_category");
-                            String isActive = resobj.getString("is_active");
-                            String createdDate = resobj.getString("created_date");
-                            String updatedDate = resobj.getString("updated_date");
-
-                            showToast(resobj.getString("id"));
-
-                        //    Toast.makeText(getApplicationContext(),"Id "+id,Toast.LENGTH_LONG).show();
-
-                          /*  List<Product_Data> list = new ArrayList<>();
-
-                            list.add(new Product_Data(id,categoryId,departmentId,catName));
-                            showToast(id + categoryId + departmentId + categoryTypeId + catName + image + catRank + hasCategory + isActive + createdDate + updatedDate);*/
-
-                     //       Log.d("RESPONSE GOT : ", id + categoryId + departmentId + categoryTypeId + catName + image + catRank + hasCategory + isActive + createdDate + updatedDate);
-                        }
-                    }
-                    catch (JSONException ex)
-                    {
-                        ex.printStackTrace();
-                    }
-                 //   showToast("Details Fetched");
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error)
-                {
-                    showToast("Fail to get Response : "+error);
-                }
-            }){
-                /*@Override
-                protected Map<String,String>getParams()
-                {
-                    Map<String,String> params = new HashMap<String,String>();
-                    params.put("email",email_login);
-                    params.put("password",password_login);
-                    params.put("login_by", String.valueOf(5));
-                    return params;
-                }*/
-                @Override
-                public Map<String,String> getHeaders()throws AuthFailureError
-                {
-                    Map<String,String>params = new HashMap<String ,String>();
-                    params.put("authorization",access_token);
-                    params.put("Content-Type", "application/json");
-                    return params;
-                }
-            };
-            RequestQueue requestQueue =Volley.newRequestQueue(getApplicationContext());
-            requestQueue.add(request);
-        }
-        catch (Exception ex)
-        {
-            Toast.makeText(DrinkOrderMenu_Activity.this, "Error 3 : "+ex, Toast.LENGTH_SHORT).show();
-        }
-    }
-
     private List<Product_Data> getData()
     {
         List<Product_Data> list = new ArrayList<>();

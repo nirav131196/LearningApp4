@@ -393,10 +393,7 @@ public class LoginActivity extends BaseActivity implements  AuthenticationListen
         {
             String url = "https://admin.p9bistro.com/index.php/SignIn";
 
-          //  RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
-
             JSONObject req = new JSONObject();
-
             try
             {
                 req.put("username",email_login);
@@ -418,7 +415,6 @@ public class LoginActivity extends BaseActivity implements  AuthenticationListen
                         {
                             String message = response.getString("message");
                             showToast(message);
-
                             JSONObject resobj = response.getJSONObject("data");
                             String id = resobj.getString("id");
                             String username = resobj.getString("username");
