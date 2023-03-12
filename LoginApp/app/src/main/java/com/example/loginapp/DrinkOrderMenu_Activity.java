@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -21,6 +22,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.navigation.NavigationView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -41,12 +43,7 @@ public class DrinkOrderMenu_Activity extends BaseActivity implements NavigationV
 
         token();
 
-        List<Product_Data> list = new ArrayList<>();
-        list =getData();
         recyclerView =(RecyclerView) findViewById(R.id.product_data);
-        adapter  =new RecyclerAdapter(list,getApplication());
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(DrinkOrderMenu_Activity.this));
     }
 
     private void getProductData(String access_token)
@@ -69,31 +66,36 @@ public class DrinkOrderMenu_Activity extends BaseActivity implements NavigationV
                 {
                     if(response.getBoolean("status"))
                     {
-                        Log.e("position","position");
-                        String message = response.getString("message");
 
-                        JSONObject resobj = response.getJSONObject("data");
+                   //     String message = response.getString("message");
 
-                        String id = resobj.getString("id");
-                        String categoryId = resobj.getString("category_id");
-                        String departmentId = resobj.getString("department_id");
-                        String categoryTypeId = resobj.getString("category_type_id");
-                        String catName = resobj.getString("cat_name");
-                        String image = resobj.getString("image");
-                        String catRank = resobj.getString("cat_rank");
-                        String hasCategory = resobj.getString("has_category");
-                        String isActive = resobj.getString("is_active");
-                        String createdDate = resobj.getString("created_date");
-                        String updatedDate = resobj.getString("updated_date");
+                        JSONArray resarray = response.getJSONArray("data");
 
-                      //  Toast.makeText(getApplicationContext(),"Id ",Toast.LENGTH_LONG).show();
+                        List<Product_Data> list = new ArrayList<>();
 
-                      /*  List<Product_Data> list = new ArrayList<>();
+                        for(int i =0;i<resarray.length();i++)
+                        {
+                            JSONObject resobj = resarray.getJSONObject(i);
 
-                        list.add(new Product_Data(id,categoryId,departmentId,catName));
-                        showToast(id + categoryId + departmentId + categoryTypeId + catName + image + catRank + hasCategory + isActive + createdDate + updatedDate);*/
+                            String id = resobj.getString("id");
+                            String categoryId = resobj.getString("category_id");
+                            String departmentId = resobj.getString("department_id");
+                            String categoryTypeId = resobj.getString("category_type_id");
+                            String catName = resobj.getString("cat_name");
+                            String image = resobj.getString("image");
+                            String catRank = resobj.getString("cat_rank");
+                            String hasCategory = resobj.getString("has_category");
+                            String isActive = resobj.getString("is_active");
+                            String createdDate = resobj.getString("created_date");
+                            String updatedDate = resobj.getString("updated_date");
 
-                        Log.d("RESPONSE GOT : ", id + categoryId + departmentId + categoryTypeId + catName + image + catRank + hasCategory + isActive + createdDate + updatedDate);
+                            list.add(new Product_Data(id,categoryId,departmentId,catName,image));
+                         }
+                        adapter  =new RecyclerAdapter(list,getApplication());
+                        recyclerView.setAdapter(adapter);
+                        recyclerView.setLayoutManager(new LinearLayoutManager(DrinkOrderMenu_Activity.this));
+
+                        Toast.makeText(getApplicationContext(),"Product details fetched",Toast.LENGTH_LONG).show();
                     }
                     else
                     {
@@ -105,17 +107,7 @@ public class DrinkOrderMenu_Activity extends BaseActivity implements NavigationV
                     showToast("Error : "+ex);
                     ex.printStackTrace();
                 }
-             //   showToast("Details Fetched");
             }, error -> showToast("Fail to get Response : "+error)){
-                /*@Override
-                protected Map<String,String>getParams()
-                {
-                    Map<String,String> params = new HashMap<String,String>();
-                    params.put("email",email_login);
-                    params.put("password",password_login);
-                    params.put("login_by", String.valueOf(5));
-                    return params;
-                }*/
                 @Override
                 public Map<String,String> getHeaders()throws AuthFailureError
                 {
@@ -172,13 +164,6 @@ public class DrinkOrderMenu_Activity extends BaseActivity implements NavigationV
         RequestQueue requestquese = Volley.newRequestQueue(getApplicationContext());
         requestquese.add(stringRequest);
     }
-    private List<Product_Data> getData()
-    {
-        List<Product_Data> list = new ArrayList<>();
-        list.add(new Product_Data("9191","7262","838383","CLOTHES"));
-
-        return list;
-    }
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -186,7 +171,6 @@ public class DrinkOrderMenu_Activity extends BaseActivity implements NavigationV
         startActivity(i);
         finish();
     }
-
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         return false;

@@ -426,12 +426,9 @@ public class LoginActivity extends BaseActivity implements  AuthenticationListen
                             edtEmail.setText("");
                             edtPassword.setText("");
 
-                            Intent i = new Intent(LoginActivity.this,Welcome_Main.class);
+                            Intent i = new Intent(LoginActivity.this,Dashboard_Activity_p9.class);
                             startActivity(i);
                             finish();
-
-                            Log.e("RESPONSE GOT", id + username + mobile_no + email2 + profile + api_key);
-                            Log.e("INPUT DATA",email_login + password_login);
                         }
                     }
                     catch (JSONException ex)

@@ -1,6 +1,7 @@
 package com.example.loginapp;
 
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,6 +16,8 @@ public class Product_View_Holder extends RecyclerView.ViewHolder {
     TextView id,category_id,department_id,category_name;
     View view;
 
+    ImageView photo;
+
 
     public Product_View_Holder(@NonNull View itemView) {
         super(itemView);
@@ -23,6 +26,7 @@ public class Product_View_Holder extends RecyclerView.ViewHolder {
         category_id = (TextView)itemView.findViewById(R.id.category_id);
         department_id = (TextView)itemView.findViewById(R.id.department_id);
         category_name = (TextView)itemView.findViewById(R.id.cat_name);
+        photo = (ImageView)itemView.findViewById(R.id.product_image);
 
         view = itemView;
     }

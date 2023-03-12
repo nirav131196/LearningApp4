@@ -4,11 +4,13 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.loginapp.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -19,6 +21,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<Product_View_Holder>
 
     List<Product_Data> list = Collections.emptyList();
     Context context;
+
     public RecyclerAdapter(List<Product_Data> list, Context context) {
         this.list = list;
         this.context = context;
@@ -42,6 +45,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<Product_View_Holder>
         holder.category_id.setText(list.get(position).category_id);
         holder.department_id.setText(list.get(position).department_id);
         holder.category_name.setText(list.get(position).cat_name);
+        Picasso.get().load(list.get(position).image).placeholder(R.drawable.googlelogo).error(R.drawable.facelogo).into(holder.photo);
+
        /* holder.view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
