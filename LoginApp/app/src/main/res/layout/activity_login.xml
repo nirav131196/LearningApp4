@@ -7,19 +7,28 @@
     android:background="@drawable/backgroundimage2"
     tools:context=".LoginActivity">
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="40dp"
+        app:cardMaxElevation="40dp"
+        app:cardPreventCornerOverlap="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent">
+
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbarlayout2"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent">
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
             android:background="#e3e6e4">
 
             <TextView
@@ -35,6 +44,8 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
+    </androidx.cardview.widget.CardView>
+
     <Spinner
         android:id="@+id/spinner_language"
         android:layout_width="wrap_content"
@@ -44,13 +55,13 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/appbarlayout2" />
+        app:layout_constraintTop_toBottomOf="@+id/cardview" />
 
     <ImageView
         android:id="@+id/image1"
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:layout_marginTop="30dp"
+        android:layout_margin="15dp"
         app:srcCompat="@drawable/login"
         android:layout_gravity="center"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -66,10 +77,22 @@
          app:layout_constraintLeft_toLeftOf="parent"
          app:layout_constraintRight_toRightOf="parent"/>-->
 
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardview2"
+        android:layout_width="350dp"
+        android:layout_height="50dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="30dp"
+        app:cardElevation="20dp"
+        app:cardMaxElevation="40dp"
+        app:cardPreventCornerOverlap="true"
+        app:layout_constraintTop_toBottomOf="@+id/image1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
+
     <EditText
         android:id="@+id/edittext_emailaddress_login"
         android:layout_width="350dp"
-        android:layout_marginTop="40dp"
         android:textColorHint="@color/yellow"
         android:hint="@string/e_mail_address"
         android:textColor="@color/yellow"
@@ -80,6 +103,22 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/image1" />
+    </androidx.cardview.widget.CardView>
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardview3"
+        android:layout_width="350dp"
+        android:layout_height="50dp"
+        app:cardBackgroundColor="@color/white"
+        android:layout_marginTop="20dp"
+        app:cardCornerRadius="30dp"
+        app:cardElevation="20dp"
+        app:cardMaxElevation="40dp"
+        app:cardPreventCornerOverlap="true"
+        app:layout_constraintTop_toBottomOf="@+id/cardview2"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent">
 
     <com.google.android.material.textfield.TextInputLayout
 
@@ -89,12 +128,11 @@
         android:hint="@string/password"
         android:textColorHint="@color/yellow"
         app:passwordToggleEnabled="true"
-        android:layout_margin="15dp"
         android:layout_width="350dp"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edittext_emailaddress_login">
+        app:layout_constraintTop_toBottomOf="@+id/cardview2">
 
 
         <com.google.android.material.textfield.TextInputEditText
@@ -103,26 +141,28 @@
             android:layout_height="wrap_content"
             android:background="@drawable/editext_design2"
             android:inputType="textPassword"
-            android:paddingLeft="15dp"
+            android:paddingLeft="10dp"
             android:textColor="@color/yellow"
+            android:textSize="16dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edittext_emailaddress_login" />
 
     </com.google.android.material.textfield.TextInputLayout>
+    </androidx.cardview.widget.CardView>
 
     <androidx.appcompat.widget.AppCompatButton
 
         android:id="@+id/login_button"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp"
+        android:layout_margin="20dp"
         android:background="@drawable/editext_design3"
         android:text="@string/login"
         android:textSize="17dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etpasswordlayout2" />
+        app:layout_constraintTop_toBottomOf="@+id/cardview3" />
 
     <LinearLayout
         android:id="@+id/l1"
@@ -182,7 +222,7 @@
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="92dp"
-            android:layout_margin="6dp"
+            android:layout_margin="3dp"
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="10dp"
             app:cardElevation="10dp"
@@ -193,7 +233,7 @@
             <ImageView
                 android:id="@+id/googlelogo"
                 android:layout_width="40dp"
-                android:layout_height="30dp"
+                android:layout_height="35dp"
                 android:layout_margin="10dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -206,7 +246,7 @@
             android:layout_height="wrap_content"
             app:cardElevation="10dp"
             app:cardCornerRadius="10dp"
-            android:layout_margin="6dp"
+            android:layout_margin="3dp"
             app:cardBackgroundColor="@color/white"
             app:cardMaxElevation="12dp"
             app:cardPreventCornerOverlap="true"
@@ -228,7 +268,7 @@
             android:layout_height="wrap_content"
             app:cardElevation="10dp"
             app:cardCornerRadius="10dp"
-            android:layout_margin="6dp"
+            android:layout_margin="3dp"
             app:cardBackgroundColor="@color/white"
             app:cardMaxElevation="12dp"
             app:cardPreventCornerOverlap="true"
@@ -237,7 +277,7 @@
             <ImageView
                 android:id="@+id/instagramlogo"
                 android:layout_width="40dp"
-                android:layout_height="31dp"
+                android:layout_height="35dp"
                 android:layout_margin="10dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -250,7 +290,7 @@
             android:layout_height="wrap_content"
             app:cardElevation="10dp"
             app:cardCornerRadius="10dp"
-            android:layout_margin="6dp"
+            android:layout_margin="3dp"
             app:cardBackgroundColor="@color/white"
             app:cardMaxElevation="12dp"
             app:cardPreventCornerOverlap="true"
@@ -259,7 +299,7 @@
             <ImageView
                 android:id="@+id/twitterlogo"
                 android:layout_width="40dp"
-                android:layout_height="31dp"
+                android:layout_height="35dp"
                 android:layout_margin="10dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
