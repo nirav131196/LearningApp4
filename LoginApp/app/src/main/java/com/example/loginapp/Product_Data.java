@@ -8,6 +8,8 @@ public class Product_Data {
     String cat_name;
     String image;
 
+
+
     public Product_Data(String product_id, String category_id, String department_id, String cat_name,String image) {
         this.product_id = product_id;
         this.category_id = category_id;

@@ -18,7 +18,6 @@ import java.util.List;
 
 public class RecyclerAdapter extends RecyclerView.Adapter<Product_View_Holder>
 {
-
     List<Product_Data> list = Collections.emptyList();
     Context context;
 
@@ -46,13 +45,6 @@ public class RecyclerAdapter extends RecyclerView.Adapter<Product_View_Holder>
         holder.department_id.setText(list.get(position).department_id);
         holder.category_name.setText(list.get(position).cat_name);
         Picasso.get().load(list.get(position).image).placeholder(R.drawable.googlelogo).error(R.drawable.facelogo).into(holder.photo);
-
-       /* holder.view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listener.click(index);
-            }
-        });*/
     }
     @Override
     public int getItemCount() {

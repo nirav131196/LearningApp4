@@ -7,6 +7,8 @@
     android:background="@drawable/backgroundimage2"
     tools:context=".LoginActivity">
 
+
+
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbarlayout2"
         android:layout_width="0dp"
@@ -21,11 +23,9 @@
             android:layout_height="wrap_content"
             app:navigationIcon="?attr/homeAsUpIndicator"
             android:background="#e3e6e4">
-
-
         </androidx.appcompat.widget.Toolbar>
-    </com.google.android.material.appbar.AppBarLayout>
 
+    </com.google.android.material.appbar.AppBarLayout>
 
     <Spinner
         android:id="@+id/spinner_language"
@@ -33,7 +33,6 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:layout_marginTop="8dp"
-
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

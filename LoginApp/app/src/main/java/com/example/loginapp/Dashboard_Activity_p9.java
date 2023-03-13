@@ -39,6 +39,7 @@ public class Dashboard_Activity_p9 extends AppCompatActivity {
 
         initView();
         ClickEventDrinkOrder();
+        ClickEventFoodOrder();
 
         // BOTTOM NAVIGATION VIEW
         BottomNavigationView bottomNavigationView =findViewById(R.id.bottom_navigation);
@@ -115,6 +116,19 @@ public class Dashboard_Activity_p9 extends AppCompatActivity {
                         return true;
                 }
                 return false;
+            }
+        });
+    }
+
+    private void ClickEventFoodOrder() {
+
+        btnFoodOrder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i =new Intent(Dashboard_Activity_p9.this, FoodOrderMenu_Activity.class);
+                startActivity(i);
+                finish();
+
             }
         });
     }

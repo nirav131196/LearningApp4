@@ -18,7 +18,6 @@ public class Product_View_Holder extends RecyclerView.ViewHolder {
 
     ImageView photo;
 
-
     public Product_View_Holder(@NonNull View itemView) {
         super(itemView);
 
