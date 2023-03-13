@@ -3,6 +3,8 @@ package com.example.loginapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -42,9 +44,23 @@ public class DrinkOrderMenu_Activity extends BaseActivity implements NavigationV
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drink_order_menu);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
         token();
 
         recyclerView =(RecyclerView) findViewById(R.id.product_data);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+
+        Intent i =new Intent(DrinkOrderMenu_Activity.this, Dashboard_Activity_p9.class);
+        startActivity(i);
+        finish();
+        return super.onSupportNavigateUp();
     }
 
     private void getProductData(String access_token)
@@ -90,13 +106,15 @@ public class DrinkOrderMenu_Activity extends BaseActivity implements NavigationV
                             String createdDate = resobj.getString("created_date");
                             String updatedDate = resobj.getString("updated_date");
 
-                            list.add(new Product_Data(id,categoryId,departmentId,catName,image));
+                            list.add(new Product_Data(catName,image));
                          }
                         adapter  =new RecyclerAdapter(list,getApplication());
+                        GridLayoutManager layoutManager = new GridLayoutManager(getApplicationContext(),2);
+                        recyclerView.setLayoutManager(layoutManager);
                         recyclerView.setAdapter(adapter);
-                        recyclerView.setLayoutManager(new LinearLayoutManager(DrinkOrderMenu_Activity.this));
+                       // recyclerView.setLayoutManager(new LinearLayoutManager(DrinkOrderMenu_Activity.this));
 
-                        Toast.makeText(getApplicationContext(),"Product details fetched",Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(),"Drink Product details fetched",Toast.LENGTH_LONG).show();
                     }
                     else
                     {

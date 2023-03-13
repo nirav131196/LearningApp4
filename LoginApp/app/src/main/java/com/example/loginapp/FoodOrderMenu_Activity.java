@@ -1,6 +1,8 @@
 package com.example.loginapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -37,9 +39,22 @@ public class FoodOrderMenu_Activity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food_order_menu);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
         token();
 
         recyclerView = (RecyclerView) findViewById(R.id.food_order_menu);
+    }
+    @Override
+    public boolean onSupportNavigateUp() {
+
+        Intent i =new Intent(FoodOrderMenu_Activity.this, Dashboard_Activity_p9.class);
+        startActivity(i);
+        finish();
+        return super.onSupportNavigateUp();
     }
     private  void getFoodProductData(String access_token)
     {
@@ -82,11 +97,15 @@ public class FoodOrderMenu_Activity extends BaseActivity {
                                 String created_date = resobj.getString("created_date");
                                 String updated_date = resobj.getString("updated_date");
 
+                                Log.e("Data is :",cat_name);
+
                                 foodlist.add(new FoodProductData(cat_name,image));
                             }
                             adapter = new FoodRecyclerAdapter(foodlist,getApplicationContext());
+                            GridLayoutManager layoutManager = new GridLayoutManager(getApplicationContext(),2);
+                            recyclerView.setLayoutManager(layoutManager);
                             recyclerView.setAdapter(adapter);
-                            recyclerView.setLayoutManager(new LinearLayoutManager(FoodOrderMenu_Activity.this));
+                          //  recyclerView.setLayoutManager(new LinearLayoutManager(FoodOrderMenu_Activity.this));
 
                             Toast.makeText(getApplicationContext(),"Food details fetched",Toast.LENGTH_LONG).show();
                         }
@@ -97,7 +116,6 @@ public class FoodOrderMenu_Activity extends BaseActivity {
                     } catch (JSONException ex) {
                         showToast("Exception 2 : " + ex);
                     }
-
                 }
             }, new Response.ErrorListener() {
                 @Override

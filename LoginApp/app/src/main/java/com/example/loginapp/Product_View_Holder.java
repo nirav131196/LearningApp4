@@ -21,9 +21,9 @@ public class Product_View_Holder extends RecyclerView.ViewHolder {
     public Product_View_Holder(@NonNull View itemView) {
         super(itemView);
 
-        id = (TextView)itemView.findViewById(R.id.product_id);
+       /* id = (TextView)itemView.findViewById(R.id.product_id);
         category_id = (TextView)itemView.findViewById(R.id.category_id);
-        department_id = (TextView)itemView.findViewById(R.id.department_id);
+        department_id = (TextView)itemView.findViewById(R.id.department_id);*/
         category_name = (TextView)itemView.findViewById(R.id.cat_name);
         photo = (ImageView)itemView.findViewById(R.id.product_image);
 
