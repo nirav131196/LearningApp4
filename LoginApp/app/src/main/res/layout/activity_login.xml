@@ -7,8 +7,6 @@
     android:background="@drawable/backgroundimage2"
     tools:context=".LoginActivity">
 
-
-
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbarlayout2"
         android:layout_width="0dp"
@@ -21,8 +19,18 @@
             android:id="@+id/toolbar2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:navigationIcon="?attr/homeAsUpIndicator"
+
             android:background="#e3e6e4">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Login"
+                android:textSize="30dp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:layout_gravity="center"
+                android:id="@+id/toolbar_title" />
         </androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>

@@ -1,6 +1,7 @@
 package com.example.loginapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -52,6 +53,18 @@ public class MainActivity extends BaseActivity
         ClickEventTextView();
         ClickEventRegister();
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+    }
+    public boolean onSupportNavigateUp() {
+
+        Intent i =new Intent(MainActivity.this, LoginActivity.class);
+        startActivity(i);
+        finish();
+        return super.onSupportNavigateUp();
     }
     private void ClickEventRegister() {
         btnRegister.setOnClickListener(new View.OnClickListener() {

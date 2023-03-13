@@ -3,7 +3,9 @@ package com.example.loginapp;
 import static android.content.ContentValues.TAG;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -109,6 +111,17 @@ public class LoginActivity extends BaseActivity implements  AuthenticationListen
         ClickEventLoginbutton();
         SpinnerForLanguage();
         ClickEventTwitter();
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+    }
+    @Override
+    public boolean onSupportNavigateUp() {
+
+        finish();
+        return super.onSupportNavigateUp();
     }
 
     private void ClickEventTwitter() {
@@ -426,7 +439,7 @@ public class LoginActivity extends BaseActivity implements  AuthenticationListen
                             edtEmail.setText("");
                             edtPassword.setText("");
 
-                            Intent i = new Intent(LoginActivity.this,Dashboard_Activity_p9.class);
+                            Intent i = new Intent(LoginActivity.this, Welcome_Main.class);
                             startActivity(i);
                             finish();
                         }
@@ -443,15 +456,6 @@ public class LoginActivity extends BaseActivity implements  AuthenticationListen
                     showToast("Fail to get Response : "+error);
                 }
             }){
-                /*@Override
-                protected Map<String,String>getParams()
-                {
-                    Map<String,String> params = new HashMap<String,String>();
-                    params.put("email",email_login);
-                    params.put("password",password_login);
-                    params.put("login_by", String.valueOf(5));
-                    return params;
-                }*/
                 @Override
                 public Map<String,String> getHeaders()throws AuthFailureError
                 {

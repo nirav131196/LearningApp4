@@ -19,7 +19,6 @@
             android:id="@+id/toolbar2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:navigationIcon="?attr/homeAsUpIndicator"
             android:background="#e3e6e4">
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>

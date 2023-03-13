@@ -1,6 +1,7 @@
 package com.example.loginapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
@@ -37,9 +38,22 @@ public class PushNotoficationActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_push_notofication);
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
       //  createNotificationChannel();
         initView();
         ClickEventButton();
+    }
+    @Override
+    public boolean onSupportNavigateUp() {
+
+        Intent i =new Intent(PushNotoficationActivity.this, Welcome_Main.class);
+        startActivity(i);
+        finish();
+        return super.onSupportNavigateUp();
     }
     private void ClickEventButton() {
 

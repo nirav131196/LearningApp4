@@ -32,6 +32,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import com.journeyapps.barcodescanner.ScanContract;
@@ -67,6 +68,19 @@ public class WelcomeActivity extends BaseActivity {
         ClickEventQRScanner();
         ClickEventCameraButton();
         ClickEventSaveButton();
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+    }
+    @Override
+    public boolean onSupportNavigateUp() {
+
+        Intent i =new Intent(WelcomeActivity.this, Welcome_Main.class);
+        startActivity(i);
+        finish();
+        return super.onSupportNavigateUp();
     }
     private void ClickEventSaveButton() {
 

@@ -1,6 +1,7 @@
 package com.example.loginapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -20,6 +21,19 @@ public class Welcome_Main extends AppCompatActivity {
         clickCamaraButton();
         clickLocationButton();
         clickNotificationButton();
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+    }
+    @Override
+    public boolean onSupportNavigateUp() {
+
+        Intent i =new Intent(Welcome_Main.this, LoginActivity.class);
+        startActivity(i);
+        finish();
+        return super.onSupportNavigateUp();
     }
 
     private void clickNotificationButton() {

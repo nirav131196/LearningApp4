@@ -6,6 +6,7 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -22,7 +23,6 @@ import android.provider.Settings;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toolbar;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -53,6 +53,11 @@ public class QRScanner_Activity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qrscanner);
 
+        androidx.appcompat.widget.Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
         // FOR LAT LONG , CHECKING PERMISSION OF LOCATION
         ActivityCompat.requestPermissions(this, new String[]{ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
 
@@ -65,6 +70,14 @@ public class QRScanner_Activity extends BaseActivity {
         initView();
         ClickEventLocationButton();
         ClickEventGoogleMapButton();
+    }
+    @Override
+    public boolean onSupportNavigateUp() {
+
+        Intent i =new Intent(QRScanner_Activity.this, Welcome_Main.class);
+        startActivity(i);
+        finish();
+        return super.onSupportNavigateUp();
     }
     private void initView()
     {

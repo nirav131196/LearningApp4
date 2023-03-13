@@ -53,7 +53,6 @@ public class DrinkOrderMenu_Activity extends BaseActivity implements NavigationV
 
         recyclerView =(RecyclerView) findViewById(R.id.product_data);
     }
-
     @Override
     public boolean onSupportNavigateUp() {
 
