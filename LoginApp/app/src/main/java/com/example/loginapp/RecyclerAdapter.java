@@ -45,6 +45,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<Product_View_Holder>
        /* holder.id.setText(list.get(position).product_id);
         holder.category_id.setText(list.get(position).category_id);
         holder.department_id.setText(list.get(position).department_id);*/
+      /*  holder.category_id.setText(list.get(position).category_id);*/
         holder.category_name.setText(list.get(position).cat_name);
         Picasso.get().load(list.get(position).image).placeholder(R.drawable.googlelogo).error(R.drawable.facelogo).into(holder.photo);
 

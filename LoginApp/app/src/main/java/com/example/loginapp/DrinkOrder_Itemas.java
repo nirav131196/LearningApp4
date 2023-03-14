@@ -54,13 +54,14 @@ public class DrinkOrder_Itemas extends BaseActivity {
     {
         try
         {
-            String url = "https://admin.p9bistro.com/index.php/getSubCateogryProductList?deptids=[1]&cat_id=12&sub_id=0";
+            int a = 1;
+            String url = "https://admin.p9bistro.com/index.php/getSubCateogryProductList?deptids=[1]&cat_id=2&sub_id=0";
 
             JSONObject req = new JSONObject();
             try
             {
                 req.put("deptids",1);
-                req.put("cat_id",12);
+                req.put("cat_id",1);
                 req.put("sub_id",0);
             }
             catch(Exception ex)
@@ -72,10 +73,9 @@ public class DrinkOrder_Itemas extends BaseActivity {
                 {
                     if(response.getBoolean("status"))
                     {
+                        String message = response.getString("message");
 
-                             String message = response.getString("message");
-
-                        JSONArray resarray = response.getJSONArray("Sub Category List");
+                        JSONArray resarray = response.getJSONArray("Product List");
 
                         List<DrinkOrderCategory_Data> list = new ArrayList<>();
 
@@ -83,7 +83,7 @@ public class DrinkOrder_Itemas extends BaseActivity {
                         {
                             JSONObject resobj = resarray.getJSONObject(i);
 
-                            String id = resobj.getString("id");
+                            /*String id = resobj.getString("id");
                             String categoryId = resobj.getString("category_id");
                             String departmentId = resobj.getString("department_id");
                             String categoryTypeId = resobj.getString("category_type_id");
@@ -96,13 +96,13 @@ public class DrinkOrder_Itemas extends BaseActivity {
                             String updatedDate = resobj.getString("updated_date");
                             String subcategory_id = resobj.getString("subcategory_id");
                             String s_cat_name = resobj.getString("s_cat_name");
-                            String s_cat_rank = resobj.getString("s_cat_rank");
+                            String s_cat_rank = resobj.getString("s_cat_rank");*/
 
                             String product_name = resobj.getString("product_name");
                             String Description = resobj.getString("Description");
-                            String offer_price = resobj.getString("offer_price");
+                            String Rate = resobj.getString("Rate");
 
-                            list.add(new DrinkOrderCategory_Data(product_name,Description,offer_price));
+                            list.add(new DrinkOrderCategory_Data(product_name,Description,Rate));
                         }
                         adapter  =new DrinkOrderCategory_RecyclerAdapter(list,getApplication());
                         recyclerView.setLayoutManager(new LinearLayoutManager(DrinkOrder_Itemas.this));
@@ -182,5 +182,12 @@ public class DrinkOrder_Itemas extends BaseActivity {
         startActivity(i);
         finish();
         return super.onSupportNavigateUp();
+    }
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i =new Intent(DrinkOrder_Itemas.this, Dashboard_Activity_p9.class);
+        startActivity(i);
+        finish();
     }
 }

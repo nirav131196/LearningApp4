@@ -105,7 +105,7 @@ public class DrinkOrderMenu_Activity extends BaseActivity implements SelectListe
                             String createdDate = resobj.getString("created_date");
                             String updatedDate = resobj.getString("updated_date");
 
-                            list.add(new Product_Data(catName,image));
+                            list.add(new Product_Data(catName,image,categoryId));
                          }
                         adapter  =new RecyclerAdapter(list,getApplication(),this);
                         GridLayoutManager layoutManager = new GridLayoutManager(getApplicationContext(),2);
@@ -192,7 +192,7 @@ public class DrinkOrderMenu_Activity extends BaseActivity implements SelectListe
         Intent i =new Intent(DrinkOrderMenu_Activity.this, DrinkOrder_Itemas.class);
         startActivity(i);
         finish();
-        showToast("Category name is : "+data.cat_name);
+     //   showToast("Category id is : "+data.category_id);
 
     }
 }
