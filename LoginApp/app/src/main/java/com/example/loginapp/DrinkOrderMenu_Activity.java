@@ -189,10 +189,12 @@ public class DrinkOrderMenu_Activity extends BaseActivity implements SelectListe
     }
     @Override
     public void OnItemClicked(Product_Data data) {
+        String id = data.category_id;
         Intent i =new Intent(DrinkOrderMenu_Activity.this, DrinkOrder_Itemas.class);
+        i.putExtra("key",id);
         startActivity(i);
         finish();
-     //   showToast("Category id is : "+data.category_id);
+
 
     }
 }

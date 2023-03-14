@@ -26,7 +26,7 @@ public class Product_View_Holder extends RecyclerView.ViewHolder {
        /* id = (TextView)itemView.findViewById(R.id.product_id);
 
         department_id = (TextView)itemView.findViewById(R.id.department_id);*/
-    /*    category_id = (TextView)itemView.findViewById(R.id.category_id);*/
+      /*  category_id = (TextView)itemView.findViewById(R.id.category_id);*/
         category_name = (TextView)itemView.findViewById(R.id.cat_name);
         photo = (ImageView)itemView.findViewById(R.id.product_image);
         cardView=itemView.findViewById(R.id.MainCardView);

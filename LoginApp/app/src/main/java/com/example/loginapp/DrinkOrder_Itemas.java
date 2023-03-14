@@ -36,6 +36,8 @@ public class DrinkOrder_Itemas extends BaseActivity {
     DrinkOrderCategory_RecyclerAdapter adapter;
     RecyclerView recyclerView;
 
+    String id;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +48,12 @@ public class DrinkOrder_Itemas extends BaseActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
+
+        Bundle extras = getIntent().getExtras();
+        if(extras != null)
+        {
+            id = extras.getString("key");
+        }
         token();
 
         recyclerView =(RecyclerView) findViewById(R.id.drinkOrderIteams);
@@ -54,21 +62,12 @@ public class DrinkOrder_Itemas extends BaseActivity {
     {
         try
         {
-            int a = 1;
-            String url = "https://admin.p9bistro.com/index.php/getSubCateogryProductList?deptids=[1]&cat_id=2&sub_id=0";
+            String url2 = "https://admin.p9bistro.com/index.php/getSubCateogryProductList?deptids=[1]&cat_id=&sub_id=0";
+            String stringtobeinserted = id;
+            int index = 81;
+            String url = insertString(url2,stringtobeinserted,index);
 
-            JSONObject req = new JSONObject();
-            try
-            {
-                req.put("deptids",1);
-                req.put("cat_id",1);
-                req.put("sub_id",0);
-            }
-            catch(Exception ex)
-            {
-                showToast("Exception "+ex);
-            }
-            JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url,req, response -> {
+            JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url,null, response -> {
                 try
                 {
                     if(response.getBoolean("status"))
@@ -82,21 +81,6 @@ public class DrinkOrder_Itemas extends BaseActivity {
                         for(int i =0;i<resarray.length();i++)
                         {
                             JSONObject resobj = resarray.getJSONObject(i);
-
-                            /*String id = resobj.getString("id");
-                            String categoryId = resobj.getString("category_id");
-                            String departmentId = resobj.getString("department_id");
-                            String categoryTypeId = resobj.getString("category_type_id");
-                            String catName = resobj.getString("cat_name");
-                            String image = resobj.getString("image");
-                            String catRank = resobj.getString("cat_rank");
-                            String hasCategory = resobj.getString("has_category");
-                            String isActive = resobj.getString("is_active");
-                            String createdDate = resobj.getString("created_date");
-                            String updatedDate = resobj.getString("updated_date");
-                            String subcategory_id = resobj.getString("subcategory_id");
-                            String s_cat_name = resobj.getString("s_cat_name");
-                            String s_cat_rank = resobj.getString("s_cat_rank");*/
 
                             String product_name = resobj.getString("product_name");
                             String Description = resobj.getString("Description");
@@ -186,8 +170,14 @@ public class DrinkOrder_Itemas extends BaseActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        Intent i =new Intent(DrinkOrder_Itemas.this, Dashboard_Activity_p9.class);
+        Intent i =new Intent(DrinkOrder_Itemas.this, DrinkOrderMenu_Activity.class);
         startActivity(i);
         finish();
+    }
+    public static String insertString(String original,String stringtobeinserted,int index)
+    {
+        String newstring = original.substring(0,index+1)+stringtobeinserted+original.substring(index+1);
+
+        return newstring;
     }
 }
