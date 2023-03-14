@@ -20,10 +20,12 @@ public class RecyclerAdapter extends RecyclerView.Adapter<Product_View_Holder>
 {
     List<Product_Data> list = Collections.emptyList();
     Context context;
+    private SelectListener listener;
 
-    public RecyclerAdapter(List<Product_Data> list, Context context) {
+    public RecyclerAdapter(List<Product_Data> list, Context context,SelectListener listener) {
         this.list = list;
         this.context = context;
+        this.listener = listener;
 
     }
     @NonNull
@@ -37,7 +39,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<Product_View_Holder>
         return viewHolder;
     }
     @Override
-    public void onBindViewHolder(final Product_View_Holder holder, final int position) {
+    public void onBindViewHolder(final Product_View_Holder holder,int position) {
 
       //  final index = holder.getAdapterPosition();
        /* holder.id.setText(list.get(position).product_id);
@@ -45,6 +47,13 @@ public class RecyclerAdapter extends RecyclerView.Adapter<Product_View_Holder>
         holder.department_id.setText(list.get(position).department_id);*/
         holder.category_name.setText(list.get(position).cat_name);
         Picasso.get().load(list.get(position).image).placeholder(R.drawable.googlelogo).error(R.drawable.facelogo).into(holder.photo);
+
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.OnItemClicked(list.get(position));
+            }
+        });
     }
     @Override
     public int getItemCount() {
