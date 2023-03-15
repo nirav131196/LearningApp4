@@ -89,16 +89,15 @@ public class DrinkOrder_Itemas extends BaseActivity {
                                 list.add(new DrinkOrderCategory_Data(product_name, Description, Rate, id2));
                             }
 
-                            Log.e("Product id is ", id2);
-                            SharedPreferences sharedPreferences = getSharedPreferences("PRODUCT_ID", MODE_PRIVATE);
+                            /*SharedPreferences sharedPreferences = getSharedPreferences("PRODUCT_ID", MODE_PRIVATE);
                             SharedPreferences.Editor edit = sharedPreferences.edit();
                             edit.putString("product_id", id2);
-                            edit.apply();
+                            edit.apply();*/
 
                             adapter = new DrinkOrderCategory_RecyclerAdapter(list, getApplication());
                             recyclerView.setLayoutManager(new LinearLayoutManager(DrinkOrder_Itemas.this));
                             recyclerView.setAdapter(adapter);
-                            Toast.makeText(getApplicationContext(), "Sub category Product details fetched", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "Sub-category Product details fetched", Toast.LENGTH_LONG).show();
                         } else {
                             showToast("Response false");
                         }

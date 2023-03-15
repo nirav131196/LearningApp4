@@ -40,6 +40,8 @@ public class DrinkOrderCategory_View_Holder extends RecyclerView.ViewHolder {
     View view;
     ImageView image;
     int count;
+    String id;
+    String product_id;
     public DrinkOrderCategory_View_Holder(@NonNull View itemView) {
         super(itemView);
 
@@ -64,10 +66,10 @@ public class DrinkOrderCategory_View_Holder extends RecyclerView.ViewHolder {
                 }
                 else
                 {
-                    // REMOVE ITEAM CODE
                     count=0;
                     image.setImageDrawable(null);
                     image.setBackgroundResource(R.drawable.favourite_icon);
+                    token2();
                 }
             }
         });
@@ -115,26 +117,15 @@ public class DrinkOrderCategory_View_Holder extends RecyclerView.ViewHolder {
     }
     private void postFavouriteData(String access_token)
     {
-
-        Log.e("Error Point","Error Point");
-
-        Log.e("Error Point 2","Error Point 2");
-
         JSONObject req = new JSONObject();
         try
         {
-            Log.e("Error Point 3","Error Point 3");
-
             req.put("product_id",842);  // DATA OF field which we will enter while adding favourite item
-
-            Log.e("Error Point 4","Error Point 4");
         }
         catch(Exception ex)
         {
             Toast.makeText( getApplicationContext(), "Exception : "+ex, Toast.LENGTH_SHORT).show();
         }
-        Log.e("Error Point 5",req.toString());
-      /*  Log.e("Error Point 5","Error Point 5");*/
         String url = "https://admin.p9bistro.com/index.php/addFavouriteProduct";
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,url,req, new Response.Listener<JSONObject>() {
 
@@ -142,18 +133,13 @@ public class DrinkOrderCategory_View_Holder extends RecyclerView.ViewHolder {
             public void onResponse(JSONObject response) {
 
                 try {
-                    Log.e("Error Point 5", "Error Point 5");
                     if (response.getBoolean("status")) {
                         String message = response.getString("message");
-                        /*   Log.e("Error Point 6","Error Point 6");*/
+
                         JSONObject jsonData = response.getJSONObject("data");  // responses which we got after successful run
-                        /*   Log.e("Error Point 7","Error Point 7");*/
+
                         String user_id = jsonData.getString("user_id");
-                        String product_id = jsonData.getString("product_id");
-                        /*  Log.e("Error Point 8","Error Point 8");*/
-                 /*   Log.e("USER ID ", user_id);
-                    Log.e("PRODUCT ID ", product_id);
-*/
+                        product_id = jsonData.getString("product_id");
                         Toast.makeText(getApplicationContext(), "Iteam Added Successfully", Toast.LENGTH_SHORT).show();
                     }
                 } catch (Exception ex) {
@@ -184,57 +170,97 @@ public class DrinkOrderCategory_View_Holder extends RecyclerView.ViewHolder {
         RequestQueue requestQuese = Volley.newRequestQueue(getApplicationContext());
         requestQuese.add(request);
     }
-    /*private void postFavouriteData2(String access_token) {
-
-        Log.e("Error Point", "Error Point");
-
-        Log.e("Error Point 2", "Error Point 2");
-
+    private void RemoveFavouriteData(String access_token)
+    {
         JSONObject req = new JSONObject();
-        try {
-            Log.e("Error Point 3", "Error Point 3");
-
-            req.put("product_id", 842);  // DATA OF field which we will enter while adding favourite item
-
-            Log.e("Error Point 4", "Error Point 4");
-        } catch (Exception ex) {
-            Toast.makeText(getApplicationContext(), "Exception : " + ex, Toast.LENGTH_SHORT).show();
+        try
+        {
+            req.put("product_id",842);  // DATA OF field which we will enter while adding favourite item
         }
-        Log.e("Error Point 5", req.toString());
-        *//*  Log.e("Error Point 5","Error Point 5");*//*
-        String url = "https://admin.p9bistro.com/index.php/addFavouriteProduct"+req;
+        catch(Exception ex)
+        {
+            Toast.makeText( getApplicationContext(), "Exception : "+ex, Toast.LENGTH_SHORT).show();
+        }
+        String url = "https://admin.p9bistro.com/index.php/removeFavouriteProduct";
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,url,req, new Response.Listener<JSONObject>() {
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
-            public void onResponse(String response) {
+            public void onResponse(JSONObject response) {
+
                 try {
-                    JSONObject jsonObject = new JSONObject(response);
+                    if (response.getBoolean("status")) {
+                        /*String message = response.getString("message");
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                        JSONObject jsonData = response.getJSONObject("data");  // responses which we got after successful run*/
+                        Toast.makeText(getApplicationContext(), "Iteam Removed Successfully", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
                 }
-
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
 
-             *//*   finish();*//*
+                Toast.makeText(getApplicationContext(), "Fail to get Response : "+error, Toast.LENGTH_SHORT).show();
             }
-        }){ @Override
-        public Map<String,String> getHeaders()throws AuthFailureError
-        {
-            SharedPreferences sh = getApplicationContext().getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
-            String api = sh.getString("apiKey","");
+        }){
+            @Override
+            public Map<String,String> getHeaders()throws AuthFailureError
+            {
+                SharedPreferences sh = getApplicationContext().getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
+                String api = sh.getString("apiKey","");
 
-            Map<String,String>params = new HashMap<String ,String>();
+                Map<String,String>params = new HashMap<String ,String>();
 
-            params.put("authorization",access_token);
-            params.put("api-key",api);
-            params.put("Content-Type", "application/json");
-            return params;
-        }};
+                params.put("authorization",access_token);
+                params.put("api-key",api);
+                params.put("Content-Type", "application/json");
+                return params;
+            }
+        };
         RequestQueue requestQuese = Volley.newRequestQueue(getApplicationContext());
-        requestQuese.add(stringRequest);
-    }*/
+        requestQuese.add(request);
+    }
+    private void token2()
+    {
+        String url = "https://admin.p9bistro.com/index.php/generate_auth_token";
+
+        StringRequest request =new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                JSONObject jsonObject = null;
+                try
+                {
+                    jsonObject = new JSONObject(response);
+                    String access_token = jsonObject.getString("access_token");
+                    Log.e("ACCESSTOKEN", access_token);
+
+                    RemoveFavouriteData(access_token);
+                }
+                catch (JSONException Je)
+                {
+                    Toast.makeText(getApplicationContext(), "Error 2 : " + Je, Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Log.e("checklog",error + "");
+                Toast.makeText(getApplicationContext(), "Timeout Error", Toast.LENGTH_LONG).show();
+            }
+        }){
+            @Override
+            public Map<String,String> getHeaders() throws AuthFailureError
+            {
+                HashMap<String,String> headers = new HashMap<>();
+                headers.put("x-api-key","XABRTYUX@123YTUFGB");
+                return headers;
+            }
+        };
+        RequestQueue requestquese = Volley.newRequestQueue(getApplicationContext());
+        requestquese.add(request);
+    }
 }
