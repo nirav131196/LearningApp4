@@ -195,6 +195,5 @@ public class DrinkOrderMenu_Activity extends BaseActivity implements SelectListe
         startActivity(i);
         finish();
 
-
     }
 }

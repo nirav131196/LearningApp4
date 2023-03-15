@@ -149,8 +149,6 @@ public class MainActivity extends BaseActivity
     {
         String url = "https://admin.p9bistro.com/index.php/SignUp";
 
-      /*  RequestQueue queue = Volley.newRequestQueue(MainActivity.this);*/
-
         JSONObject req = new JSONObject();
         try
         {
@@ -243,13 +241,10 @@ public class MainActivity extends BaseActivity
     {
         String url = "https://admin.p9bistro.com/index.php/generate_auth_token";
 
-      /*  Log.e("checklog", url + "");*/
-
         StringRequest request =new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 
-             /*   Log.e("checklog", response + "");*/
                 JSONObject jsonObject = null;
                 try
                 {
@@ -263,7 +258,7 @@ public class MainActivity extends BaseActivity
                     Toast.makeText(MainActivity.this, "Error 2 : " + Je, Toast.LENGTH_SHORT).show();
                 }
             }
-        }, new Response.ErrorListener() {   // I AM GETTING ERROR HERE
+        }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
 
@@ -282,7 +277,7 @@ public class MainActivity extends BaseActivity
         RequestQueue requestquese = Volley.newRequestQueue(getApplicationContext());
         requestquese.add(request);
     }
-    // VALIDATING MOBILENO FUNCTIONALITY
+    // VALIDATING MOBILE_NO FUNCTIONALITY
     private boolean isValidMobile(String phone)
     {
         if(!Pattern.matches("[a-zA-Z]+[@#$%^&+=!.]+", phone)) {

@@ -10,6 +10,7 @@ import androidx.appcompat.widget.Toolbar;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.net.Uri;
@@ -90,6 +91,7 @@ public class LoginActivity extends BaseActivity implements  AuthenticationListen
     public static final String[] languages = {"select language","Hindi","English"};
     public AuthenticationListener listener;
 
+    String access_token;
     FirebaseAuth firebaseAuth;  // FOR TWITTER
 
     @SuppressLint("MissingInflatedId")
@@ -123,7 +125,6 @@ public class LoginActivity extends BaseActivity implements  AuthenticationListen
         finish();
         return super.onSupportNavigateUp();
     }
-
     private void ClickEventTwitter() {
 
         IVTwitterlogo.setOnClickListener(new View.OnClickListener() {
@@ -351,18 +352,15 @@ public class LoginActivity extends BaseActivity implements  AuthenticationListen
                 {
                     showToast("Error 1 "+ex);
                 }
-
             }
         });
     }
-
     private void ClickEventFacebook() {
         IVFacebooklogo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 LoginManager.getInstance().logInWithReadPermissions(LoginActivity.this, Arrays.asList("public_profile"));
                 //    finish();
-
             }
         });
     }
@@ -371,8 +369,6 @@ public class LoginActivity extends BaseActivity implements  AuthenticationListen
             @Override
             public void onClick(View view) {
                 signIn();
-
-
             }
         });
     }
@@ -436,6 +432,13 @@ public class LoginActivity extends BaseActivity implements  AuthenticationListen
                             String profile = resobj.getString("profile");
                             String api_key = resobj.getString("api_key");
 
+                            Log.e("LOGIN API KEY : ",api_key);
+
+                            SharedPreferences sharedPreferences =getSharedPreferences("MySharedPref",MODE_PRIVATE);
+                            SharedPreferences.Editor edit =sharedPreferences.edit();
+                            edit.putString("apiKey",api_key);
+                            edit.apply();
+
                             edtEmail.setText("");
                             edtPassword.setText("");
 
@@ -487,7 +490,8 @@ public class LoginActivity extends BaseActivity implements  AuthenticationListen
                 try
                 {
                     jsonObject = new JSONObject(response);
-                    String access_token = jsonObject.getString("access_token");
+                    access_token = jsonObject.getString("access_token");
+
                     Log.e("ACCESSTOKEN", access_token);
                     postLoginData(access_token);
 

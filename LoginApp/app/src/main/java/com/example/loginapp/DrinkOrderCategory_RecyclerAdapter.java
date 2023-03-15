@@ -1,6 +1,7 @@
 package com.example.loginapp;
 
 import android.content.Context;
+import android.icu.text.Transliterator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,12 +19,9 @@ public class DrinkOrderCategory_RecyclerAdapter extends RecyclerView.Adapter<Dri
     List<DrinkOrderCategory_Data> list = Collections.emptyList();
     Context context;
 
-
     public DrinkOrderCategory_RecyclerAdapter(List<DrinkOrderCategory_Data> list, Context context) {
         this.list = list;
         this.context = context;
-
-
     }
     @NonNull
     @Override
@@ -40,6 +38,7 @@ public class DrinkOrderCategory_RecyclerAdapter extends RecyclerView.Adapter<Dri
 
         holder.txtSubCategoryName.setText(list.get(position).subCategoryName);
         holder.txtSubCategoryDescription.setText(list.get(position).subCategoryDescription);
+        holder.txtid.setText(list.get(position).productid);
         holder.txtPrice.setText(list.get(position).price);
     }
     @Override
@@ -49,6 +48,5 @@ public class DrinkOrderCategory_RecyclerAdapter extends RecyclerView.Adapter<Dri
     @Override
     public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
-
     }
 }

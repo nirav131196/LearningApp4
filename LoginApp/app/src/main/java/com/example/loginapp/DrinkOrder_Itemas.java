@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
@@ -32,12 +33,10 @@ import java.util.Map;
 
 public class DrinkOrder_Itemas extends BaseActivity {
 
-
     DrinkOrderCategory_RecyclerAdapter adapter;
     RecyclerView recyclerView;
-
+    String id2;
     String id;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,43 +66,54 @@ public class DrinkOrder_Itemas extends BaseActivity {
             int index = 81;
             String url = insertString(url2,stringtobeinserted,index);
 
-            JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url,null, response -> {
-                try
-                {
-                    if(response.getBoolean("status"))
-                    {
-                        String message = response.getString("message");
+            JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url,null, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
 
-                        JSONArray resarray = response.getJSONArray("Product List");
+                    try {
+                        if (response.getBoolean("status")) {
+                            String message = response.getString("message");
 
-                        List<DrinkOrderCategory_Data> list = new ArrayList<>();
+                            JSONArray resarray = response.getJSONArray("Product List");
 
-                        for(int i =0;i<resarray.length();i++)
-                        {
-                            JSONObject resobj = resarray.getJSONObject(i);
+                            List<DrinkOrderCategory_Data> list = new ArrayList<>();
 
-                            String product_name = resobj.getString("product_name");
-                            String Description = resobj.getString("Description");
-                            String Rate = resobj.getString("Rate");
+                            for (int i = 0; i < resarray.length(); i++) {
+                                JSONObject resobj = resarray.getJSONObject(i);
 
-                            list.add(new DrinkOrderCategory_Data(product_name,Description,Rate));
+                                id2 = resobj.getString("id");
+                                String product_name = resobj.getString("product_name");
+                                String Description = resobj.getString("Description");
+                                String Rate = resobj.getString("Rate");
+
+                                list.add(new DrinkOrderCategory_Data(product_name, Description, Rate, id2));
+                            }
+
+                            Log.e("Product id is ", id2);
+                            SharedPreferences sharedPreferences = getSharedPreferences("PRODUCT_ID", MODE_PRIVATE);
+                            SharedPreferences.Editor edit = sharedPreferences.edit();
+                            edit.putString("product_id", id2);
+                            edit.apply();
+
+                            adapter = new DrinkOrderCategory_RecyclerAdapter(list, getApplication());
+                            recyclerView.setLayoutManager(new LinearLayoutManager(DrinkOrder_Itemas.this));
+                            recyclerView.setAdapter(adapter);
+                            Toast.makeText(getApplicationContext(), "Sub category Product details fetched", Toast.LENGTH_LONG).show();
+                        } else {
+                            showToast("Response false");
                         }
-                        adapter  =new DrinkOrderCategory_RecyclerAdapter(list,getApplication());
-                        recyclerView.setLayoutManager(new LinearLayoutManager(DrinkOrder_Itemas.this));
-                        recyclerView.setAdapter(adapter);
-                        Toast.makeText(getApplicationContext(),"Sub category Product details fetched",Toast.LENGTH_LONG).show();
-                    }
-                    else
-                    {
-                        showToast("Response false");
+                    } catch (JSONException ex) {
+                        showToast("Error : " + ex);
+                        ex.printStackTrace();
                     }
                 }
-                catch (JSONException ex)
-                {
-                    showToast("Error : "+ex);
-                    ex.printStackTrace();
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+
+                    showToast("Fail to get Response : "+error);
                 }
-            }, error -> showToast("Fail to get Response : "+error)){
+            }){
                 @Override
                 public Map<String,String> getHeaders()throws AuthFailureError
                 {
