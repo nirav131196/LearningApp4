@@ -5,6 +5,7 @@ import android.icu.text.Transliterator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -48,18 +49,14 @@ public class DrinkOrderCategory_RecyclerAdapter extends RecyclerView.Adapter<Dri
             @Override
             public void onClick(View v) {
 
-                if(count ==0)
-                {
                     itemClickListener.OnItemClicked(position);
                     holder.image.setImageDrawable(null);
                     holder.image.setBackgroundResource(R.drawable.fullheart);
-                }
-                else
-                {
+
+                    count=0;
                     itemClickListener.OnItemClicked2(position);
                     holder.image.setImageDrawable(null);
                     holder.image.setBackgroundResource(R.drawable.favourite_icon);
-                }
             }
         });
     }

@@ -179,7 +179,7 @@ public class Favourite_Activity extends BaseActivity {
 
                     if (response.getBoolean("status")) {
 
-                        Toast.makeText(getApplicationContext(), "Iteam Removed Successfully", Toast.LENGTH_SHORT).show();
+                    /*    Toast.makeText(getApplicationContext(), "Iteam Removed Successfully", Toast.LENGTH_SHORT).show();*/
                         list.remove(position);
                         adapter.notifyDataSetChanged();
                     }

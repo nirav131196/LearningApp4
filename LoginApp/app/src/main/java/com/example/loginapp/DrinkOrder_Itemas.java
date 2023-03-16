@@ -43,9 +43,6 @@ public class DrinkOrder_Itemas extends BaseActivity {
     String id;
     String token,api;
 
-    List<DrinkOrderCategory_Data> list;
-    int position;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,7 +75,6 @@ public class DrinkOrder_Itemas extends BaseActivity {
         Log.e("Access Token : ",token);
         Log.e("api key","api key");
         Log.e("API KEY : ",api);
-
 
     }
     private void getSubCategoryItemsData(String access_token)
@@ -113,17 +109,17 @@ public class DrinkOrder_Itemas extends BaseActivity {
                                 list.add(new DrinkOrderCategory_Data(product_name, Description, Rate, id2));
                             }
                             adapter = new DrinkOrderCategory_RecyclerAdapter(list, getApplication(), new DrinkOrderCategory_RecyclerAdapter.ItemClickListener() {
-
+                                int a1;
 
                                 @Override
                                 public void OnItemClicked(int position) {
 
-                                        postFavouriteData(token);
+                                        postFavouriteData(token,list,position);
                                 }
                                 @Override
                                 public void OnItemClicked2(int position) {
 
-                                    RemoveFavouriteData(token);
+                                    RemoveFavouriteData(token,list,position);
                                 }
                             });
                             recyclerView.setLayoutManager(new LinearLayoutManager(DrinkOrder_Itemas.this));
@@ -182,7 +178,7 @@ public class DrinkOrder_Itemas extends BaseActivity {
 
         return newstring;
     }
-    private void postFavouriteData(String access_token)
+    private void postFavouriteData(String access_token,List<DrinkOrderCategory_Data> list,int position)
     {
 
         JSONObject req = new JSONObject();
@@ -196,7 +192,8 @@ public class DrinkOrder_Itemas extends BaseActivity {
         }
         catch(Exception ex)
         {
-            Toast.makeText( getApplicationContext(), "Exception : "+ex, Toast.LENGTH_SHORT).show();
+            Toast.makeText( getApplicationContext(), "My Exception : "+ex, Toast.LENGTH_SHORT).show();
+
         }
         Log.e("Error Point","Error point 4");
         String url = "https://admin.p9bistro.com/index.php/addFavouriteProduct";
@@ -221,6 +218,10 @@ public class DrinkOrder_Itemas extends BaseActivity {
 
 
                     }
+                    else
+                    {
+                        Log.e("STATUS","FALSE");
+                    }
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
@@ -239,7 +240,7 @@ public class DrinkOrder_Itemas extends BaseActivity {
 
                 Map<String,String>params = new HashMap<String ,String>();
 
-                params.put("authorization",token);
+                params.put("authorization",access_token);
                 params.put("api-key",api);
                 params.put("Content-Type", "application/json");
                 return params;
@@ -248,7 +249,7 @@ public class DrinkOrder_Itemas extends BaseActivity {
         RequestQueue requestQuese = Volley.newRequestQueue(getApplicationContext());
         requestQuese.add(request);
     }
-    private void RemoveFavouriteData(String access_token)
+    private void RemoveFavouriteData(String access_token,List<DrinkOrderCategory_Data> list,int position)
     {
         JSONObject req = new JSONObject();
         try
@@ -289,7 +290,7 @@ public class DrinkOrder_Itemas extends BaseActivity {
 
                 Map<String,String>params = new HashMap<String ,String>();
 
-                params.put("authorization",token);
+                params.put("authorization",access_token);
                 params.put("api-key",api);
                 params.put("Content-Type", "application/json");
                 return params;
