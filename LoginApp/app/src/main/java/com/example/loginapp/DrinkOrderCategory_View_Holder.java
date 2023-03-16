@@ -1,5 +1,6 @@
 package com.example.loginapp;
 
+import static android.content.Context.MODE_PRIVATE;
 import static android.content.Intent.getIntent;
 import static androidx.core.app.NotificationCompat.getExtras;
 import static com.facebook.FacebookSdk.getApplicationContext;
@@ -41,7 +42,6 @@ public class DrinkOrderCategory_View_Holder extends RecyclerView.ViewHolder {
     ImageView image;
     int count;
     String id;
-    String product_id;
     public DrinkOrderCategory_View_Holder(@NonNull View itemView) {
         super(itemView);
 
@@ -51,28 +51,8 @@ public class DrinkOrderCategory_View_Holder extends RecyclerView.ViewHolder {
         txtid = (TextView)itemView.findViewById(R.id.product_id);
         image = (ImageView)itemView.findViewById(R.id.favourite_icon);
         view = itemView;
-        count = 0;
 
-        image.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("ResourceAsColor")
-            @Override
-            public void onClick(View v) {
-                if(count == 0)
-                {
-                    ++count;
-                    image.setImageDrawable(null);
-                    image.setBackgroundResource(R.drawable.fullheart);
-                    token();
-                }
-                else
-                {
-                    count=0;
-                    image.setImageDrawable(null);
-                    image.setBackgroundResource(R.drawable.favourite_icon);
-                    token2();
-                }
-            }
-        });
+
     }
     private void token()
     {
@@ -89,7 +69,12 @@ public class DrinkOrderCategory_View_Holder extends RecyclerView.ViewHolder {
                     String access_token = jsonObject.getString("access_token");
                     Log.e("ACCESSTOKEN", access_token);
 
-                    postFavouriteData(access_token);
+
+
+                    SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("MyToken", MODE_PRIVATE);
+                    SharedPreferences.Editor edit =sharedPreferences.edit();
+                    edit.putString("token",access_token);
+                    edit.apply();
                 }
                 catch (JSONException Je)
                 {
@@ -115,113 +100,9 @@ public class DrinkOrderCategory_View_Holder extends RecyclerView.ViewHolder {
         RequestQueue requestquese = Volley.newRequestQueue(getApplicationContext());
         requestquese.add(request);
     }
-    private void postFavouriteData(String access_token)
-    {
-        JSONObject req = new JSONObject();
-        try
-        {
-            req.put("product_id",842);  // DATA OF field which we will enter while adding favourite item
-        }
-        catch(Exception ex)
-        {
-            Toast.makeText( getApplicationContext(), "Exception : "+ex, Toast.LENGTH_SHORT).show();
-        }
-        String url = "https://admin.p9bistro.com/index.php/addFavouriteProduct";
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,url,req, new Response.Listener<JSONObject>() {
 
-            @Override
-            public void onResponse(JSONObject response) {
 
-                try {
-                    if (response.getBoolean("status")) {
-                        String message = response.getString("message");
 
-                        JSONObject jsonData = response.getJSONObject("data");  // responses which we got after successful run
-
-                        String user_id = jsonData.getString("user_id");
-                        product_id = jsonData.getString("product_id");
-                        Toast.makeText(getApplicationContext(), "Iteam Added Successfully", Toast.LENGTH_SHORT).show();
-                    }
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-                Toast.makeText(getApplicationContext(), "Fail to get Response : "+error, Toast.LENGTH_SHORT).show();
-            }
-        }){
-            @Override
-            public Map<String,String> getHeaders()throws AuthFailureError
-            {
-                SharedPreferences sh = getApplicationContext().getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
-                String api = sh.getString("apiKey","");
-
-                Map<String,String>params = new HashMap<String ,String>();
-
-                params.put("authorization",access_token);
-                params.put("api-key",api);
-                params.put("Content-Type", "application/json");
-                return params;
-            }
-        };
-        RequestQueue requestQuese = Volley.newRequestQueue(getApplicationContext());
-        requestQuese.add(request);
-    }
-    private void RemoveFavouriteData(String access_token)
-    {
-        JSONObject req = new JSONObject();
-        try
-        {
-            req.put("product_id",842);  // DATA OF field which we will enter while adding favourite item
-        }
-        catch(Exception ex)
-        {
-            Toast.makeText( getApplicationContext(), "Exception : "+ex, Toast.LENGTH_SHORT).show();
-        }
-        String url = "https://admin.p9bistro.com/index.php/removeFavouriteProduct";
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,url,req, new Response.Listener<JSONObject>() {
-
-            @Override
-            public void onResponse(JSONObject response) {
-
-                try {
-                    if (response.getBoolean("status")) {
-                        /*String message = response.getString("message");
-
-                        JSONObject jsonData = response.getJSONObject("data");  // responses which we got after successful run*/
-                        Toast.makeText(getApplicationContext(), "Iteam Removed Successfully", Toast.LENGTH_SHORT).show();
-                    }
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-                Toast.makeText(getApplicationContext(), "Fail to get Response : "+error, Toast.LENGTH_SHORT).show();
-            }
-        }){
-            @Override
-            public Map<String,String> getHeaders()throws AuthFailureError
-            {
-                SharedPreferences sh = getApplicationContext().getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
-                String api = sh.getString("apiKey","");
-
-                Map<String,String>params = new HashMap<String ,String>();
-
-                params.put("authorization",access_token);
-                params.put("api-key",api);
-                params.put("Content-Type", "application/json");
-                return params;
-            }
-        };
-        RequestQueue requestQuese = Volley.newRequestQueue(getApplicationContext());
-        requestQuese.add(request);
-    }
     private void token2()
     {
         String url = "https://admin.p9bistro.com/index.php/generate_auth_token";
@@ -237,7 +118,7 @@ public class DrinkOrderCategory_View_Holder extends RecyclerView.ViewHolder {
                     String access_token = jsonObject.getString("access_token");
                     Log.e("ACCESSTOKEN", access_token);
 
-                    RemoveFavouriteData(access_token);
+
                 }
                 catch (JSONException Je)
                 {

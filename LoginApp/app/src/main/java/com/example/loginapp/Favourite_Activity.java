@@ -2,6 +2,7 @@ package com.example.loginapp;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -12,6 +13,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -34,10 +38,10 @@ import java.util.Map;
 
 public class Favourite_Activity extends BaseActivity {
 
-
     Favourite_Iteam_RecyclerAdapter adapter;
     RecyclerView recyclerView;
     String id;
+    String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,10 +53,12 @@ public class Favourite_Activity extends BaseActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
+        SharedPreferences sh = getSharedPreferences("MyToken", Context.MODE_PRIVATE);
+        token = sh.getString("token","");
+
         token();
 
         recyclerView =(RecyclerView) findViewById(R.id.favouriteMenuItems);
-
     }
     public boolean onSupportNavigateUp() {
 
@@ -99,7 +105,13 @@ public class Favourite_Activity extends BaseActivity {
 
                                 list.add(new Favourite_Iteam_Data(product_id, product_name));
                             }
-                            adapter = new Favourite_Iteam_RecyclerAdapter(list, getApplication());
+                            adapter = new Favourite_Iteam_RecyclerAdapter(list, getApplication(), new Favourite_Iteam_RecyclerAdapter.ItemClickListener() {
+                                @Override
+                                public void onItemClicked(int position) {
+
+                                    RemoveFavouriteData(token,list,position);
+                                }
+                            });
                             recyclerView.setLayoutManager(new LinearLayoutManager(Favourite_Activity.this));
                             recyclerView.setAdapter(adapter);
                             if(resarray.length() == 0)
@@ -146,6 +158,59 @@ public class Favourite_Activity extends BaseActivity {
             Toast.makeText(Favourite_Activity.this, "Error 3 : "+ex, Toast.LENGTH_SHORT).show();
         }
     }
+    private void RemoveFavouriteData(String access_token,List<Favourite_Iteam_Data> list,int position)
+    {
+        JSONObject req = new JSONObject();
+        try
+        {
+            req.put("product_id",list.get(position).productId);  // DATA OF field which we will enter while adding favourite item
+        }
+        catch(Exception ex)
+        {
+            Toast.makeText( getApplicationContext(), "Exception : "+ex, Toast.LENGTH_SHORT).show();
+        }
+        String url = "https://admin.p9bistro.com/index.php/removeFavouriteProduct";
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,url,req, new Response.Listener<JSONObject>() {
+
+            @Override
+            public void onResponse(JSONObject response) {
+
+                try {
+
+                    if (response.getBoolean("status")) {
+
+                        Toast.makeText(getApplicationContext(), "Iteam Removed Successfully", Toast.LENGTH_SHORT).show();
+                        list.remove(position);
+                        adapter.notifyDataSetChanged();
+                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Toast.makeText(getApplicationContext(), "Fail to get Response : "+error, Toast.LENGTH_SHORT).show();
+            }
+        }){
+            @Override
+            public Map<String,String> getHeaders()throws AuthFailureError
+            {
+                SharedPreferences sh = getApplicationContext().getSharedPreferences("MySharedPref", Context.MODE_PRIVATE);
+                String api = sh.getString("apiKey","");
+
+                Map<String,String>params = new HashMap<String ,String>();
+
+                params.put("authorization",access_token);
+                params.put("api-key",api);
+                params.put("Content-Type", "application/json");
+                return params;
+            }
+        };
+        RequestQueue requestQuese = Volley.newRequestQueue(getApplicationContext());
+        requestQuese.add(request);
+    }
     private void token() {
         String url = "https://admin.p9bistro.com/index.php/generate_auth_token";
         Log.e("checklog", url + "");
@@ -185,5 +250,4 @@ public class Favourite_Activity extends BaseActivity {
         RequestQueue requestquese = Volley.newRequestQueue(getApplicationContext());
         requestquese.add(stringRequest);
     }
-
 }

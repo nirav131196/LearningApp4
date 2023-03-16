@@ -18,10 +18,14 @@ public class DrinkOrderCategory_RecyclerAdapter extends RecyclerView.Adapter<Dri
 {
     List<DrinkOrderCategory_Data> list = Collections.emptyList();
     Context context;
+    int count=0;
 
-    public DrinkOrderCategory_RecyclerAdapter(List<DrinkOrderCategory_Data> list, Context context) {
+    ItemClickListener itemClickListener;
+
+    public DrinkOrderCategory_RecyclerAdapter(List<DrinkOrderCategory_Data> list, Context context,ItemClickListener itemClickListener) {
         this.list = list;
         this.context = context;
+        this.itemClickListener = itemClickListener;
     }
     @NonNull
     @Override
@@ -40,6 +44,24 @@ public class DrinkOrderCategory_RecyclerAdapter extends RecyclerView.Adapter<Dri
         holder.txtSubCategoryDescription.setText(list.get(position).subCategoryDescription);
         holder.txtid.setText(list.get(position).productid);
         holder.txtPrice.setText(list.get(position).price);
+        holder.image.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(count ==0)
+                {
+                    itemClickListener.OnItemClicked(position);
+                    holder.image.setImageDrawable(null);
+                    holder.image.setBackgroundResource(R.drawable.fullheart);
+                }
+                else
+                {
+                    itemClickListener.OnItemClicked2(position);
+                    holder.image.setImageDrawable(null);
+                    holder.image.setBackgroundResource(R.drawable.favourite_icon);
+                }
+            }
+        });
     }
     @Override
     public int getItemCount() {
@@ -48,5 +70,9 @@ public class DrinkOrderCategory_RecyclerAdapter extends RecyclerView.Adapter<Dri
     @Override
     public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
+    }
+    public interface ItemClickListener{
+        void OnItemClicked(int position);
+        void OnItemClicked2(int position);
     }
 }

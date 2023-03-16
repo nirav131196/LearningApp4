@@ -1,5 +1,7 @@
 package com.example.loginapp;
 
+import static com.facebook.FacebookSdk.getApplicationContext;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -7,10 +9,12 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -37,6 +41,11 @@ public class DrinkOrder_Itemas extends BaseActivity {
     RecyclerView recyclerView;
     String id2;
     String id;
+    String token,api;
+
+    List<DrinkOrderCategory_Data> list;
+    int position;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,15 +56,30 @@ public class DrinkOrder_Itemas extends BaseActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-
+        //For Adding unique item ids for selecting sub-category list of item
         Bundle extras = getIntent().getExtras();
         if(extras != null)
         {
             id = extras.getString("key");
         }
-        token();
+
+        // using token of login activity
+        SharedPreferences sh = getSharedPreferences("MyToken", Context.MODE_PRIVATE);
+        token = sh.getString("token","");
+        // using api of login activity
+        SharedPreferences sh2 = getApplicationContext().getSharedPreferences("MySharedPref", MODE_PRIVATE);
+        api = sh2.getString("apiKey","");
+
+        //Calling method for sub category items
+        getSubCategoryItemsData(token);
 
         recyclerView =(RecyclerView) findViewById(R.id.drinkOrderIteams);
+        Log.e("ACCESS TOKEN","ACCESS TOKEN");
+        Log.e("Access Token : ",token);
+        Log.e("api key","api key");
+        Log.e("API KEY : ",api);
+
+
     }
     private void getSubCategoryItemsData(String access_token)
     {
@@ -88,13 +112,20 @@ public class DrinkOrder_Itemas extends BaseActivity {
 
                                 list.add(new DrinkOrderCategory_Data(product_name, Description, Rate, id2));
                             }
+                            adapter = new DrinkOrderCategory_RecyclerAdapter(list, getApplication(), new DrinkOrderCategory_RecyclerAdapter.ItemClickListener() {
 
-                            /*SharedPreferences sharedPreferences = getSharedPreferences("PRODUCT_ID", MODE_PRIVATE);
-                            SharedPreferences.Editor edit = sharedPreferences.edit();
-                            edit.putString("product_id", id2);
-                            edit.apply();*/
 
-                            adapter = new DrinkOrderCategory_RecyclerAdapter(list, getApplication());
+                                @Override
+                                public void OnItemClicked(int position) {
+
+                                        postFavouriteData(token);
+                                }
+                                @Override
+                                public void OnItemClicked2(int position) {
+
+                                    RemoveFavouriteData(token);
+                                }
+                            });
                             recyclerView.setLayoutManager(new LinearLayoutManager(DrinkOrder_Itemas.this));
                             recyclerView.setAdapter(adapter);
                             Toast.makeText(getApplicationContext(), "Sub-category Product details fetched", Toast.LENGTH_LONG).show();
@@ -130,45 +161,7 @@ public class DrinkOrder_Itemas extends BaseActivity {
             Toast.makeText(DrinkOrder_Itemas.this, "Error 3 : "+ex, Toast.LENGTH_SHORT).show();
         }
     }
-    private void token() {
-        String url = "https://admin.p9bistro.com/index.php/generate_auth_token";
-        Log.e("checklog", url + "");
 
-        StringRequest stringRequest =new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-
-                Log.e("checklog", response + "");
-                JSONObject jsonObject = null;
-                try
-                {
-                    jsonObject = new JSONObject(response);
-                    String access_token = jsonObject.getString("access_token");
-                    Log.e("ACCESSTOKEN", access_token);
-                    getSubCategoryItemsData(access_token);
-
-                } catch (JSONException je) {
-                    Toast.makeText(DrinkOrder_Itemas.this, "Error 2 : " + je, Toast.LENGTH_SHORT).show();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-                Log.e("checklog",error + "");
-                Toast.makeText(getApplicationContext(), "Timeout Error", Toast.LENGTH_LONG).show();
-            }
-        }){
-            @Override
-            public Map<String,String> getHeaders() throws AuthFailureError {
-                HashMap<String,String> headers = new HashMap<>();
-                headers.put("x-api-key","XABRTYUX@123YTUFGB");
-                return headers;
-            }
-        };
-        RequestQueue requestquese = Volley.newRequestQueue(getApplicationContext());
-        requestquese.add(stringRequest);
-    }
     public boolean onSupportNavigateUp() {
 
         Intent i =new Intent(DrinkOrder_Itemas.this, DrinkOrderMenu_Activity.class);
@@ -188,5 +181,121 @@ public class DrinkOrder_Itemas extends BaseActivity {
         String newstring = original.substring(0,index+1)+stringtobeinserted+original.substring(index+1);
 
         return newstring;
+    }
+    private void postFavouriteData(String access_token)
+    {
+
+        JSONObject req = new JSONObject();
+        Log.e("Error Point","Error point 1");
+        try
+        {
+            Log.e("Error Point","Error point 2");
+            req.put("product_id",list.get(position).productid);  // DATA OF field which we will enter while adding favourite item
+            Log.e("Error Point","Error point 3");
+
+        }
+        catch(Exception ex)
+        {
+            Toast.makeText( getApplicationContext(), "Exception : "+ex, Toast.LENGTH_SHORT).show();
+        }
+        Log.e("Error Point","Error point 4");
+        String url = "https://admin.p9bistro.com/index.php/addFavouriteProduct";
+        Log.e("Error Point","Error point 5");
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,url,req, new Response.Listener<JSONObject>() {
+
+
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.e("Error Point","Error point 6");
+
+                try {
+                    if (response.getBoolean("status")) {
+                        String message = response.getString("message");
+                        Log.e("Error Point","Error point 7");
+
+                        JSONObject jsonData = response.getJSONObject("data");  // responses which we got after successful run
+                        Log.e("Error Point","Error point 8");
+                        String user_id = jsonData.getString("user_id");
+                        String product_id = jsonData.getString("product_id");
+                        Toast.makeText(getApplicationContext(), "Item Added Successfully", Toast.LENGTH_SHORT).show();
+
+
+                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Toast.makeText(getApplicationContext(), "Fail to get Response : "+error, Toast.LENGTH_SHORT).show();
+            }
+        }){
+            @Override
+            public Map<String,String> getHeaders()throws AuthFailureError
+            {
+
+
+                Map<String,String>params = new HashMap<String ,String>();
+
+                params.put("authorization",token);
+                params.put("api-key",api);
+                params.put("Content-Type", "application/json");
+                return params;
+            }
+        };
+        RequestQueue requestQuese = Volley.newRequestQueue(getApplicationContext());
+        requestQuese.add(request);
+    }
+    private void RemoveFavouriteData(String access_token)
+    {
+        JSONObject req = new JSONObject();
+        try
+        {
+            req.put("product_id",list.get(position).productid);  // DATA OF field which we will enter while adding favourite item
+        }
+        catch(Exception ex)
+        {
+            Toast.makeText( getApplicationContext(), "Exception : "+ex, Toast.LENGTH_SHORT).show();
+        }
+        String url = "https://admin.p9bistro.com/index.php/removeFavouriteProduct";
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,url,req, new Response.Listener<JSONObject>() {
+
+            @Override
+            public void onResponse(JSONObject response) {
+
+                try {
+                    if (response.getBoolean("status")) {
+
+
+                        Toast.makeText(getApplicationContext(), "Iteam Removed Successfully", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                Toast.makeText(getApplicationContext(), "Fail to get Response : "+error, Toast.LENGTH_SHORT).show();
+            }
+        }){
+            @Override
+            public Map<String,String> getHeaders()throws AuthFailureError
+            {
+
+
+                Map<String,String>params = new HashMap<String ,String>();
+
+                params.put("authorization",token);
+                params.put("api-key",api);
+                params.put("Content-Type", "application/json");
+                return params;
+            }
+        };
+        RequestQueue requestQuese = Volley.newRequestQueue(getApplicationContext());
+        requestQuese.add(request);
     }
 }

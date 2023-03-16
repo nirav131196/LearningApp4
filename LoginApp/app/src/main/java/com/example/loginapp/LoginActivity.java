@@ -2,6 +2,8 @@ package com.example.loginapp;
 
 import static android.content.ContentValues.TAG;
 
+import static com.facebook.FacebookSdk.getApplicationContext;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -93,6 +95,8 @@ public class LoginActivity extends BaseActivity implements  AuthenticationListen
 
     String access_token;
     FirebaseAuth firebaseAuth;  // FOR TWITTER
+
+
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -202,6 +206,7 @@ public class LoginActivity extends BaseActivity implements  AuthenticationListen
         IVFacebooklogo =findViewById(R.id.facebooklogo);
         IVInstagramlogo = findViewById(R.id.instagramlogo);
         IVTwitterlogo = findViewById(R.id.twitterlogo);
+
 
         spinner = findViewById(R.id.spinner_language);
     }
@@ -431,7 +436,7 @@ public class LoginActivity extends BaseActivity implements  AuthenticationListen
                             String email2 = resobj.getString("email");
                             String profile = resobj.getString("profile");
                             String api_key = resobj.getString("api_key");
-
+                            Log.e("Login api key","Login api key");
                             Log.e("LOGIN API KEY : ",api_key);
 
                             SharedPreferences sharedPreferences =getSharedPreferences("MySharedPref",MODE_PRIVATE);
@@ -442,7 +447,7 @@ public class LoginActivity extends BaseActivity implements  AuthenticationListen
                             edtEmail.setText("");
                             edtPassword.setText("");
 
-                            Intent i = new Intent(LoginActivity.this, Welcome_Main.class);
+                            Intent i = new Intent(LoginActivity.this, Dashboard_Activity_p9.class);
                             startActivity(i);
                             finish();
                         }
@@ -491,6 +496,11 @@ public class LoginActivity extends BaseActivity implements  AuthenticationListen
                 {
                     jsonObject = new JSONObject(response);
                     access_token = jsonObject.getString("access_token");
+
+                    SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("MyToken", MODE_PRIVATE);
+                    SharedPreferences.Editor edit =sharedPreferences.edit();
+                    edit.putString("token",access_token);
+                    edit.apply();
 
                     Log.e("ACCESSTOKEN", access_token);
                     postLoginData(access_token);
