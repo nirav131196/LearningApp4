@@ -59,7 +59,6 @@ public class DrinkOrder_Itemas extends BaseActivity {
         {
             id = extras.getString("key");
         }
-
         // using token of login activity
         SharedPreferences sh = getSharedPreferences("MyToken", Context.MODE_PRIVATE);
         token = sh.getString("token","");
@@ -109,7 +108,7 @@ public class DrinkOrder_Itemas extends BaseActivity {
                                 list.add(new DrinkOrderCategory_Data(product_name, Description, Rate, id2));
                             }
                             adapter = new DrinkOrderCategory_RecyclerAdapter(list, getApplication(), new DrinkOrderCategory_RecyclerAdapter.ItemClickListener() {
-                                int a1;
+
 
                                 @Override
                                 public void OnItemClicked(int position) {
@@ -182,41 +181,35 @@ public class DrinkOrder_Itemas extends BaseActivity {
     {
 
         JSONObject req = new JSONObject();
-        Log.e("Error Point","Error point 1");
+
         try
         {
-            Log.e("Error Point","Error point 2");
             req.put("product_id",list.get(position).productid);  // DATA OF field which we will enter while adding favourite item
-            Log.e("Error Point","Error point 3");
-
         }
         catch(Exception ex)
         {
             Toast.makeText( getApplicationContext(), "My Exception : "+ex, Toast.LENGTH_SHORT).show();
-
         }
-        Log.e("Error Point","Error point 4");
+
         String url = "https://admin.p9bistro.com/index.php/addFavouriteProduct";
-        Log.e("Error Point","Error point 5");
+
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,url,req, new Response.Listener<JSONObject>() {
 
 
             @Override
             public void onResponse(JSONObject response) {
-                Log.e("Error Point","Error point 6");
+
 
                 try {
                     if (response.getBoolean("status")) {
                         String message = response.getString("message");
-                        Log.e("Error Point","Error point 7");
+
 
                         JSONObject jsonData = response.getJSONObject("data");  // responses which we got after successful run
-                        Log.e("Error Point","Error point 8");
+
                         String user_id = jsonData.getString("user_id");
                         String product_id = jsonData.getString("product_id");
                         Toast.makeText(getApplicationContext(), "Item Added Successfully", Toast.LENGTH_SHORT).show();
-
-
                     }
                     else
                     {

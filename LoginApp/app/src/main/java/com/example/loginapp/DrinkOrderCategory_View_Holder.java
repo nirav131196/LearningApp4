@@ -51,8 +51,6 @@ public class DrinkOrderCategory_View_Holder extends RecyclerView.ViewHolder {
         txtid = (TextView)itemView.findViewById(R.id.product_id);
         image = (ImageView)itemView.findViewById(R.id.favourite_icon);
         view = itemView;
-
-
     }
     private void token()
     {

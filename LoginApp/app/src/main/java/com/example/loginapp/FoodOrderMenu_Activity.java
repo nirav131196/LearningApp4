@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
@@ -29,7 +30,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class FoodOrderMenu_Activity extends BaseActivity {
+public class FoodOrderMenu_Activity extends BaseActivity implements Food_Cat_Item_SelectListener{
 
     FoodRecyclerAdapter adapter;
     RecyclerView  recyclerView;
@@ -99,7 +100,7 @@ public class FoodOrderMenu_Activity extends BaseActivity {
 
                                 Log.e("Data is :",cat_name);
 
-                                foodlist.add(new FoodProductData(cat_name,image));
+                                foodlist.add(new FoodProductData(cat_name,image,category_id));
                             }
                             adapter = new FoodRecyclerAdapter(foodlist,getApplicationContext());
                             GridLayoutManager layoutManager = new GridLayoutManager(getApplicationContext(),2);
@@ -187,6 +188,19 @@ public class FoodOrderMenu_Activity extends BaseActivity {
         super.onBackPressed();
 
         Intent i  =new Intent(FoodOrderMenu_Activity.this, Dashboard_Activity_p9.class);
+        startActivity(i);
+        finish();
+    }
+    @Override
+    public void OnItemClicked(FoodProductData data) {
+
+        String cat_id = data.FoodCategoryId;
+        SharedPreferences sharedPreferences =getSharedPreferences("CATEGORY_ID",MODE_PRIVATE);
+        SharedPreferences.Editor edit =sharedPreferences.edit();
+        edit.putString("CAT_ID",cat_id);
+        edit.apply();
+
+        Intent i =new Intent(FoodOrderMenu_Activity.this,FoodOrderCategory_Items.class);
         startActivity(i);
         finish();
     }
