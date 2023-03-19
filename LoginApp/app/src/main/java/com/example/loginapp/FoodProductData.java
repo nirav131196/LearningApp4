@@ -4,7 +4,6 @@ public class FoodProductData {
 
     String FoodDrinkImage;
     String FoodProductCatName;
-
     String FoodCategoryId;
 
     public FoodProductData(String foodProductCatName, String foodDrinkImage,String foodcategoryId) {

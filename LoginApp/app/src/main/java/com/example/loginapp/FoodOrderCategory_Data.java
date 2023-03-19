@@ -13,11 +13,9 @@ public class FoodOrderCategory_Data {
         this.Rate = rate;
         this.Description = description;
     }
-
     public String getId() {
         return id;
     }
-
     public void setId(String id) {
         this.id = id;
     }

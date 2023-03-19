@@ -22,7 +22,7 @@ public interface FoodOrderCategory_API_Interface {
     String original = "/getSubCateogryProductList?deptids=[2]&cat_id=19&sub_id=0";
     String url = insertString(original,stringtobeinserted,index);*/
 
-    @GET("/getSubCateogryProductList?deptids=[2]&cat_id=19&sub_id=0")
+    @GET("/index.php/getSubCateogryProductList?deptids=[2]&cat_id=19&sub_id=0")
 
     Call<List<FoodOrderCategory_Data>> getDetails();
 

@@ -17,10 +17,12 @@ public class FoodRecyclerAdapter extends RecyclerView.Adapter<Food_Product_View_
 
     List<FoodProductData> foodlist = Collections.emptyList();
     Context context;
+    private FoodCatItemSelectListener listener;
 
-    public FoodRecyclerAdapter(List<FoodProductData> foodlist,Context context) {
+    public FoodRecyclerAdapter(List<FoodProductData> foodlist,Context context,FoodCatItemSelectListener listener) {
         this.foodlist = foodlist;
         this.context = context;
+        this.listener = listener;
     }
 
     @NonNull
@@ -40,6 +42,13 @@ public class FoodRecyclerAdapter extends RecyclerView.Adapter<Food_Product_View_
 
         holder.txtProductCatName.setText(foodlist.get(position).FoodProductCatName);
         Picasso.get().load(foodlist.get(position).FoodDrinkImage).placeholder(R.drawable.googlelogo).error(R.drawable.facelogo).into(holder.IVFoodProductCatName);
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.OnItemClicked(foodlist.get(position));
+            }
+        });
+
     }
     @Override
     public int getItemCount() {

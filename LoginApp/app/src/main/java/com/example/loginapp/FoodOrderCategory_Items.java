@@ -21,12 +21,11 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class FoodOrderCategory_Items extends AppCompatActivity {
+public class FoodOrderCategory_Items extends BaseActivity {
 
-        public static String url = "https://admin.p9bistro.com/index.php";
-
+        public static String url = "https://admin.p9bistro.com";
         RecyclerView recyclerView;
-        FoodOrderCategory_RecyclerAdapter adapter;
+        List<FoodOrderCategory_Data> allUsersList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,27 +35,25 @@ public class FoodOrderCategory_Items extends AppCompatActivity {
         recyclerView = findViewById(R.id.FoodOrderIteams);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        instance.getInstance().apiInterface.getDetails().enqueue(new Callback<List<FoodOrderCategory_Data>>() {
+        FoodOrderCategory_Retrofit_Instance.getInstance().apiInterface.getDetails().enqueue(new Callback<List<FoodOrderCategory_Data>>() {
             @Override
             public void onResponse(Call<List<FoodOrderCategory_Data>> call, Response<List<FoodOrderCategory_Data>> response) {
 
-                List<FoodOrderCategory_Data> allUsersList = new ArrayList<>();
                 allUsersList = response.body();
-
-                for(int i=0;i<allUsersList.size();i++)
+                recyclerView.setAdapter(new FoodOrderCategory_RecyclerAdapter(FoodOrderCategory_Items.this,allUsersList));
+               /* for(int i = 0; i < allUsersList.size(); i++)
                 {
-                    String id = allUsersList.get(i).getId();
+                    Log.e("api","on Response : "+allUsersList.get(i).getProduct_name());
+                   *//* String id = allUsersList.get(i).getId();
                     String name = allUsersList.get(i).getProduct_name();
                     String description = allUsersList.get(i).getDescription();
                     String price = allUsersList.get(i).getRate();
                     allUsersList.add(new FoodOrderCategory_Data(id,name,price,description));
 
-                    Log.e("api","onResponse : "+allUsersList.get(i).getProduct_name()+allUsersList.get(i).getDescription()+allUsersList.get(i).getId()+allUsersList.get(i).getRate());
-                }
+                    Log.e("api","onResponse : "+allUsersList.get(i).getProduct_name()+allUsersList.get(i).getDescription()+allUsersList.get(i).getId()+allUsersList.get(i).getRate());*//*
+                }*/
 
-                recyclerView.setAdapter(new FoodOrderCategory_RecyclerAdapter(FoodOrderCategory_Items.this,allUsersList));
-                recyclerView.setLayoutManager(new LinearLayoutManager(FoodOrderCategory_Items.this));
-
+                /*recyclerView.setLayoutManager(new LinearLayoutManager(FoodOrderCategory_Items.this));*/
             }
             @Override
             public void onFailure(Call<List<FoodOrderCategory_Data>> call, Throwable t) {

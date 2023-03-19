@@ -61,7 +61,6 @@ public class DrinkOrderMenu_Activity extends BaseActivity implements SelectListe
         finish();
         return super.onSupportNavigateUp();
     }
-
     private void getProductData(String access_token)
     {
         try
@@ -194,6 +193,5 @@ public class DrinkOrderMenu_Activity extends BaseActivity implements SelectListe
         i.putExtra("key",id);
         startActivity(i);
         finish();
-
     }
 }

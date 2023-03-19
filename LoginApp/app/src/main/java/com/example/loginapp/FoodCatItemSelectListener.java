@@ -1,6 +1,6 @@
 package com.example.loginapp;
 
-public interface Food_Cat_Item_SelectListener {
+public interface FoodCatItemSelectListener {
 
     void OnItemClicked(FoodProductData data);
 }

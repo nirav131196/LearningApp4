@@ -30,7 +30,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class FoodOrderMenu_Activity extends BaseActivity implements Food_Cat_Item_SelectListener{
+public class FoodOrderMenu_Activity extends BaseActivity implements FoodCatItemSelectListener{
 
     FoodRecyclerAdapter adapter;
     RecyclerView  recyclerView;
@@ -102,7 +102,7 @@ public class FoodOrderMenu_Activity extends BaseActivity implements Food_Cat_Ite
 
                                 foodlist.add(new FoodProductData(cat_name,image,category_id));
                             }
-                            adapter = new FoodRecyclerAdapter(foodlist,getApplicationContext());
+                            adapter = new FoodRecyclerAdapter(foodlist,getApplicationContext(),FoodOrderMenu_Activity.this);
                             GridLayoutManager layoutManager = new GridLayoutManager(getApplicationContext(),2);
                             recyclerView.setLayoutManager(layoutManager);
                             recyclerView.setAdapter(adapter);
@@ -191,17 +191,18 @@ public class FoodOrderMenu_Activity extends BaseActivity implements Food_Cat_Ite
         startActivity(i);
         finish();
     }
-    @Override
-    public void OnItemClicked(FoodProductData data) {
 
+    @Override
+    public void OnItemClicked(FoodProductData data)
+    {
         String cat_id = data.FoodCategoryId;
+        Intent i =new Intent(FoodOrderMenu_Activity.this,FoodOrderCategory_Items.class);
+        startActivity(i);
+        finish();
         SharedPreferences sharedPreferences =getSharedPreferences("CATEGORY_ID",MODE_PRIVATE);
         SharedPreferences.Editor edit =sharedPreferences.edit();
         edit.putString("CAT_ID",cat_id);
         edit.apply();
-
-        Intent i =new Intent(FoodOrderMenu_Activity.this,FoodOrderCategory_Items.class);
-        startActivity(i);
-        finish();
+        Log.e("CATEGORY ID IS ",cat_id);
     }
 }

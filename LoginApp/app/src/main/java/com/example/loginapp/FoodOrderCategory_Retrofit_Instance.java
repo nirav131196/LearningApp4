@@ -16,9 +16,9 @@ public class FoodOrderCategory_Retrofit_Instance {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        retrofit.create(FoodOrderCategory_API_Interface.class);
+        apiInterface = retrofit.create(FoodOrderCategory_API_Interface.class);
     }
-    public FoodOrderCategory_Retrofit_Instance getInstance()
+    public static FoodOrderCategory_Retrofit_Instance getInstance()
     {
         if(instance == null)
         {
@@ -26,4 +26,5 @@ public class FoodOrderCategory_Retrofit_Instance {
         }
         return instance;
     }
+
 }

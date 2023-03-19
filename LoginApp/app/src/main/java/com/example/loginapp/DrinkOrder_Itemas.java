@@ -109,7 +109,6 @@ public class DrinkOrder_Itemas extends BaseActivity {
                             }
                             adapter = new DrinkOrderCategory_RecyclerAdapter(list, getApplication(), new DrinkOrderCategory_RecyclerAdapter.ItemClickListener() {
 
-
                                 @Override
                                 public void OnItemClicked(int position) {
 
@@ -194,11 +193,8 @@ public class DrinkOrder_Itemas extends BaseActivity {
         String url = "https://admin.p9bistro.com/index.php/addFavouriteProduct";
 
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST,url,req, new Response.Listener<JSONObject>() {
-
-
             @Override
             public void onResponse(JSONObject response) {
-
 
                 try {
                     if (response.getBoolean("status")) {

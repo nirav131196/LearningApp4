@@ -53,7 +53,7 @@ public class DrinkOrderCategory_RecyclerAdapter extends RecyclerView.Adapter<Dri
                     holder.image.setImageDrawable(null);
                     holder.image.setBackgroundResource(R.drawable.fullheart);
 
-                   /* count=0;
+                 /*   count=0;
                     itemClickListener.OnItemClicked2(position);
                     holder.image.setImageDrawable(null);
                     holder.image.setBackgroundResource(R.drawable.favourite_icon);*/
