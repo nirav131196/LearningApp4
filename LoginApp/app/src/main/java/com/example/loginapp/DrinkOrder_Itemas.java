@@ -62,7 +62,7 @@ public class DrinkOrder_Itemas extends BaseActivity {
         // using token of login activity
         SharedPreferences sh = getSharedPreferences("MyToken", Context.MODE_PRIVATE);
         token = sh.getString("token","");
-        // using api of login activity
+        // using api key of login activity
         SharedPreferences sh2 = getApplicationContext().getSharedPreferences("MySharedPref", MODE_PRIVATE);
         api = sh2.getString("apiKey","");
 
@@ -121,14 +121,16 @@ public class DrinkOrder_Itemas extends BaseActivity {
                             recyclerView.setLayoutManager(new LinearLayoutManager(DrinkOrder_Itemas.this));
                             recyclerView.setAdapter(adapter);
                             Toast.makeText(getApplicationContext(), "Sub-category Product details fetched", Toast.LENGTH_LONG).show();
-                        } else {
-
+                        }
+                        else
+                        {
+                            showToast("First Do Login");
                             Intent i =new Intent(DrinkOrder_Itemas.this,LoginActivity.class);
                             startActivity(i);
                             finish();
-                            showToast("First Do Login");
                         }
-                    } catch (JSONException ex) {
+                    } catch (JSONException ex)
+                    {
                         showToast("Error : " + ex);
                         ex.printStackTrace();
                     }
@@ -157,7 +159,6 @@ public class DrinkOrder_Itemas extends BaseActivity {
             Toast.makeText(DrinkOrder_Itemas.this, "Error 3 : "+ex, Toast.LENGTH_SHORT).show();
         }
     }
-
     public boolean onSupportNavigateUp() {
 
         Intent i =new Intent(DrinkOrder_Itemas.this, DrinkOrderMenu_Activity.class);
@@ -180,9 +181,7 @@ public class DrinkOrder_Itemas extends BaseActivity {
     }
     private void postFavouriteData(String access_token,List<DrinkOrderCategory_Data> list,int position)
     {
-
         JSONObject req = new JSONObject();
-
         try
         {
             req.put("product_id",list.get(position).productid);  // DATA OF field which we will enter while adding favourite item
@@ -259,12 +258,16 @@ public class DrinkOrder_Itemas extends BaseActivity {
             public void onResponse(JSONObject response) {
 
                 try {
+
                     if (response.getBoolean("status")) {
 
-
-                        Toast.makeText(getApplicationContext(), "Iteam Removed Successfully", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Item Removed Successfully", Toast.LENGTH_SHORT).show();
                         list.get(position).isfourite = false;
                         adapter.notifyItemChanged(position);
+                    }
+                    else
+                    {
+                        showToast("Status False");
                     }
                 } catch (Exception ex) {
                     ex.printStackTrace();
@@ -280,8 +283,6 @@ public class DrinkOrder_Itemas extends BaseActivity {
             @Override
             public Map<String,String> getHeaders()throws AuthFailureError
             {
-
-
                 Map<String,String>params = new HashMap<String ,String>();
 
                 params.put("authorization",access_token);

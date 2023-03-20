@@ -1,5 +1,6 @@
 package com.example.loginapp;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,14 +18,16 @@ public class FoodOrderCategory_RecyclerAdapter extends RecyclerView.Adapter<Food
 
     FoodOrderCategory_Items foodOrderCategoryItems;
     List<FoodOrderCategory_Data> allUsersList;
+    Context context;
+
+    ItemClickedlistener itemClickedlistener;
 
 
-
-
-    public FoodOrderCategory_RecyclerAdapter(FoodOrderCategory_Items foodOrderCategoryItems, List<FoodOrderCategory_Data> allUsersList) {
+    public FoodOrderCategory_RecyclerAdapter(FoodOrderCategory_Items foodOrderCategoryItems,Context context, List<FoodOrderCategory_Data> allUsersList,ItemClickedlistener itemClickedlistener) {
         this.foodOrderCategoryItems = foodOrderCategoryItems;
+        this.context = context;
         this.allUsersList = allUsersList;
-
+        this.itemClickedlistener =itemClickedlistener;
     }
     @NonNull
     @Override
@@ -39,9 +42,32 @@ public class FoodOrderCategory_RecyclerAdapter extends RecyclerView.Adapter<Food
         holder.txtProductDescription.setText(allUsersList.get(position).getDescription());
         holder.txtPrice.setText(allUsersList.get(position).getRate());
 
+        if(allUsersList.get(position).isfavourite)
+        {
+            holder.IVFavouriteItem.setImageResource(R.drawable.fullheart);
+        }
+        else
+        {
+            holder.IVFavouriteItem.setImageResource(R.drawable.favourite_icon);
+        }
+        holder.IVFavouriteItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(allUsersList.get(position).isfavourite)
+                {
+                    itemClickedlistener.onItemClicked(position,"UNFAVOURITE");
+                }
+                else
+                {
+                    itemClickedlistener.onItemClicked(position,"FAVOURITE");
+                }
+            }
+        });
     }
     @Override
     public int getItemCount() {
+
         return allUsersList.size();
     }
     class FoodOrderCategory_Holder extends RecyclerView.ViewHolder{
@@ -61,5 +87,9 @@ public class FoodOrderCategory_RecyclerAdapter extends RecyclerView.Adapter<Food
             btnFoodAdd=itemView.findViewById(R.id.FoodAddButton);
             IVFavouriteItem=itemView.findViewById(R.id.favourite_food_icon);
         }
+    }
+    public interface ItemClickedlistener
+    {
+        void onItemClicked(int position,String choice);
     }
 }

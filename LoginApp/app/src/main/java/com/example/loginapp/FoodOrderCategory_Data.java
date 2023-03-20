@@ -7,6 +7,8 @@ public class FoodOrderCategory_Data {
     String Rate;
     String Description;
 
+    boolean isfavourite;
+
     public FoodOrderCategory_Data(String id, String product_name, String rate, String description) {
         this.id = id;
         this.product_name = product_name;

@@ -19,8 +19,6 @@ public class DrinkOrderCategory_RecyclerAdapter extends RecyclerView.Adapter<Dri
 {
     List<DrinkOrderCategory_Data> list = Collections.emptyList();
     Context context;
-
-
     ItemClickListener itemClickListener;
 
     public DrinkOrderCategory_RecyclerAdapter(List<DrinkOrderCategory_Data> list, Context context,ItemClickListener itemClickListener) {
