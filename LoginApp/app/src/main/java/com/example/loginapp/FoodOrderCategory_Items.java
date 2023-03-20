@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -27,6 +29,8 @@ public class FoodOrderCategory_Items extends BaseActivity {
         RecyclerView recyclerView;
         List<FoodOrderCategory_Data> allUsersList;
 
+        String CAT_ID;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,28 +39,33 @@ public class FoodOrderCategory_Items extends BaseActivity {
         recyclerView = findViewById(R.id.FoodOrderIteams);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        FoodOrderCategory_Retrofit_Instance.getInstance().apiInterface.getDetails().enqueue(new Callback<List<FoodOrderCategory_Data>>() {
+        if(getIntent().hasExtra("CAT_ID"))
+        {
+            CAT_ID = getIntent().getStringExtra("CAT_ID");
+        }
+        SharedPreferences sh = getApplicationContext().getSharedPreferences("MyToken", Context.MODE_PRIVATE);
+        String api = sh.getString("token","");
+
+        FoodOrderCategory_Retrofit_Instance.getInstance().apiInterface.getDetails(api,CAT_ID).enqueue(new Callback<FoodOrderCategory_Data_BaseRes>() {
             @Override
-            public void onResponse(Call<List<FoodOrderCategory_Data>> call, Response<List<FoodOrderCategory_Data>> response) {
+            public void onResponse(Call<FoodOrderCategory_Data_BaseRes> call, Response<FoodOrderCategory_Data_BaseRes> response) {
 
-                allUsersList = response.body();
-                recyclerView.setAdapter(new FoodOrderCategory_RecyclerAdapter(FoodOrderCategory_Items.this,allUsersList));
-               /* for(int i = 0; i < allUsersList.size(); i++)
-                {
-                    Log.e("api","on Response : "+allUsersList.get(i).getProduct_name());
-                   *//* String id = allUsersList.get(i).getId();
-                    String name = allUsersList.get(i).getProduct_name();
-                    String description = allUsersList.get(i).getDescription();
-                    String price = allUsersList.get(i).getRate();
-                    allUsersList.add(new FoodOrderCategory_Data(id,name,price,description));
+                    FoodOrderCategory_Data_BaseRes baseresponse = response.body();
 
-                    Log.e("api","onResponse : "+allUsersList.get(i).getProduct_name()+allUsersList.get(i).getDescription()+allUsersList.get(i).getId()+allUsersList.get(i).getRate());*//*
-                }*/
-
-                /*recyclerView.setLayoutManager(new LinearLayoutManager(FoodOrderCategory_Items.this));*/
+                    allUsersList = baseresponse.foodlist;
+                    Log.e("Base response","response"+baseresponse.message);
+                    if(allUsersList != null)
+                    {
+                        FoodOrderCategory_RecyclerAdapter adapter =new FoodOrderCategory_RecyclerAdapter(FoodOrderCategory_Items.this, allUsersList);
+                        recyclerView.setAdapter(adapter);
+                    }
+                    else
+                    {
+                        Log.e("FoodOrderCategory_Item","Null");
+                    }
             }
             @Override
-            public void onFailure(Call<List<FoodOrderCategory_Data>> call, Throwable t) {
+            public void onFailure(Call<FoodOrderCategory_Data_BaseRes> call, Throwable t) {
 
                 Log.e("api","onFailure : "+t.getLocalizedMessage());
             }

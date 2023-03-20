@@ -197,12 +197,9 @@ public class FoodOrderMenu_Activity extends BaseActivity implements FoodCatItemS
     {
         String cat_id = data.FoodCategoryId;
         Intent i =new Intent(FoodOrderMenu_Activity.this,FoodOrderCategory_Items.class);
+        i.putExtra("CAT_ID",cat_id);
         startActivity(i);
         finish();
-        SharedPreferences sharedPreferences =getSharedPreferences("CATEGORY_ID",MODE_PRIVATE);
-        SharedPreferences.Editor edit =sharedPreferences.edit();
-        edit.putString("CAT_ID",cat_id);
-        edit.apply();
-        Log.e("CATEGORY ID IS ",cat_id);
+
     }
 }

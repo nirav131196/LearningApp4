@@ -48,7 +48,6 @@ public class FoodRecyclerAdapter extends RecyclerView.Adapter<Food_Product_View_
                 listener.OnItemClicked(foodlist.get(position));
             }
         });
-
     }
     @Override
     public int getItemCount() {

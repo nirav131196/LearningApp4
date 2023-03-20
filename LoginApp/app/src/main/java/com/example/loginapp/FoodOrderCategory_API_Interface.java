@@ -12,19 +12,16 @@ import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
+import retrofit2.http.Query;
 
 public interface FoodOrderCategory_API_Interface {
 
-   /* SharedPreferences sh = getApplicationContext().getSharedPreferences("CATEGORY_ID", Context.MODE_PRIVATE);
-    String Cat_id = sh.getString("CAT_ID","");
-    String stringtobeinserted = Cat_id;
-    int index = 46;
-    String original = "/getSubCateogryProductList?deptids=[2]&cat_id=19&sub_id=0";
-    String url = insertString(original,stringtobeinserted,index);*/
 
-    @GET("/index.php/getSubCateogryProductList?deptids=[2]&cat_id=19&sub_id=0")
+    @GET("/index.php/getSubCateogryProductList?deptids=[2]&sub_id=0")
 
-    Call<List<FoodOrderCategory_Data>> getDetails();
+    Call<FoodOrderCategory_Data_BaseRes> getDetails(@Header("authorization") String token, @Query("cat_id")String id);
+
 
    /* static String insertString(String original,String stringtobeinserted,int index)
     {
@@ -32,5 +29,13 @@ public interface FoodOrderCategory_API_Interface {
 
         return newstring;
     }*/
+
+    /* SharedPreferences sh = getApplicationContext().getSharedPreferences("CATEGORY_ID", Context.MODE_PRIVATE);
+    String Cat_id = sh.getString("CAT_ID","");
+    String stringtobeinserted = Cat_id;
+    int index = 46;
+    String original = "/getSubCateogryProductList?deptids=[2]&cat_id=19&sub_id=0";
+    String url = insertString(original,stringtobeinserted,index);*/
+
 }
 

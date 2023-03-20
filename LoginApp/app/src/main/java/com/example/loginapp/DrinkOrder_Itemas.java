@@ -110,21 +110,23 @@ public class DrinkOrder_Itemas extends BaseActivity {
                             adapter = new DrinkOrderCategory_RecyclerAdapter(list, getApplication(), new DrinkOrderCategory_RecyclerAdapter.ItemClickListener() {
 
                                 @Override
-                                public void OnItemClicked(int position) {
+                                public void OnItemClicked(int position,String choice) {
 
+                                    if(choice.equals("favourite"))
                                         postFavouriteData(token,list,position);
-                                }
-                                @Override
-                                public void OnItemClicked2(int position) {
-
-                                    RemoveFavouriteData(token,list,position);
+                                    else
+                                        RemoveFavouriteData(token,list,position);
                                 }
                             });
                             recyclerView.setLayoutManager(new LinearLayoutManager(DrinkOrder_Itemas.this));
                             recyclerView.setAdapter(adapter);
                             Toast.makeText(getApplicationContext(), "Sub-category Product details fetched", Toast.LENGTH_LONG).show();
                         } else {
-                            showToast("Response false");
+
+                            Intent i =new Intent(DrinkOrder_Itemas.this,LoginActivity.class);
+                            startActivity(i);
+                            finish();
+                            showToast("First Do Login");
                         }
                     } catch (JSONException ex) {
                         showToast("Error : " + ex);
@@ -206,6 +208,8 @@ public class DrinkOrder_Itemas extends BaseActivity {
                         String user_id = jsonData.getString("user_id");
                         String product_id = jsonData.getString("product_id");
                         Toast.makeText(getApplicationContext(), "Item Added Successfully", Toast.LENGTH_SHORT).show();
+                        list.get(position).isfourite = true;
+                        adapter.notifyItemChanged(position);
                     }
                     else
                     {
@@ -225,7 +229,6 @@ public class DrinkOrder_Itemas extends BaseActivity {
             @Override
             public Map<String,String> getHeaders()throws AuthFailureError
             {
-
 
                 Map<String,String>params = new HashMap<String ,String>();
 
@@ -260,6 +263,8 @@ public class DrinkOrder_Itemas extends BaseActivity {
 
 
                         Toast.makeText(getApplicationContext(), "Iteam Removed Successfully", Toast.LENGTH_SHORT).show();
+                        list.get(position).isfourite = false;
+                        adapter.notifyItemChanged(position);
                     }
                 } catch (Exception ex) {
                     ex.printStackTrace();
