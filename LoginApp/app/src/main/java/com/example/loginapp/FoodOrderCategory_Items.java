@@ -13,6 +13,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.google.gson.JsonObject;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -30,6 +32,8 @@ public class FoodOrderCategory_Items extends BaseActivity {
         public static String url = "https://admin.p9bistro.com";
         RecyclerView recyclerView;
         List<FoodOrderCategory_Data> allUsersList;
+
+        FoodOrderCat_POST_Fav_Data FavItem;
 
         FoodOrderCategory_RecyclerAdapter adapter;
 
@@ -68,12 +72,12 @@ public class FoodOrderCategory_Items extends BaseActivity {
             public void onResponse(Call<FoodOrderCategory_Data_BaseRes> call, Response<FoodOrderCategory_Data_BaseRes> response) {
 
                     FoodOrderCategory_Data_BaseRes baseresponse = response.body();
-
+                    Log.e("DATA","DATA 1 "+response.body());
                     allUsersList = baseresponse.foodlist;
-                    Log.e("Base response","response"+baseresponse.message);
+                    Log.e("Base response","response "+baseresponse.message);
                     if(allUsersList != null)
                     {
-                        FoodOrderCategory_RecyclerAdapter adapter =new FoodOrderCategory_RecyclerAdapter(FoodOrderCategory_Items.this,getApplication(), allUsersList, new FoodOrderCategory_RecyclerAdapter.ItemClickedlistener() {
+                        adapter =new FoodOrderCategory_RecyclerAdapter(FoodOrderCategory_Items.this,getApplication(), allUsersList, new FoodOrderCategory_RecyclerAdapter.ItemClickedlistener() {
                             @Override
                             public void onItemClicked(int position, String choice) {
                                 if(choice.equals("FAVOURITE"))
@@ -102,25 +106,64 @@ public class FoodOrderCategory_Items extends BaseActivity {
     }
     private void RemoveFavouriteItem(int position) {
 
-        allUsersList.get(position).isfavourite = false;
-        adapter.notifyItemChanged(position);
-        showToast("UNFAVOURITE");
+        JsonObject jsonObject =new JsonObject();
+        jsonObject.addProperty("product_id",allUsersList.get(position).getId());
+        FoodOrderCat_Post_Retrofit_Instance.getInstance().apiInterface.getHeaders(token,api_key,jsonObject).enqueue(new Callback<FoodOrderCat_RemovalBaseReData>() {
+            @Override
+            public void onResponse(Call<FoodOrderCat_RemovalBaseReData> call, Response<FoodOrderCat_RemovalBaseReData> response) {
+
+                //Storing response to baseresponse3
+                FoodOrderCat_RemovalBaseReData baseresponse3 = response.body();
+                Log.e("DATA","DATA 2 "+response.body());
+
+                Log.e("Base response","Removal "+baseresponse3.message);
+
+                if(allUsersList != null)
+                {
+                    showToast("Item Removed Successfully");
+                    allUsersList.get(position).isfavourite = false;
+                    adapter.notifyItemChanged(position);
+                }
+                else
+                {
+                    showToast("Do Login First");
+                    Intent i = new Intent(FoodOrderCategory_Items.this, LoginActivity.class);
+                    startActivity(i);
+                    finish();
+                    Log.e("Removal of Favourite Item","Null");
+                }
+            }
+            @Override
+            public void onFailure(Call<FoodOrderCat_RemovalBaseReData> call, Throwable t) {
+
+                Log.e("api","onFailure : "+t.getLocalizedMessage());
+
+            }
+        });
+
     }
     private void PostFavouriteItem(int position) {
 
      /* public static String addurl = "https://admin.p9bistro.com";*/
 
-        FoodOrderCat_Post_Retrofit_Instance.getInstance().apiInterface.postitems(token,api_key).enqueue(new Callback<FoodOrderCat_BaseResponseData>() {
+        JsonObject jsonObject= new JsonObject();
+        jsonObject.addProperty("product_id",allUsersList.get(position).getId());
+
+        FoodOrderCat_Post_Retrofit_Instance.getInstance().apiInterface.postitems(token,api_key,jsonObject).enqueue(new Callback<FoodOrderCat_BaseResponseData>() {
             @Override
             public void onResponse(Call<FoodOrderCat_BaseResponseData> call, Response<FoodOrderCat_BaseResponseData> response) {
 
                 FoodOrderCat_BaseResponseData baseresponse2 = response.body();
 
-                allUsersList = baseresponse2.foodlist;
+                Log.e("DATA","DATA 2 "+response.body());
+
+                FavItem = baseresponse2.favFoodItem;
+
+                Log.e("Base response","Favourite"+baseresponse2.message);
+
                 if(allUsersList != null)
                 {
-                    FoodOrderCategory_RecyclerAdapter adapter1 = new FoodOrderCategory_RecyclerAdapter(FoodOrderCategory_Items.this,getApplication(),allUsersList,null);
-                    recyclerView.setAdapter(adapter1);
+
                     showToast("Item Added Successfully");
                     allUsersList.get(position).isfavourite = true;
                     adapter.notifyItemChanged(position);
@@ -131,7 +174,7 @@ public class FoodOrderCategory_Items extends BaseActivity {
                     Intent i = new Intent(FoodOrderCategory_Items.this, LoginActivity.class);
                     startActivity(i);
                     finish();
-                    Log.e("FoodOrderCategoryFavourite_Item","Null");
+                    Log.e("Adding Favourite Item","Null");
                 }
             }
             @Override

@@ -10,5 +10,5 @@ public class FoodOrderCat_BaseResponseData {
     String message;
 
     @SerializedName("data")
-    List<FoodOrderCategory_Data> foodlist;
+    FoodOrderCat_POST_Fav_Data favFoodItem;
 }
