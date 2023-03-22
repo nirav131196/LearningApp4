@@ -10,7 +10,7 @@ import android.widget.Button;
 
 public class Welcome_Main extends AppCompatActivity {
 
-    Button btnCamara,btnLocation,btnNotification;
+    Button btnCamara,btnLocation,btnNotification,btnSqlite;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,11 +21,31 @@ public class Welcome_Main extends AppCompatActivity {
         clickCamaraButton();
         clickLocationButton();
         clickNotificationButton();
+        clickSQliteButton();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+    }
+
+    private void clickSQliteButton() {
+        btnSqlite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent i=new Intent(Welcome_Main.this, SQLite_Insert_Activity.class);
+                startActivity(i);
+                finish();
+            }
+        });
+    }
+
+    private void initView() {
+        btnCamara = findViewById(R.id.QR_AND_CAMERA);
+        btnLocation = findViewById(R.id.LOCATION);
+        btnNotification =findViewById(R.id.PUSH_NOTIFICATION);
+        btnSqlite =findViewById(R.id.SQLITE_CONNECTIVITY);
     }
     @Override
     public boolean onSupportNavigateUp() {
@@ -73,9 +93,5 @@ public class Welcome_Main extends AppCompatActivity {
         });
     }
 
-    private void initView() {
-        btnCamara = findViewById(R.id.QR_AND_CAMERA);
-        btnLocation = findViewById(R.id.LOCATION);
-        btnNotification =findViewById(R.id.PUSH_NOTIFICATION);
-    }
+
 }

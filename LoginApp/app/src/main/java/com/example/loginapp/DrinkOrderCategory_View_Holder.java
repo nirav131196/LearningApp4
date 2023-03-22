@@ -40,8 +40,6 @@ public class DrinkOrderCategory_View_Holder extends RecyclerView.ViewHolder {
     TextView txtSubCategoryName,txtSubCategoryDescription,txtPrice,txtid;
     View view;
     ImageView image;
-    int count;
-    String id;
     public DrinkOrderCategory_View_Holder(@NonNull View itemView) {
         super(itemView);
 
@@ -51,95 +49,5 @@ public class DrinkOrderCategory_View_Holder extends RecyclerView.ViewHolder {
         txtid = (TextView)itemView.findViewById(R.id.product_id);
         image = (ImageView)itemView.findViewById(R.id.favourite_icon);
         view = itemView;
-    }
-    private void token()
-    {
-        String url = "https://admin.p9bistro.com/index.php/generate_auth_token";
-
-        StringRequest request =new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-
-                JSONObject jsonObject = null;
-                try
-                {
-                    jsonObject = new JSONObject(response);
-                    String access_token = jsonObject.getString("access_token");
-                    Log.e("ACCESSTOKEN", access_token);
-
-
-
-                    SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("MyToken", MODE_PRIVATE);
-                    SharedPreferences.Editor edit =sharedPreferences.edit();
-                    edit.putString("token",access_token);
-                    edit.apply();
-                }
-                catch (JSONException Je)
-                {
-                    Toast.makeText(getApplicationContext(), "Error 2 : " + Je, Toast.LENGTH_SHORT).show();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-                Log.e("checklog",error + "");
-                Toast.makeText(getApplicationContext(), "Timeout Error", Toast.LENGTH_LONG).show();
-            }
-        }){
-            @Override
-            public Map<String,String> getHeaders() throws AuthFailureError
-            {
-                HashMap<String,String> headers = new HashMap<>();
-                headers.put("x-api-key","XABRTYUX@123YTUFGB");
-                return headers;
-            }
-        };
-        RequestQueue requestquese = Volley.newRequestQueue(getApplicationContext());
-        requestquese.add(request);
-    }
-
-
-
-    private void token2()
-    {
-        String url = "https://admin.p9bistro.com/index.php/generate_auth_token";
-
-        StringRequest request =new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-
-                JSONObject jsonObject = null;
-                try
-                {
-                    jsonObject = new JSONObject(response);
-                    String access_token = jsonObject.getString("access_token");
-                    Log.e("ACCESSTOKEN", access_token);
-
-
-                }
-                catch (JSONException Je)
-                {
-                    Toast.makeText(getApplicationContext(), "Error 2 : " + Je, Toast.LENGTH_SHORT).show();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-                Log.e("checklog",error + "");
-                Toast.makeText(getApplicationContext(), "Timeout Error", Toast.LENGTH_LONG).show();
-            }
-        }){
-            @Override
-            public Map<String,String> getHeaders() throws AuthFailureError
-            {
-                HashMap<String,String> headers = new HashMap<>();
-                headers.put("x-api-key","XABRTYUX@123YTUFGB");
-                return headers;
-            }
-        };
-        RequestQueue requestquese = Volley.newRequestQueue(getApplicationContext());
-        requestquese.add(request);
     }
 }

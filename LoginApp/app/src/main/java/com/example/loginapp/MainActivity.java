@@ -35,7 +35,7 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class MainActivity extends BaseActivity
+public class MainActivity extends BaseActivity 
 {
 
     EditText edtUsername,edtPassword,edtMobileno,edtEmail;
@@ -131,7 +131,6 @@ public class MainActivity extends BaseActivity
                 Intent i =new Intent(MainActivity.this,LoginActivity.class);
                 startActivity(i);
                   finish();
-
             }
         });
     }
@@ -206,22 +205,7 @@ public class MainActivity extends BaseActivity
                 Toast.makeText( MainActivity.this, "Fail to get Response : "+error, Toast.LENGTH_SHORT).show();
             }
         }){
-            /*  @Override
-              protected Map<String,String> getParams()
-              {
-                  Map<String,String> params = new HashMap<String,String>();
 
-                  params.put("username",username_edt.getText().toString());  // DATA OF field which we will enter while doing sign up
-                  params.put("password",password_edt.getText().toString());
-                  params.put("mobile_no",mobileno_edt.getText().toString());
-                  params.put("email",email_edt.getText().toString());
-                  params.put("profile","nirav");
-                  params.put("register_by", String.valueOf(5));
-                  return params;
-
-                   //   Log.e("Data",username+password+mobileno);
-
-              }*/
             @Override
             public Map<String,String> getHeaders()throws AuthFailureError
             {

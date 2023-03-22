@@ -40,7 +40,6 @@ public class Favourite_Activity extends BaseActivity {
 
     Favourite_Iteam_RecyclerAdapter adapter;
     RecyclerView recyclerView;
-    String id;
     String token;
 
     @Override
@@ -75,6 +74,7 @@ public class Favourite_Activity extends BaseActivity {
         startActivity(i);
         finish();
     }
+    // FOR GETTING ALL FAVOURITE ITEM METHOD (API)
     private void getFavouriteItemsData(String access_token)
     {
         try
@@ -158,6 +158,7 @@ public class Favourite_Activity extends BaseActivity {
             Toast.makeText(Favourite_Activity.this, "Error 3 : "+ex, Toast.LENGTH_SHORT).show();
         }
     }
+    //  REMOVING FAVOURITE ITEM METHOD ON CLICK
     private void RemoveFavouriteData(String access_token,List<Favourite_Iteam_Data> list,int position)
     {
         JSONObject req = new JSONObject();

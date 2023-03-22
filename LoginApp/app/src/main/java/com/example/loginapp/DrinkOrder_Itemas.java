@@ -53,7 +53,7 @@ public class DrinkOrder_Itemas extends BaseActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        //For Adding unique item ids for selecting sub-category list of item
+        //For Adding unique item ids for selecting sub-category list items
         Bundle extras = getIntent().getExtras();
         if(extras != null)
         {
@@ -70,11 +70,6 @@ public class DrinkOrder_Itemas extends BaseActivity {
         getSubCategoryItemsData(token);
 
         recyclerView =(RecyclerView) findViewById(R.id.drinkOrderIteams);
-        Log.e("ACCESS TOKEN","ACCESS TOKEN");
-        Log.e("Access Token : ",token);
-        Log.e("api key","api key");
-        Log.e("API KEY : ",api);
-
     }
     private void getSubCategoryItemsData(String access_token)
     {
@@ -85,6 +80,8 @@ public class DrinkOrder_Itemas extends BaseActivity {
             int index = 81;
             String url = insertString(url2,stringtobeinserted,index);
 
+
+            // API CODE OF SUB-CATEGORY ITEMS
             JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url,null, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
@@ -179,6 +176,7 @@ public class DrinkOrder_Itemas extends BaseActivity {
 
         return newstring;
     }
+    // FAVOURITE ITEM ADDING METHOD (API)
     private void postFavouriteData(String access_token,List<DrinkOrderCategory_Data> list,int position)
     {
         JSONObject req = new JSONObject();
@@ -240,6 +238,7 @@ public class DrinkOrder_Itemas extends BaseActivity {
         RequestQueue requestQuese = Volley.newRequestQueue(getApplicationContext());
         requestQuese.add(request);
     }
+    // REMOVING FAVOURITE ITEM METHOD (API)
     private void RemoveFavouriteData(String access_token,List<DrinkOrderCategory_Data> list,int position)
     {
         JSONObject req = new JSONObject();

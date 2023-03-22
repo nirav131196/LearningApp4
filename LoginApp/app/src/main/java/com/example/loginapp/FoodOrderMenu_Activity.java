@@ -106,7 +106,6 @@ public class FoodOrderMenu_Activity extends BaseActivity implements FoodCatItemS
                             GridLayoutManager layoutManager = new GridLayoutManager(getApplicationContext(),2);
                             recyclerView.setLayoutManager(layoutManager);
                             recyclerView.setAdapter(adapter);
-                          //  recyclerView.setLayoutManager(new LinearLayoutManager(FoodOrderMenu_Activity.this));
 
                             Toast.makeText(getApplicationContext(),"Food details fetched",Toast.LENGTH_LONG).show();
                         }

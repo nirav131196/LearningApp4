@@ -61,4 +61,14 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="sqlite_connectivity">SQLITE CONNECTIVITY</string>
+    <string name="empname">Enter Name</string>
+    <string name="empsurname">Enter Surname</string>
+    <string name="emppost">Enter Designation</string>
+    <string name="empdob">Enter Date of Birth</string>
+    <string name="empjoiningdate">Enter Joining Date</string>
+    <string name="empsalary">Enter Salary</string>
+    <string name="empaddress">Enter Address</string>
+    <string name="empcity">Enter City</string>
+    <string name="insertbutton">Add Employee</string>
 </resources>

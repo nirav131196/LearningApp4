@@ -25,38 +25,18 @@
         android:theme="@style/Theme.LoginApp"
         tools:targetApi="31">
         <activity
-            android:name=".FoodOrderCategory_Items"
-            android:exported="false" />
-        <activity
-            android:name=".DrinkOrder_Itemas"
-            android:exported="false" />
-        <activity
-            android:name=".FoodOrderMenu_Activity"
-            android:exported="false" />
-        <activity
-            android:name=".DrinkOrderMenu_Activity"
-            android:exported="false" />
-        <activity
-            android:name=".Notification_Activity"
-            android:exported="false" />
-        <activity
-            android:name=".OrderHistory"
-            android:exported="false" />
-        <activity
-            android:name=".Favourite_Activity"
-            android:exported="false" />
-        <activity
-            android:name=".OrderList_Activity"
-            android:exported="false" />
-        <activity
-            android:name=".MainActivity2"
+            android:name=".SQLite_Select_Record"
             android:exported="false"
-            android:label="@string/title_activity_main2" />
+            android:screenOrientation="portrait"/>
         <activity
-            android:name=".Dashboard_Activity_p9"
+            android:name=".SQLite_Update_Activity"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".SQLite_Insert_Activity"
             android:exported="true"
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.LoginApp.NoActionBar">
+            android:screenOrientation="portrait">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -64,8 +44,50 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".FoodOrderCategory_Items"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".DrinkOrder_Itemas"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".FoodOrderMenu_Activity"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".DrinkOrderMenu_Activity"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".Notification_Activity"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".OrderHistory"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".Favourite_Activity"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".OrderList_Activity"
+            android:exported="false"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".MainActivity2"
+            android:exported="false"
+            android:label="@string/title_activity_main2" />
+        <activity
+            android:name=".Dashboard_Activity_p9"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.LoginApp.NoActionBar" />
+        <activity
             android:name=".Welcome_Main"
-            android:exported="false" />
+            android:exported="false">
+        </activity>
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
@@ -123,5 +145,4 @@
             android:stateNotNeeded="true"
             android:theme="@style/zxing_CaptureTheme" />
     </application>
-
 </manifest>

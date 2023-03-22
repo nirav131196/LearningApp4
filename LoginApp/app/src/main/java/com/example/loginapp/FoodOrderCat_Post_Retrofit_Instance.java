@@ -23,6 +23,7 @@ public class FoodOrderCat_Post_Retrofit_Instance {
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
 
 
+        // For Printing request and response in log cat.
         final OkHttpClient okHttpClient = new OkHttpClient.Builder()
 
                 .addInterceptor(loggingInterceptor)

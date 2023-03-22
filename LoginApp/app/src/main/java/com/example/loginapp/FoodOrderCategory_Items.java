@@ -104,6 +104,7 @@ public class FoodOrderCategory_Items extends BaseActivity {
             }
         });
     }
+    // METHOD OF REMOVING FAVOURITE ITEM
     private void RemoveFavouriteItem(int position) {
 
         JsonObject jsonObject =new JsonObject();
@@ -142,9 +143,8 @@ public class FoodOrderCategory_Items extends BaseActivity {
         });
 
     }
+    // METHOD OF ADDING FAVOURITE ITEM
     private void PostFavouriteItem(int position) {
-
-     /* public static String addurl = "https://admin.p9bistro.com";*/
 
         JsonObject jsonObject= new JsonObject();
         jsonObject.addProperty("product_id",allUsersList.get(position).getId());
@@ -155,15 +155,10 @@ public class FoodOrderCategory_Items extends BaseActivity {
 
                 FoodOrderCat_BaseResponseData baseresponse2 = response.body();
 
-                Log.e("DATA","DATA 2 "+response.body());
-
                 FavItem = baseresponse2.favFoodItem;
-
-                Log.e("Base response","Favourite"+baseresponse2.message);
 
                 if(allUsersList != null)
                 {
-
                     showToast("Item Added Successfully");
                     allUsersList.get(position).isfavourite = true;
                     adapter.notifyItemChanged(position);

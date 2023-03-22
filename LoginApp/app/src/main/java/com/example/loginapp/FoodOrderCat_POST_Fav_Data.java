@@ -11,7 +11,6 @@ public class FoodOrderCat_POST_Fav_Data {
     public void setUser_id(String user_id) {
         this.user_id = user_id;
     }
-
     public String getProduct_id() {
         return product_id;
     }

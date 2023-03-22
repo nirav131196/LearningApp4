@@ -29,7 +29,7 @@ import android.widget.EditText;
 
 public class PushNotoficationActivity extends BaseActivity {
 
-    EditText   edtTitle, edtDescription;
+    EditText edtTitle, edtDescription;
     Button btnEnter;
     String title, description;
     public String CHANNEL_ID = "PORBANDAR";

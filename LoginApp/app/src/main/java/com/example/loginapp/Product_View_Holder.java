@@ -17,9 +17,7 @@ public class Product_View_Holder extends RecyclerView.ViewHolder {
     TextView id,category_id,department_id,category_name;
     View view;
     CardView cardView;
-
     ImageView photo;
-
     public Product_View_Holder(@NonNull View itemView) {
         super(itemView);
 

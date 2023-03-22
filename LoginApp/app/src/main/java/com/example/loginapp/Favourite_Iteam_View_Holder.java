@@ -40,7 +40,6 @@ public class Favourite_Iteam_View_Holder extends RecyclerView.ViewHolder {
     View view;
     ImageView IVCancelOption;
 
-
     public Favourite_Iteam_View_Holder(@NonNull View itemView) {
         super(itemView);
 
