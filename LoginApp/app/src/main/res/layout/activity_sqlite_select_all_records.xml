@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/backgroundimage2"
-    tools:context=".SQLite_Select_Record">
+    tools:context=".SQLite_Select_All_Records">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbarlayout4"
@@ -20,20 +19,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/yellow">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Your Employee Details"
+                android:text="Your Employee Full Details"
                 android:textSize="25dp"
                 android:textStyle="bold"
                 android:textColor="@color/white"
                 android:layout_gravity="center"
                 android:id="@+id/toolbar_title" />
+
         </androidx.appcompat.widget.Toolbar>
+
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/ShowEmpData"
+        android:id="@+id/ShowEmpAllData"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="65dp"

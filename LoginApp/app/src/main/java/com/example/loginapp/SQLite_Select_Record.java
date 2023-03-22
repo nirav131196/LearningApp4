@@ -7,15 +7,19 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SQLite_Select_Record extends AppCompatActivity {
+public class SQLite_Select_Record extends BaseActivity {
 
     RecyclerView recyclerView;
      SQLite_Database_Helper databaseHelper;
     List<SQLiteEmployeeData> employeelist;
+    SQLite_RecyclerAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +32,34 @@ public class SQLite_Select_Record extends AppCompatActivity {
         employeelist =new ArrayList<>();
         databaseHelper =new SQLite_Database_Helper(this);
         employeelist=databaseHelper.getEmployeeData();
-        SQLite_RecyclerAdapter adapter = new SQLite_RecyclerAdapter(employeelist);
+        adapter = new SQLite_RecyclerAdapter(employeelist, new SQLite_RecyclerAdapter.ItemClickListener() {
+            @Override
+            public void onDeleteClicked(int position) {
+
+                    databaseHelper.DeleteRecord(employeelist.get(position).id);
+                    showToast("Employee Details Deleted");
+                    employeelist.remove(position);
+                    adapter.notifyDataSetChanged();
+
+            }
+            @Override
+            public void onUpdateClicked(int position) {
+
+                Intent i =new Intent(SQLite_Select_Record.this,SQLite_Update_Activity.class);
+
+                startActivity(i);
+                finish();
+            }
+
+            @Override
+            public void onShowClicked(int position) {
+                String id = employeelist.get(position).id;
+                Intent i =new Intent(SQLite_Select_Record.this,SQLite_Select_All_Records.class);
+                i.putExtra("myid",id);
+                startActivity(i);
+                finish();
+            }
+        });
         recyclerView.setAdapter(adapter);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
@@ -51,4 +82,5 @@ public class SQLite_Select_Record extends AppCompatActivity {
         finish();
         super.onBackPressed();
     }
+
 }

@@ -116,11 +116,11 @@ public class Favourite_Activity extends BaseActivity {
                             recyclerView.setAdapter(adapter);
                             if(resarray.length() == 0)
                             {
-                                showToast("No favourite iteams to show");
+                                showToast("No favourite items to show");
                             }
                             else
                             {
-                                showToast("Favourite Iteams fetched");
+                                showToast("Favourite Items fetched");
                             }
                         } else {
                             showToast("Response false");

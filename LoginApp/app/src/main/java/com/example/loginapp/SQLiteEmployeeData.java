@@ -1,9 +1,7 @@
 package com.example.loginapp;
 
 public class SQLiteEmployeeData {
-
         String id,name,designation;
-
     public String getId() {
         return id;
     }

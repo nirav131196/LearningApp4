@@ -3,7 +3,9 @@ package com.example.loginapp;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,10 +16,13 @@ public class SQLite_RecyclerAdapter extends RecyclerView.Adapter<SQLite_Recycler
 
         List<SQLiteEmployeeData> data;
         SQLiteEmployeeData model;
+        ItemClickListener itemClickListener;
 
-        public SQLite_RecyclerAdapter(List<SQLiteEmployeeData> data)
+
+        public SQLite_RecyclerAdapter(List<SQLiteEmployeeData> data,ItemClickListener itemClickListener)
         {
             this.data =data;
+            this.itemClickListener =itemClickListener;
         }
     @Override
     public SQLite_RecyclerAdapter.EmpViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -31,9 +36,28 @@ public class SQLite_RecyclerAdapter extends RecyclerView.Adapter<SQLite_Recycler
     public void onBindViewHolder(@NonNull SQLite_RecyclerAdapter.EmpViewHolder holder, int position) {
 
         model = data.get(position);
-        holder.id.setText(model.getId());
-        holder.name.setText(model.getName());
-        holder.post.setText(model.getDesignation());
+        holder.txtid.setText(model.getId());
+        holder.txtname.setText(model.getName());
+        holder.txtpost.setText(model.getDesignation());
+        holder.IVDeleteItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                itemClickListener.onDeleteClicked(position);
+            }
+        });
+        holder.IVUpdateItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                itemClickListener.onUpdateClicked(position);
+            }
+        });
+        holder.IVSHOWItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                itemClickListener.onShowClicked(position);
+            }
+        });
     }
 
     @Override
@@ -42,17 +66,27 @@ public class SQLite_RecyclerAdapter extends RecyclerView.Adapter<SQLite_Recycler
     }
     public class EmpViewHolder extends RecyclerView.ViewHolder
     {
-
-        TextView id,name,post;
+        TextView txtid,txtname,txtpost;
+        ImageView IVDeleteItem,IVUpdateItem,IVSHOWItem;
 
         public EmpViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            id= (TextView) itemView.findViewById(R.id.txtEmpID);
-            name=(TextView) itemView.findViewById(R.id.txtEmpName);
-            post=(TextView) itemView.findViewById(R.id.txtEmpDesignation);
+            txtid= (TextView) itemView.findViewById(R.id.txtEmpID);
+            txtname=(TextView) itemView.findViewById(R.id.txtEmpName);
+            txtpost=(TextView) itemView.findViewById(R.id.txtEmpDesignation);
+
+            IVDeleteItem =itemView.findViewById(R.id.IVDeleteRecord);
+            IVUpdateItem =itemView.findViewById(R.id.IVUpdateRecord);
+            IVSHOWItem =itemView.findViewById(R.id.IVViewRecord);
         }
     }
+    public interface ItemClickListener
+    {
+        void onDeleteClicked(int position);
 
+        void onUpdateClicked(int position);
 
+        void onShowClicked(int position);
+    }
 }

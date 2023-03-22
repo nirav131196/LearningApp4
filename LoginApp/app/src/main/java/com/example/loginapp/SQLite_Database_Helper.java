@@ -90,4 +90,36 @@ public class SQLite_Database_Helper extends SQLiteOpenHelper {
         }
         return list;
     }
+    public ArrayList<SQLiteEmployeeData_All> getEmployeeALlData(String id)
+    {
+        ArrayList<SQLiteEmployeeData_All> list = new ArrayList<>();
+        String SQL = "SELECT * FROM " + TABLE_NAME + " WHERE emp_id="+id;
+        SQLiteDatabase db =this.getWritableDatabase();
+        Cursor cursor =db.rawQuery(SQL,null);
+        if(cursor.moveToFirst())
+        {
+            do {
+                SQLiteEmployeeData_All data = new SQLiteEmployeeData_All();
+                data.setId(cursor.getString(0));
+                data.setName(cursor.getString(1));
+                data.setSurname(cursor.getString(2));
+                data.setDesignation(cursor.getString(3));
+                data.setDob(cursor.getString(4));
+                data.setJoindate(cursor.getString(5));
+                data.setSalary(cursor.getString(6));
+                data.setAddress(cursor.getString(7));
+                data.setCity(cursor.getString(8));
+                list.add(data);
+            }
+            while (cursor.moveToNext());
+        }
+        return list;
+    }
+
+    public void DeleteRecord(String id)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_NAME,"emp_id=?",new String[]{id});
+        db.close();
+    }
 }
