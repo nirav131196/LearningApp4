@@ -5,6 +5,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,11 +14,14 @@ public class SQLite_Insert_Activity extends BaseActivity {
 
     EditText edtName,edtSurname,edtDesignation,edtDOB,edtJoiningDate,edtSalary,edtAddress,edtCity;
     Button btnInsert;
+    SQLite_Database_Helper databaseHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sqlite_insert);
+
+        databaseHelper = new SQLite_Database_Helper(this);
 
         initView();
         ClickInsertButton();
@@ -33,21 +37,37 @@ public class SQLite_Insert_Activity extends BaseActivity {
             @Override
             public void onClick(View v) {
 
-                int name = edtName.getText().toString().trim().length();
-                int surname =edtSurname.getText().toString().trim().length();
-                int post =edtDesignation.getText().toString().trim().length();
-                int DOB =edtDOB.getText().toString().trim().length();
-                int JoinDate =edtJoiningDate.getText().toString().trim().length();
-                int Salary =edtSalary.getText().toString().trim().length();
-                int Address =edtAddress.getText().toString().trim().length();
-                int City =edtCity.getText().toString().trim().length();
+                String name = edtName.getText().toString().trim();
+                String surname =edtSurname.getText().toString().trim();
+                String post =edtDesignation.getText().toString().trim();
+                String DOB =edtDOB.getText().toString().trim();
+                String JoinDate =edtJoiningDate.getText().toString().trim();
+                String Salary =edtSalary.getText().toString().trim();
+                String Address =edtAddress.getText().toString().trim();
+                String City =edtCity.getText().toString().trim();
 
-                if(name > 0 && surname > 0 && post > 0 && DOB > 0 && JoinDate > 0 && Salary > 0 && Address > 0 && City > 0)
+                if(name.length() > 0 && surname.length() > 0 && post.length() > 0 && DOB.length() > 0 && JoinDate.length() > 0 && Salary.length() > 0 && Address.length() > 0 && City.length() > 0)
                 {
-                    showToast("Employee Details Added");
-                    Intent i = new Intent(SQLite_Insert_Activity.this,SQLite_Select_Record.class);
-                    startActivity(i);
-                    finish();
+                    try {
+                        Log.e("DATA : ","DATA "+ name+surname+post+DOB+JoinDate+Salary+Address+City);
+                        boolean isInserted = databaseHelper.insertData(name,surname,post,DOB,JoinDate,Salary,Address,City);
+
+                        if(isInserted == true)
+                        {
+                            showToast("Employee Details Added");
+                            Intent i = new Intent(SQLite_Insert_Activity.this,SQLite_Select_Record.class);
+                            startActivity(i);
+                            finish();
+                        }
+                        else
+                        {
+                            showToast("Employee Details Not Added");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        showToast("Exception is : "+ex);
+                    }
                 }
                 else
                 {
