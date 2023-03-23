@@ -49,10 +49,35 @@ public class SQLite_Update_Activity extends BaseActivity {
       /*  SharedPreferences sh = getSharedPreferences("TABLENAME", Context.MODE_PRIVATE);
         String MYTABLE = sh.getString("table","");*/
 
-       /* String SQL = "SELECT * FROM " + TABLE_NAME + " WHERE emp_id="+updateid;
-        db = this.getWritableDatabase();
+        String SQL = "SELECT * FROM " + TABLE_NAME + " WHERE emp_id="+updateid;
+        db = databaseHelper.getWritableDatabase();
         Cursor cursor =db.rawQuery(SQL,null);
-*/
+
+        if(cursor.moveToFirst())
+        {
+            do {
+                String id =cursor.getString(0);
+                String name = cursor.getString(1);
+                String surname = cursor.getString(2);
+                String post = cursor.getString(3);
+                String DOB= cursor.getString(4);
+                String Joindate =cursor.getString(5);
+                String salary =cursor.getString(6);
+                String address = cursor.getString(7);
+                String city =cursor.getString(8);
+
+                edtId.setText(id);
+                edtName.setText(name);
+                edtSurname.setText(surname);
+                edtPost.setText(post);
+                edtDob.setText(DOB);
+                edtJoinDate.setText(Joindate);
+                edtSalary.setText(salary);
+                edtAddress.setText(address);
+                edtCity.setText(city);
+
+            } while(cursor.moveToNext());
+        }
     }
     private void ClickUpdateButton() {
         btnUpdate.setOnClickListener(new View.OnClickListener() {
