@@ -1,7 +1,16 @@
 package com.example.loginapp;
 
 public class SQLiteEmployeeData {
-        String id,name,designation;
+        String id,name,designation,salary;
+
+    public String getSalary() {
+        return salary;
+    }
+
+    public void setSalary(String salary) {
+        this.salary = salary;
+    }
+
     public String getId() {
         return id;
     }

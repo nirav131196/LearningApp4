@@ -39,6 +39,7 @@ public class SQLite_RecyclerAdapter extends RecyclerView.Adapter<SQLite_Recycler
         holder.txtid.setText(model.getId());
         holder.txtname.setText(model.getName());
         holder.txtpost.setText(model.getDesignation());
+        holder.txtSalary.setText(model.getSalary());
         holder.IVDeleteItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
@@ -66,7 +67,7 @@ public class SQLite_RecyclerAdapter extends RecyclerView.Adapter<SQLite_Recycler
     }
     public class EmpViewHolder extends RecyclerView.ViewHolder
     {
-        TextView txtid,txtname,txtpost;
+        TextView txtid,txtname,txtpost,txtSalary;
         ImageView IVDeleteItem,IVUpdateItem,IVSHOWItem;
 
         public EmpViewHolder(@NonNull View itemView) {
@@ -75,6 +76,7 @@ public class SQLite_RecyclerAdapter extends RecyclerView.Adapter<SQLite_Recycler
             txtid= (TextView) itemView.findViewById(R.id.txtEmpID);
             txtname=(TextView) itemView.findViewById(R.id.txtEmpName);
             txtpost=(TextView) itemView.findViewById(R.id.txtEmpDesignation);
+            txtSalary=(TextView) itemView.findViewById(R.id.txtEmpSalary);
 
             IVDeleteItem =itemView.findViewById(R.id.IVDeleteRecord);
             IVUpdateItem =itemView.findViewById(R.id.IVUpdateRecord);

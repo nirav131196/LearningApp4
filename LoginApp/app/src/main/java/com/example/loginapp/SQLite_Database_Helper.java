@@ -38,10 +38,10 @@ public class SQLite_Database_Helper extends SQLiteOpenHelper {
         String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME +"(" + columnId + " INTEGER PRIMARY KEY AUTOINCREMENT, " + columnName + " TEXT, " + columnSurname + " TEXT, " + columnDesignation + " TEXT, " + columnDOB + " TEXT, " + columnJoiningDate + " TEXT, " + columnSalary + " TEXT, " + columnAddress + " TEXT, " + columnCity + " TEXT)";
         db.execSQL(CREATE_TABLE);
 
-        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("TABLENAME", MODE_PRIVATE);
+      /*  SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("TABLENAME", MODE_PRIVATE);
         SharedPreferences.Editor edit =sharedPreferences.edit();
         edit.putString("table",TABLE_NAME);
-        edit.apply();
+        edit.apply();*/
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -80,10 +80,10 @@ public class SQLite_Database_Helper extends SQLiteOpenHelper {
                 return false;
             }
     }
-    public ArrayList<SQLiteEmployeeData> getEmployeeData()
+    public ArrayList<SQLiteEmployeeData> getEmployeeData(int salary)
     {
         ArrayList<SQLiteEmployeeData> list = new ArrayList<>();
-        String SQL = "SELECT * FROM "+TABLE_NAME;
+        String SQL = "SELECT * FROM " + TABLE_NAME + " WHERE emp_salary > "+ salary;
         SQLiteDatabase db =this.getWritableDatabase();
         Cursor cursor =db.rawQuery(SQL,null);
         if(cursor.moveToFirst())
@@ -93,6 +93,7 @@ public class SQLite_Database_Helper extends SQLiteOpenHelper {
                 data.setId(cursor.getString(0));
                 data.setName(cursor.getString(1));
                 data.setDesignation(cursor.getString(3));
+                data.setSalary(cursor.getString(6));
                 list.add(data);
             }
             while (cursor.moveToNext());

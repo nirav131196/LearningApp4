@@ -8,13 +8,20 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+
+import java.util.Calendar;
 
 public class SQLite_Insert_Activity extends BaseActivity {
 
     EditText edtName,edtSurname,edtDesignation,edtDOB,edtJoiningDate,edtSalary,edtAddress,edtCity;
     Button btnInsert;
     SQLite_Database_Helper databaseHelper;
+
+    private DatePicker datepicker;
+    private Calendar calander;
+    private int year,month,day;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
