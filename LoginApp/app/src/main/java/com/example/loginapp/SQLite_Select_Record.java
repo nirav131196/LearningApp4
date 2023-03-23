@@ -40,13 +40,12 @@ public class SQLite_Select_Record extends BaseActivity {
                     showToast("Employee Details Deleted");
                     employeelist.remove(position);
                     adapter.notifyDataSetChanged();
-
             }
             @Override
             public void onUpdateClicked(int position) {
-
+                String id2 = employeelist.get(position).id;
                 Intent i =new Intent(SQLite_Select_Record.this,SQLite_Update_Activity.class);
-
+                i.putExtra("myid2",id2);
                 startActivity(i);
                 finish();
             }
@@ -61,7 +60,6 @@ public class SQLite_Select_Record extends BaseActivity {
             }
         });
         recyclerView.setAdapter(adapter);
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

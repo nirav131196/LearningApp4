@@ -47,7 +47,8 @@
         app:layout_constraintTop_toBottomOf="@+id/appbarlayout4"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_margin="15dp"/>
+        android:layout_margin="15dp"
+        android:autofillHints="" />
     <EditText
         android:id="@+id/editEmpSurname"
         android:layout_width="350dp"
@@ -86,7 +87,7 @@
         android:textColor="@color/yellow"
         android:background="@drawable/editext_design2"
         android:ems="10"
-        android:inputType="text"
+        android:inputType="date|number"
         android:hint="@string/empdob"
         android:textColorHint="@color/yellow"
         app:layout_constraintTop_toBottomOf="@+id/editEmpPost"
@@ -101,7 +102,7 @@
         android:textColor="@color/yellow"
         android:background="@drawable/editext_design2"
         android:ems="10"
-        android:inputType="text"
+        android:inputType="date|number"
         android:hint="@string/empjoiningdate"
         android:textColorHint="@color/yellow"
         app:layout_constraintTop_toBottomOf="@+id/editEmpDOB"
@@ -116,7 +117,7 @@
         android:textColor="@color/yellow"
         android:background="@drawable/editext_design2"
         android:ems="10"
-        android:inputType="text"
+        android:inputType="phone"
         android:hint="@string/empsalary"
         android:textColorHint="@color/yellow"
         app:layout_constraintTop_toBottomOf="@+id/editEmpJoiningDate"

@@ -71,4 +71,6 @@
     <string name="empaddress">Enter Address</string>
     <string name="empcity">Enter City</string>
     <string name="insertbutton">Add Employee</string>
+    <string name="empid">Enter Id</string>
+    <string name="updatebutton">Update</string>
 </resources>

@@ -1,7 +1,11 @@
 package com.example.loginapp;
 
+import static android.content.Context.MODE_PRIVATE;
+import static com.facebook.FacebookSdk.getApplicationContext;
+
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -33,6 +37,11 @@ public class SQLite_Database_Helper extends SQLiteOpenHelper {
 
         String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME +"(" + columnId + " INTEGER PRIMARY KEY AUTOINCREMENT, " + columnName + " TEXT, " + columnSurname + " TEXT, " + columnDesignation + " TEXT, " + columnDOB + " TEXT, " + columnJoiningDate + " TEXT, " + columnSalary + " TEXT, " + columnAddress + " TEXT, " + columnCity + " TEXT)";
         db.execSQL(CREATE_TABLE);
+
+        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences("TABLENAME", MODE_PRIVATE);
+        SharedPreferences.Editor edit =sharedPreferences.edit();
+        edit.putString("table",TABLE_NAME);
+        edit.apply();
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -115,11 +124,25 @@ public class SQLite_Database_Helper extends SQLiteOpenHelper {
         }
         return list;
     }
-
     public void DeleteRecord(String id)
     {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_NAME,"emp_id=?",new String[]{id});
+        db.close();
+    }
+    public void UpdateRecord(String id,String name,String surname,String post,String dob,String joindate,String salary,String address,String city)
+    {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv= new ContentValues();
+        cv.put(columnName,name);
+        cv.put(columnSurname,surname);
+        cv.put(columnDesignation,post);
+        cv.put(columnDOB,dob);
+        cv.put(columnJoiningDate,joindate);
+        cv.put(columnSalary,salary);
+        cv.put(columnAddress,address);
+        cv.put(columnCity,city);
+        db.update(TABLE_NAME,cv,"emp_id=?",new String[]{id});
         db.close();
     }
 }
