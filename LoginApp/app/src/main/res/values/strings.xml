@@ -73,4 +73,5 @@
     <string name="insertbutton">Add Employee</string>
     <string name="empid">Enter Id</string>
     <string name="updatebutton">Update</string>
+    <string name="apply">Apply</string>
 </resources>

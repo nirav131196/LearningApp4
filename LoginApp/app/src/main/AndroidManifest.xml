@@ -25,12 +25,15 @@
         android:theme="@style/Theme.LoginApp"
         tools:targetApi="31">
         <activity
+            android:name=".SQLiteFilterDate"
+            android:exported="false" />
+        <activity
             android:name=".SQLite_Select_All_Records"
             android:exported="false" />
         <activity
             android:name=".SQLite_Select_Record"
             android:exported="true"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -44,9 +47,7 @@
         <activity
             android:name=".SQLite_Insert_Activity"
             android:exported="false"
-            android:screenOrientation="portrait">
-
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".FoodOrderCategory_Items"
             android:exported="false"
@@ -90,7 +91,7 @@
             android:theme="@style/Theme.LoginApp.NoActionBar" />
         <activity
             android:name=".Welcome_Main"
-            android:exported="false"></activity>
+            android:exported="false" />
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

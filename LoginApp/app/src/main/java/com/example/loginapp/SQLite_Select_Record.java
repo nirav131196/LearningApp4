@@ -6,8 +6,10 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -22,36 +24,40 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SQLite_Select_Record extends BaseActivity implements AdapterView.OnItemSelectedListener {
+public class SQLite_Select_Record extends BaseActivity   {
 
     RecyclerView recyclerView;
      SQLite_Database_Helper databaseHelper;
     List<SQLiteEmployeeData> employeelist;
     SQLite_RecyclerAdapter adapter;
-    int salary,salary2;
-    String[] items = {"Apply Filter","Salary > 50k","Same Designation"};
-
+    String salary,mysalary;
+    ImageView IVFilter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sqlite_select_record);
 
-        Spinner spino = findViewById(R.id.Spinner);
-        spino.setOnItemSelectedListener(this);
-
-        ArrayAdapter ad = new ArrayAdapter(this, android.R.layout.simple_spinner_item, items);
-
-        ad.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spino.setAdapter(ad);
-
+        IVFilter =(ImageView) findViewById(R.id.IVFilter);
+        if(getIntent().hasExtra("SALARY"))
+        {
+            mysalary = getIntent().getStringExtra("SALARY");
+        }
+        Log.e("My salary 2","salary "+mysalary);
 
         recyclerView =(RecyclerView)findViewById(R.id.ShowEmpData);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false));
-
         employeelist =new ArrayList<>();
         databaseHelper =new SQLite_Database_Helper(this);
-        salary = salary2;
-        employeelist=databaseHelper.getEmployeeData(salary);
+        if(mysalary == null)
+        {
+            salary ="1";
+            employeelist=databaseHelper.getEmployeeData(salary);
+        }
+        else
+        {
+            employeelist=databaseHelper.getEmployeeData(mysalary);
+        }
+
         adapter = new SQLite_RecyclerAdapter(employeelist, new SQLite_RecyclerAdapter.ItemClickListener() {
             @Override
             public void onDeleteClicked(int position) {
@@ -83,51 +89,30 @@ public class SQLite_Select_Record extends BaseActivity implements AdapterView.On
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        IVFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i =new Intent(SQLite_Select_Record.this,SQLiteFilterDate.class);
+                startActivity(i);
+                finish();
+            }
+        });
     }
     public boolean onSupportNavigateUp() {
 
         Intent i =new Intent(SQLite_Select_Record.this, SQLite_Insert_Activity.class);
         startActivity(i);
         finish();
+
         return super.onSupportNavigateUp();
     }
-
     @Override
     public void onBackPressed() {
         Intent i =new Intent(SQLite_Select_Record.this, SQLite_Insert_Activity.class);
         startActivity(i);
         finish();
+
         super.onBackPressed();
-    }
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-
-        if(position == 0)
-        {
-            salary2 = 1;
-        }
-        else if(position == 1)
-        {
-            salary2 = 50000;
-            showToast("Salary "+salary2);
-
-          /*  recyclerView =(RecyclerView)findViewById(R.id.ShowEmpData);
-            recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false));
-            employeelist =new ArrayList<>();
-            databaseHelper =new SQLite_Database_Helper(this);
-            employeelist=databaseHelper.getEmployeeData(salary);
-            adapter.notifyItemChanged(position);
-            recyclerView.setAdapter(adapter);*/
-
-
-        }
-        else
-        {
-            showToast("SAGAR");
-        }
-    }
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-
     }
 }
