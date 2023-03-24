@@ -1,7 +1,10 @@
 package com.example.loginapp;
 
 import static android.content.Context.MODE_PRIVATE;
+import static android.icu.text.ListFormatter.Type.AND;
+import static android.icu.text.MessagePattern.ArgType.SELECT;
 import static com.facebook.FacebookSdk.getApplicationContext;
+import static com.google.firebase.crashlytics.buildtools.reloc.com.google.common.net.HttpHeaders.FROM;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -28,6 +31,11 @@ public class SQLite_Database_Helper extends SQLiteOpenHelper {
     public static final String columnAddress = "emp_address";
     public static final String columnCity = "emp_city";
 
+    public static final String TABLE_NAME2 = "EMPLOYEE_CONTACT_DETAILS";
+    public static final String columnId2 = "emp_id";
+    public static final String columnMobileNo = "emp_mobileno";
+    public static final String columnEmailId = "emp_emailid";
+
     public SQLite_Database_Helper(Context context)
     {
         super(context, DATABASE_NAME, null, 1);
@@ -38,12 +46,16 @@ public class SQLite_Database_Helper extends SQLiteOpenHelper {
         String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME +"(" + columnId + " INTEGER PRIMARY KEY AUTOINCREMENT, " + columnName + " TEXT, " + columnSurname + " TEXT, " + columnDesignation + " TEXT, " + columnDOB + " TEXT, " + columnJoiningDate + " TEXT, " + columnSalary + " TEXT, " + columnAddress + " TEXT, " + columnCity + " TEXT)";
         db.execSQL(CREATE_TABLE);
 
+        String CREATE_TABLE2 = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME2 +"(" + columnId2 + " INTEGER NOT NULL, " + columnMobileNo + " TEXT NOT NULL, " + columnEmailId + " TEXT NOT NULL,FOREIGN KEY(columnId2) REFERENCES TABLE_NAME(columnId))";
+        db.execSQL(CREATE_TABLE2);
+
 
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS "+TABLE_NAME2);
         onCreate(db);
     }
     public boolean insertData(String name,String surname,String designation,String DOB,String JoinDate,String Salary,String Address,String City)
@@ -77,6 +89,33 @@ public class SQLite_Database_Helper extends SQLiteOpenHelper {
                 return false;
             }
     }
+    public boolean insertContactData(String id,String mobileno,String emailid)
+    {
+        try
+        {
+            SQLiteDatabase db = this.getWritableDatabase();
+            ContentValues cv =new ContentValues();
+            cv.put(columnId2,id);
+            cv.put(columnMobileNo,mobileno);
+            cv.put(columnEmailId,emailid);
+
+
+            long result2 = db.insert(TABLE_NAME2,null,cv);
+            if(result2 ==  -1)
+            {
+                return  false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+            return false;
+        }
+    }
     public ArrayList<SQLiteEmployeeData> getEmployeeData(String salary)
     {
         ArrayList<SQLiteEmployeeData> list = new ArrayList<>();
@@ -101,6 +140,26 @@ public class SQLite_Database_Helper extends SQLiteOpenHelper {
     {
         ArrayList<SQLiteEmployeeData> list = new ArrayList<>();
         String SQL = "SELECT * FROM EMPLOYEE_DETAILS WHERE emp_designation='"+post+"'";
+        SQLiteDatabase db =this.getWritableDatabase();
+        Cursor cursor =db.rawQuery(SQL,null);
+        if(cursor.moveToFirst())
+        {
+            do {
+                SQLiteEmployeeData data = new SQLiteEmployeeData();
+                data.setId(cursor.getString(0));
+                data.setName(cursor.getString(1));
+                data.setDesignation(cursor.getString(3));
+                data.setSalary(cursor.getString(6));
+                list.add(data);
+            }
+            while (cursor.moveToNext());
+        }
+        return list;
+    }
+    public ArrayList<SQLiteEmployeeData> getEmpDataPostAndSalary(String salary,String post)
+    {
+        ArrayList<SQLiteEmployeeData> list = new ArrayList<>();
+        String SQL = "SELECT * FROM EMPLOYEE_DETAILS WHERE emp_salary>'"+salary+"' AND emp_designation='"+post+"'";
         SQLiteDatabase db =this.getWritableDatabase();
         Cursor cursor =db.rawQuery(SQL,null);
         if(cursor.moveToFirst())

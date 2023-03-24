@@ -16,7 +16,7 @@ import java.util.Calendar;
 public class SQLite_Insert_Activity extends BaseActivity {
 
     EditText edtName,edtSurname,edtDesignation,edtDOB,edtJoiningDate,edtSalary,edtAddress,edtCity;
-    Button btnInsert;
+    Button btnInsert,btnInsertContact;
     SQLite_Database_Helper databaseHelper;
 
     private DatePicker datepicker;
@@ -32,11 +32,24 @@ public class SQLite_Insert_Activity extends BaseActivity {
 
         initView();
         ClickInsertButton();
+        ClickInsertContactButton();
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+    }
+
+    private void ClickInsertContactButton() {
+        btnInsertContact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent i =new Intent(SQLite_Insert_Activity.this,SQLite_Insert_ContactData_Activity.class);
+                startActivity(i);
+                finish();
+            }
+        });
     }
 
     private void ClickInsertButton() {
@@ -94,6 +107,7 @@ public class SQLite_Insert_Activity extends BaseActivity {
         edtCity = findViewById(R.id.editEmpCity);
 
         btnInsert=findViewById(R.id.InsertButton);
+        btnInsertContact=findViewById(R.id.InsertContactButton);
     }
     public boolean onSupportNavigateUp() {
 

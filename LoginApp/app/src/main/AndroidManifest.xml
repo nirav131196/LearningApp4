@@ -25,6 +25,9 @@
         android:theme="@style/Theme.LoginApp"
         tools:targetApi="31">
         <activity
+            android:name=".SQLite_Insert_ContactData_Activity"
+            android:exported="false" />
+        <activity
             android:name=".SQLiteFilterDate"
             android:exported="false" />
         <activity
@@ -32,6 +35,15 @@
             android:exported="false" />
         <activity
             android:name=".SQLite_Select_Record"
+            android:exported="false"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".SQLite_Update_Activity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SQLite_Insert_Activity"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -40,14 +52,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".SQLite_Update_Activity"
-            android:exported="false"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".SQLite_Insert_Activity"
-            android:exported="false"
-            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".FoodOrderCategory_Items"
             android:exported="false"

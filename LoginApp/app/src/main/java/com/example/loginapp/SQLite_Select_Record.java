@@ -50,8 +50,27 @@ public class SQLite_Select_Record extends BaseActivity   {
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false));
         employeelist =new ArrayList<>();
         databaseHelper =new SQLite_Database_Helper(this);
+        if(mysalary != null && post != null)
+        {
+            employeelist=databaseHelper.getEmpDataPostAndSalary(mysalary,post);
+        }
+        else
+        {
+            salary ="1";
+            employeelist=databaseHelper.getEmployeeData(salary);
+        }
 
-        if(mysalary == null)
+
+       /* if(mysalary !=null && post != null)
+        {
+
+        }
+        else
+        {
+            salary ="1";
+            employeelist=databaseHelper.getEmployeeData(salary);
+        }*/
+       /* if(mysalary == null)
         {
             if(post == null)
             {
@@ -63,10 +82,14 @@ public class SQLite_Select_Record extends BaseActivity   {
                 employeelist=databaseHelper.getEmpDataByPost(post);
             }
         }
+        else if(post != null && post != "Select Designation")
+        {
+            employeelist=databaseHelper.getEmpDataPostAndSalary(mysalary,post);
+        }
         else
         {
             employeelist=databaseHelper.getEmployeeData(mysalary);
-        }
+        }*/
         adapter = new SQLite_RecyclerAdapter(employeelist, new SQLite_RecyclerAdapter.ItemClickListener() {
             @Override
             public void onDeleteClicked(int position) {
