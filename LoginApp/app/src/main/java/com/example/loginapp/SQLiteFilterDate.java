@@ -1,6 +1,7 @@
 package com.example.loginapp;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -15,14 +16,22 @@ import android.widget.Spinner;
 
 public class SQLiteFilterDate extends BaseActivity implements AdapterView.OnItemSelectedListener {
 
-    String[] items = {"Select Salary","Salary > 50k","Same Designation"};
-    String[] items2 = {"Select Designation","Salary > 50k","Same Designation"};
-    String salary2;
+    String[] items = {"Select Salary","Salary > 50k"};
+    String[] items2 = {"Select Designation","IOS","Angular","REACT NATIVE","ANDROID","FLUTTER","PYTHON","C#","JAVA","UI DESIGNER","PHP","LARAVEL"};
+    String salary2,designation;
     Button btnApply;
+    Object aa;
+
+    Spinner post;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sqlite_filter_date);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar2);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         btnApply =(Button)findViewById(R.id.applybutton);
         btnApply.setOnClickListener(new View.OnClickListener() {
@@ -30,43 +39,52 @@ public class SQLiteFilterDate extends BaseActivity implements AdapterView.OnItem
             public void onClick(View v) {
                 Intent i =new Intent(SQLiteFilterDate.this,SQLite_Select_Record.class);
                 i.putExtra("SALARY",salary2);
-                i.putExtra("POST",122);
+                i.putExtra("POST",designation);
                 startActivity(i);
                 finish();
-                Log.e("My salary 1","SALARY "+salary2);
             }
         });
-
-        Spinner spino = findViewById(R.id.Spinner2);
-        spino.setOnItemSelectedListener(this);
+        Spinner salary = findViewById(R.id.Spinner2);
+        salary.setOnItemSelectedListener(this);
 
         ArrayAdapter ad = new ArrayAdapter(this, android.R.layout.simple_spinner_item, items);
 
         ad.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spino.setAdapter(ad);
+        salary.setAdapter(ad);
 
-        Spinner spino2 = findViewById(R.id.Spinner3);
-        spino2.setOnItemSelectedListener(this);
+        post = findViewById(R.id.Spinner3);
+        post.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
+                     designation = post.getItemAtPosition(position).toString();
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         ArrayAdapter ad2 = new ArrayAdapter(this, android.R.layout.simple_spinner_item, items2);
 
         ad2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spino.setAdapter(ad2);
+        post.setAdapter(ad2);
+    }
+    public boolean onSupportNavigateUp() {
+
+        Intent i =new Intent(SQLiteFilterDate.this, SQLite_Select_Record.class);
+        startActivity(i);
+        finish();
+
+        return super.onSupportNavigateUp();
     }
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-        switch(view.getId())
-        {
-
-        }
-        if(position == 1)
-        {
+        if(position ==1){
             salary2 = "50000";
-
-           showToast("Salary Selected");
+            showToast("Salary Selected");
         }
-
     }
     @Override
     public void onNothingSelected(AdapterView<?> parent) {

@@ -30,7 +30,7 @@ public class SQLite_Select_Record extends BaseActivity   {
      SQLite_Database_Helper databaseHelper;
     List<SQLiteEmployeeData> employeelist;
     SQLite_RecyclerAdapter adapter;
-    String salary,mysalary;
+    String salary,mysalary,post;
     ImageView IVFilter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,22 +42,31 @@ public class SQLite_Select_Record extends BaseActivity   {
         {
             mysalary = getIntent().getStringExtra("SALARY");
         }
-        Log.e("My salary 2","salary "+mysalary);
-
+        if(getIntent().hasExtra("POST"))
+        {
+            post = getIntent().getStringExtra("POST");
+        }
         recyclerView =(RecyclerView)findViewById(R.id.ShowEmpData);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false));
         employeelist =new ArrayList<>();
         databaseHelper =new SQLite_Database_Helper(this);
+
         if(mysalary == null)
         {
-            salary ="1";
-            employeelist=databaseHelper.getEmployeeData(salary);
+            if(post == null)
+            {
+                salary ="1";
+                employeelist=databaseHelper.getEmployeeData(salary);
+            }
+            else
+            {
+                employeelist=databaseHelper.getEmpDataByPost(post);
+            }
         }
         else
         {
             employeelist=databaseHelper.getEmployeeData(mysalary);
         }
-
         adapter = new SQLite_RecyclerAdapter(employeelist, new SQLite_RecyclerAdapter.ItemClickListener() {
             @Override
             public void onDeleteClicked(int position) {

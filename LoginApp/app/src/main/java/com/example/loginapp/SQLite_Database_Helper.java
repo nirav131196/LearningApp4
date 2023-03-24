@@ -97,10 +97,10 @@ public class SQLite_Database_Helper extends SQLiteOpenHelper {
         }
         return list;
     }
-    public ArrayList<SQLiteEmployeeData> getEmployeeData2(String salary)
+    public ArrayList<SQLiteEmployeeData> getEmpDataByPost(String post)
     {
         ArrayList<SQLiteEmployeeData> list = new ArrayList<>();
-        String SQL = "SELECT * FROM " + TABLE_NAME + " WHERE emp_salary > "+ salary;
+        String SQL = "SELECT * FROM EMPLOYEE_DETAILS WHERE emp_designation='"+post+"'";
         SQLiteDatabase db =this.getWritableDatabase();
         Cursor cursor =db.rawQuery(SQL,null);
         if(cursor.moveToFirst())

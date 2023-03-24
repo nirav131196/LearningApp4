@@ -22,7 +22,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Your Employee Details"
+                android:text="Apply Filters"
                 android:textSize="25dp"
                 android:textStyle="bold"
                 android:textColor="@color/white"
@@ -30,25 +30,23 @@
                 android:id="@+id/toolbar_title" />
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
-
-
     <Spinner
         android:id="@+id/Spinner2"
         android:layout_height="50dp"
-        android:layout_width="300dp"
-        android:layout_marginStart="10dp"
+        android:layout_width="match_parent"
+        android:layout_margin="20dp"
+        android:background="@drawable/editext_design4"
         android:layout_marginBottom="10dp"
-        android:layout_marginTop="60dp"
+
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@+id/appbarlayout4"/>
 
     <Spinner
         android:id="@+id/Spinner3"
         android:layout_height="50dp"
-        android:layout_width="300dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="30dp"
+        android:layout_width="match_parent"
+        android:background="@drawable/editext_design4"
+        android:layout_margin="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/Spinner2"/>
 
@@ -60,6 +58,7 @@
         android:layout_margin="15dp"
         android:background="@drawable/editext_design3"
         android:text="@string/apply"
+        android:textColor="@color/white"
         android:textSize="17dp"
         android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
