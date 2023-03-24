@@ -31,31 +31,39 @@ public class SQLite_Database_Helper extends SQLiteOpenHelper {
     public static final String columnAddress = "emp_address";
     public static final String columnCity = "emp_city";
 
-    public static final String TABLE_NAME2 = "EMPLOYEE_CONTACT_DETAILS";
+
+    public static final String EMPLOYEE = "EMPLOYEE";
     public static final String columnId2 = "emp_id";
     public static final String columnMobileNo = "emp_mobileno";
-    public static final String columnEmailId = "emp_emailid";
+    public static final String group_id = "emp_id2";
+
+    public static final String EMPLOYEE_GROUP = "EMPLOYEE_GROUP";
+    public static final String group_id2 = "emp_id2";
+    public static final String columnMobileNo2 = "emp_mobileno2";
+
 
     public SQLite_Database_Helper(Context context)
     {
-        super(context, DATABASE_NAME, null, 1);
+        super(context, DATABASE_NAME, null, 6);
     }
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME +"(" + columnId + " INTEGER PRIMARY KEY AUTOINCREMENT, " + columnName + " TEXT, " + columnSurname + " TEXT, " + columnDesignation + " TEXT, " + columnDOB + " TEXT, " + columnJoiningDate + " TEXT, " + columnSalary + " TEXT, " + columnAddress + " TEXT, " + columnCity + " TEXT)";
+        String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME +"(" + columnId + " INTEGER PRIMARY KEY, " + columnName + " TEXT, " + columnSurname + " TEXT, " + columnDesignation + " TEXT, " + columnDOB + " TEXT, " + columnJoiningDate + " TEXT, " + columnSalary + " TEXT, " + columnAddress + " TEXT, " + columnCity + " TEXT, FOREIGN KEY(emp_id) REFERENCES EMPLOYEE_CONTACT_DETAILS(emp_id))";
         db.execSQL(CREATE_TABLE);
 
-        String CREATE_TABLE2 = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME2 +"(" + columnId2 + " INTEGER NOT NULL, " + columnMobileNo + " TEXT NOT NULL, " + columnEmailId + " TEXT NOT NULL,FOREIGN KEY(columnId2) REFERENCES TABLE_NAME(columnId))";
+        String CREATE_TABLE2 = "CREATE TABLE IF NOT EXISTS " + EMPLOYEE +"(" + columnId2 + " INTEGER PRIMARY KEY, " + columnMobileNo + " TEXT, " + group_id + " INTEGER NOT NULL)";
         db.execSQL(CREATE_TABLE2);
 
-
+        String CREATE_TABLE3 = "CREATE TABLE IF NOT EXISTS " + EMPLOYEE_GROUP +"(" + group_id2 + " INTEGER PRIMARY KEY, " + columnMobileNo2 + " TEXT NOT NULL)";
+        db.execSQL(CREATE_TABLE3);
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_NAME);
-        db.execSQL("DROP TABLE IF EXISTS "+TABLE_NAME2);
+        db.execSQL("DROP TABLE IF EXISTS "+EMPLOYEE);
+        db.execSQL("DROP TABLE IF EXISTS "+EMPLOYEE_GROUP);
         onCreate(db);
     }
     public boolean insertData(String name,String surname,String designation,String DOB,String JoinDate,String Salary,String Address,String City)
@@ -89,18 +97,42 @@ public class SQLite_Database_Helper extends SQLiteOpenHelper {
                 return false;
             }
     }
-    public boolean insertContactData(String id,String mobileno,String emailid)
+    public boolean insertEmp(String mobileno,String groupid)
+    {
+
+        try
+        {
+            SQLiteDatabase db = this.getWritableDatabase();
+            ContentValues cv =new ContentValues();
+
+            cv.put(columnMobileNo,mobileno);
+            cv.put(group_id,groupid);
+
+            long result2 = db.insert(EMPLOYEE,null,cv);
+            if(result2 ==  -1)
+            {
+                return  false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+    public boolean insertEmpGroup(String mobileno)
     {
         try
         {
             SQLiteDatabase db = this.getWritableDatabase();
             ContentValues cv =new ContentValues();
-            cv.put(columnId2,id);
-            cv.put(columnMobileNo,mobileno);
-            cv.put(columnEmailId,emailid);
+            cv.put(columnMobileNo2,mobileno);
 
-
-            long result2 = db.insert(TABLE_NAME2,null,cv);
+            long result2 = db.insert(EMPLOYEE_GROUP,null,cv);
             if(result2 ==  -1)
             {
                 return  false;
