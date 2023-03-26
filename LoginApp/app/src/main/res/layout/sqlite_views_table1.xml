@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="15dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/txti"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Id : "
+        android:textSize="25dp"
+        android:textColor="@color/yellow"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+    <TextView
+        android:id="@+id/txtid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="12345"
+        android:textSize="25dp"
+        android:textColor="@color/yellow"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toRightOf="@+id/txti"/>
+    <TextView
+        android:id="@+id/txtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mobile no : "
+        android:textSize="25dp"
+        android:textColor="@color/yellow"
+        app:layout_constraintTop_toBottomOf="@+id/txti"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+    <TextView
+        android:id="@+id/txtmobileno"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="7096"
+        android:textSize="25dp"
+        android:textColor="@color/yellow"
+        app:layout_constraintTop_toBottomOf="@+id/txtid"
+        app:layout_constraintLeft_toRightOf="@+id/txtn"/>
+    <TextView
+        android:id="@+id/txtg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Group id : "
+        android:textSize="25dp"
+        android:textColor="@color/yellow"
+        app:layout_constraintTop_toBottomOf="@+id/txtn"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+    <TextView
+        android:id="@+id/txtgroupid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1"
+        android:textSize="25dp"
+        android:textColor="@color/yellow"
+        app:layout_constraintTop_toBottomOf="@+id/txtmobileno"
+        app:layout_constraintLeft_toRightOf="@+id/txtg"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

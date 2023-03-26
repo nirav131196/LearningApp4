@@ -2,6 +2,8 @@ package com.example.loginapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,11 +12,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SQLite_Insert_ContactData_Activity extends BaseActivity {
 
     EditText edtId,edtName,edtName2;
     Button btnInsert,btnInsert2;
     SQLite_Database_Helper databaseHelper;
+
+    RecyclerView recyclerView;
+    List<SQLiteEmpData> list;
+    SQLite_Adapter_ForeignKey_Table1 adapter;
     String id,name,name2;
 
     @Override
@@ -38,7 +47,7 @@ public class SQLite_Insert_ContactData_Activity extends BaseActivity {
                     {
                         id=edtId.getText().toString();
                         name=edtName.getText().toString();
-                        boolean isinserted = databaseHelper.insertEmp(edtId.getText().toString(),edtName.getText().toString());
+                        boolean isinserted = databaseHelper.insertEmp(name,id);
 
                         if(isinserted == true)
                         {
@@ -101,6 +110,14 @@ public class SQLite_Insert_ContactData_Activity extends BaseActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        recyclerView =(RecyclerView)findViewById(R.id.rvdetails);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false));
+        list =new ArrayList<>();
+        databaseHelper =new SQLite_Database_Helper(this);
+        list=databaseHelper.getData1();
+        adapter = new SQLite_Adapter_ForeignKey_Table1(list);
+        recyclerView.setAdapter(adapter);
     }
     public boolean onSupportNavigateUp() {
 
