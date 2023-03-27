@@ -32,19 +32,18 @@ public class SQLite_Database_Helper extends SQLiteOpenHelper {
     public static final String columnCity = "emp_city";
 
 
-    public static final String EMPLOYEE = "EMPLOYEE_ONE";
+    public static final String EMPLOYEE = "EMPLOYEE_THREE";
     public static final String columnId2 = "emp_id";
     public static final String columnMobileNo = "emp_mobileno";
     public static final String group_id = "emp_id2";
 
-    public static final String EMPLOYEE_GROUP = "EMPLOYEE_TWO";
+    public static final String EMPLOYEE_GROUP = "EMPLOYEE_FOUR";
     public static final String group_id2 = "emp_id2";
     public static final String columnMobileNo2 = "emp_mobileno2";
 
-
     public SQLite_Database_Helper(Context context)
     {
-        super(context, DATABASE_NAME, null, 10);
+        super(context, DATABASE_NAME, null, 21);
     }
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -52,10 +51,20 @@ public class SQLite_Database_Helper extends SQLiteOpenHelper {
         String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME +"(" + columnId + " INTEGER PRIMARY KEY, " + columnName + " TEXT, " + columnSurname + " TEXT, " + columnDesignation + " TEXT, " + columnDOB + " TEXT, " + columnJoiningDate + " TEXT, " + columnSalary + " TEXT, " + columnAddress + " TEXT, " + columnCity + " TEXT)";
         db.execSQL(CREATE_TABLE);
 
-        String CREATE_TABLE2 = "CREATE TABLE IF NOT EXISTS " + EMPLOYEE +"(" + columnId2 + " INTEGER PRIMARY KEY, " + columnMobileNo + " TEXT, " + group_id + " INTEGER references " + EMPLOYEE_GROUP + "(" + group_id2 + "))";
+        /*String CREATE_TABLE2 = "CREATE TABLE IF NOT EXISTS " + EMPLOYEE +"(" + columnId2 + " INTEGER PRIMARY KEY, "
+                + columnMobileNo + " TEXT, "
+                + group_id + " INTEGER UNIQUE," + " FOREIGN KEY ("+group_id+") REFERENCES "
+                + EMPLOYEE_GROUP + "(" + group_id2 + "));";
         db.execSQL(CREATE_TABLE2);
 
-        String CREATE_TABLE3 = "CREATE TABLE IF NOT EXISTS " + EMPLOYEE_GROUP +"(" + group_id2 + " INTEGER PRIMARY KEY, " + columnMobileNo2 + " TEXT NOT NULL)";
+        String CREATE_TABLE3 = "CREATE TABLE IF NOT EXISTS " + EMPLOYEE_GROUP +"(" + group_id2 + " INTEGER PRIMARY KEY, "
+                + columnMobileNo2 + " TEXT NOT NULL)";
+        db.execSQL(CREATE_TABLE3);*/
+
+        String CREATE_TABLE2 = "CREATE TABLE IF NOT EXISTS EMPLOYEE_THREE (emp_id INTEGER PRIMARY KEY,emp_mobileno TEXT,emp_id2 INTEGER UNIQUE, FOREIGN KEY(emp_id2) REFERENCES EMPLOYEE_TWO(emp_id2))";
+        db.execSQL(CREATE_TABLE2);
+
+        String CREATE_TABLE3 = "CREATE TABLE IF NOT EXISTS EMPLOYEE_FOUR (emp_id2 INTEGER PRIMARY KEY,emp_mobileno2 TEXT)";
         db.execSQL(CREATE_TABLE3);
     }
     @Override
@@ -246,6 +255,25 @@ public class SQLite_Database_Helper extends SQLiteOpenHelper {
                 data.setMobileno(cursor.getString(1));
                 data.setGroupid(cursor.getString(2));
 
+                list.add(data);
+            }
+            while (cursor.moveToNext());
+        }
+        return list;
+    }
+    public ArrayList<SQLiteEmpData2> getData2()
+    {
+        ArrayList<SQLiteEmpData2> list = new ArrayList<>();
+        String SQL = "SELECT * FROM " + EMPLOYEE_GROUP;
+        SQLiteDatabase db =this.getWritableDatabase();
+        Cursor cursor =db.rawQuery(SQL,null);
+        if(cursor.moveToFirst())
+        {
+            do {
+                SQLiteEmpData2 data = new SQLiteEmpData2();
+
+                data.setGroupid2(cursor.getString(0));
+                data.setMobileno2(cursor.getString(1));
                 list.add(data);
             }
             while (cursor.moveToNext());

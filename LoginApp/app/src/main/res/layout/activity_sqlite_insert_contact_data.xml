@@ -101,21 +101,47 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Employee Table"
+        android:textSize="15dp"
+        android:textColor="@color/yellow"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"
+        app:layout_constraintTop_toBottomOf="@+id/InsertContactButton3"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:id="@+id/txttable1" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvdetails"
         android:layout_width="match_parent"
         android:layout_height="110dp"
         android:layout_margin="20dp"
-        app:layout_constraintTop_toBottomOf="@+id/InsertContactButton3"
+        app:layout_constraintTop_toBottomOf="@+id/txttable1"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Employee Group Table"
+        android:textSize="15dp"
+        android:textColor="@color/yellow"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"
+        app:layout_constraintTop_toBottomOf="@+id/rvdetails"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:id="@+id/txttable2"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvdetails2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
         android:layout_margin="20dp"
-        app:layout_constraintTop_toBottomOf="@+id/rvdetails"
+        app:layout_constraintTop_toBottomOf="@+id/txttable2"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
 

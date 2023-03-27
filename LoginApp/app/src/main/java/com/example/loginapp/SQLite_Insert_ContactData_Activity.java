@@ -21,9 +21,11 @@ public class SQLite_Insert_ContactData_Activity extends BaseActivity {
     Button btnInsert,btnInsert2;
     SQLite_Database_Helper databaseHelper;
 
-    RecyclerView recyclerView;
+    RecyclerView recyclerView,recyclerView2;
     List<SQLiteEmpData> list;
+    List<SQLiteEmpData2> list2;
     SQLite_Adapter_ForeignKey_Table1 adapter;
+    SQLite_Adapter_ForeignKey_Table2 adapter2;
     String id,name,name2;
 
     @Override
@@ -54,6 +56,13 @@ public class SQLite_Insert_ContactData_Activity extends BaseActivity {
 
                             Log.e("DATA","DATA 1 "+id +" "+name);
                             showToast("Contact Details Added");
+
+                            list =new ArrayList<>();
+                            databaseHelper =new SQLite_Database_Helper(getApplicationContext());
+                            list=databaseHelper.getData1();
+                            adapter = new SQLite_Adapter_ForeignKey_Table1(list);
+                            recyclerView.setAdapter(adapter);
+
                             edtId.setText("");
                             edtName.setText("");
                         }
@@ -88,6 +97,13 @@ public class SQLite_Insert_ContactData_Activity extends BaseActivity {
                             {
                                 Log.e("DATA","DATA 2 "+name2);
                                 showToast("Contact Details Added");
+
+                                list2 =new ArrayList<>();
+                                databaseHelper =new SQLite_Database_Helper(getApplicationContext());
+                                list2=databaseHelper.getData2();
+                                adapter2 = new SQLite_Adapter_ForeignKey_Table2(list2);
+                                recyclerView2.setAdapter(adapter2);
+
                                 edtName2.setText("");
                             }
                             else
@@ -118,6 +134,14 @@ public class SQLite_Insert_ContactData_Activity extends BaseActivity {
         list=databaseHelper.getData1();
         adapter = new SQLite_Adapter_ForeignKey_Table1(list);
         recyclerView.setAdapter(adapter);
+
+        recyclerView2 =(RecyclerView)findViewById(R.id.rvdetails2);
+        recyclerView2.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false));
+        list2 =new ArrayList<>();
+        databaseHelper =new SQLite_Database_Helper(this);
+        list2=databaseHelper.getData2();
+        adapter2 = new SQLite_Adapter_ForeignKey_Table2(list2);
+        recyclerView2.setAdapter(adapter2);
     }
     public boolean onSupportNavigateUp() {
 
