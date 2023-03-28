@@ -19,7 +19,7 @@ import java.util.ArrayList;
 
 public class SQLite_Database_Helper extends SQLiteOpenHelper {
 
-    public static final String DATABASE_NAME = "EMPLOYEE.db";
+    public static final String databasename = "employee8";
     public static final String TABLE_NAME = "EMPLOYEE_DETAILS";
     public static final String columnId = "emp_id";
     public static final String columnName = "emp_name";
@@ -32,18 +32,19 @@ public class SQLite_Database_Helper extends SQLiteOpenHelper {
     public static final String columnCity = "emp_city";
 
 
-    public static final String EMPLOYEE = "EMPLOYEE_THREE";
+    //  FIELDS FOR FOREIGN KEY
+    public static final String employee = "employee";
     public static final String columnId2 = "emp_id";
     public static final String columnMobileNo = "emp_mobileno";
-    public static final String group_id = "emp_id2";
+    public static final String groupid1 = "empid1";
 
-    public static final String EMPLOYEE_GROUP = "EMPLOYEE_FOUR";
-    public static final String group_id2 = "emp_id2";
+    public static final String employeegroup = "employee2";
+    public static final String groupid2 = "empid2";
     public static final String columnMobileNo2 = "emp_mobileno2";
 
     public SQLite_Database_Helper(Context context)
     {
-        super(context, DATABASE_NAME, null, 21);
+        super(context, databasename, null, 37);
     }
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -51,28 +52,41 @@ public class SQLite_Database_Helper extends SQLiteOpenHelper {
         String CREATE_TABLE = "CREATE TABLE IF NOT EXISTS " + TABLE_NAME +"(" + columnId + " INTEGER PRIMARY KEY, " + columnName + " TEXT, " + columnSurname + " TEXT, " + columnDesignation + " TEXT, " + columnDOB + " TEXT, " + columnJoiningDate + " TEXT, " + columnSalary + " TEXT, " + columnAddress + " TEXT, " + columnCity + " TEXT)";
         db.execSQL(CREATE_TABLE);
 
-        /*String CREATE_TABLE2 = "CREATE TABLE IF NOT EXISTS " + EMPLOYEE +"(" + columnId2 + " INTEGER PRIMARY KEY, "
+        // TABLE 1
+        db.execSQL("create table " + employeegroup +"(" + groupid2 + " integer primary key autoincrement, "
+                + columnMobileNo2 + " text"+")");
+
+
+        // TABLE 2
+        db.execSQL("create table " + employee +"(" + columnId2 + " integer primary key autoincrement, "
+                + columnMobileNo + " text, "
+                + groupid1 + " integer references " + employeegroup + "(" + groupid2 + ")"+")");
+
+
+       /* String CREATE_TABLE2 = "CREATE TABLE IF NOT EXISTS " + EMPLOYEE +"(" + columnId2 + " INTEGER PRIMARY KEY, "
                 + columnMobileNo + " TEXT, "
-                + group_id + " INTEGER UNIQUE," + " FOREIGN KEY ("+group_id+") REFERENCES "
-                + EMPLOYEE_GROUP + "(" + group_id2 + "));";
+                + group_id + " INTEGER UNIQUE references " + EMPLOYEE_GROUP + "(" + group_id2 + "))";
         db.execSQL(CREATE_TABLE2);
 
         String CREATE_TABLE3 = "CREATE TABLE IF NOT EXISTS " + EMPLOYEE_GROUP +"(" + group_id2 + " INTEGER PRIMARY KEY, "
                 + columnMobileNo2 + " TEXT NOT NULL)";
         db.execSQL(CREATE_TABLE3);*/
 
-        String CREATE_TABLE2 = "CREATE TABLE IF NOT EXISTS EMPLOYEE_THREE (emp_id INTEGER PRIMARY KEY,emp_mobileno TEXT,emp_id2 INTEGER UNIQUE, FOREIGN KEY(emp_id2) REFERENCES EMPLOYEE_TWO(emp_id2))";
+
+
+       /* String CREATE_TABLE2 = "CREATE TABLE IF NOT EXISTS EMPLOYEE_THREE " +
+                "(emp_id INTEGER PRIMARY KEY,emp_mobileno TEXT,emp_id2 INTEGER UNIQUE, FOREIGN KEY(emp_id2) REFERENCES EMPLOYEE_FOUR(emp_id2))";
         db.execSQL(CREATE_TABLE2);
 
         String CREATE_TABLE3 = "CREATE TABLE IF NOT EXISTS EMPLOYEE_FOUR (emp_id2 INTEGER PRIMARY KEY,emp_mobileno2 TEXT)";
-        db.execSQL(CREATE_TABLE3);
+        db.execSQL(CREATE_TABLE3);*/
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
         db.execSQL("DROP TABLE IF EXISTS "+TABLE_NAME);
-        db.execSQL("DROP TABLE IF EXISTS "+EMPLOYEE);
-        db.execSQL("DROP TABLE IF EXISTS "+EMPLOYEE_GROUP);
+        db.execSQL("DROP TABLE IF EXISTS "+employee);
+        db.execSQL("DROP TABLE IF EXISTS "+employeegroup);
         onCreate(db);
     }
     public boolean insertData(String name,String surname,String designation,String DOB,String JoinDate,String Salary,String Address,String City)
@@ -114,9 +128,9 @@ public class SQLite_Database_Helper extends SQLiteOpenHelper {
             ContentValues cv =new ContentValues();
 
             cv.put(columnMobileNo,mobileno);
-            cv.put(group_id,groupid);
+            cv.put(groupid1,groupid);
 
-            long result2 = db.insert(EMPLOYEE,null,cv);
+            long result2 = db.insert(employee,null,cv);
             if(result2 ==  -1)
             {
                 return  false;
@@ -140,7 +154,7 @@ public class SQLite_Database_Helper extends SQLiteOpenHelper {
             ContentValues cv =new ContentValues();
             cv.put(columnMobileNo2,mobileno);
 
-            long result2 = db.insert(EMPLOYEE_GROUP,null,cv);
+            long result2 = db.insert(employeegroup,null,cv);
             if(result2 ==  -1)
             {
                 return  false;
@@ -244,7 +258,7 @@ public class SQLite_Database_Helper extends SQLiteOpenHelper {
     public ArrayList<SQLiteEmpData> getData1()
     {
         ArrayList<SQLiteEmpData> list = new ArrayList<>();
-        String SQL = "SELECT * FROM " + EMPLOYEE;
+        String SQL = "SELECT * FROM " + employee;
         SQLiteDatabase db =this.getWritableDatabase();
         Cursor cursor =db.rawQuery(SQL,null);
         if(cursor.moveToFirst())
@@ -264,7 +278,7 @@ public class SQLite_Database_Helper extends SQLiteOpenHelper {
     public ArrayList<SQLiteEmpData2> getData2()
     {
         ArrayList<SQLiteEmpData2> list = new ArrayList<>();
-        String SQL = "SELECT * FROM " + EMPLOYEE_GROUP;
+        String SQL = "SELECT * FROM " + employeegroup;
         SQLiteDatabase db =this.getWritableDatabase();
         Cursor cursor =db.rawQuery(SQL,null);
         if(cursor.moveToFirst())

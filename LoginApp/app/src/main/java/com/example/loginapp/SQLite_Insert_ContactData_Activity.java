@@ -90,20 +90,16 @@ public class SQLite_Insert_ContactData_Activity extends BaseActivity {
                     {
                         try
                         {
-                            boolean isinserted = databaseHelper.insertEmpGroup(edtName2.getText().toString());
 
-                            name2 =edtName2.getText().toString();
+                            boolean isinserted = databaseHelper.insertEmpGroup(edtName2.getText().toString());
                             if(isinserted == true)
                             {
-                                Log.e("DATA","DATA 2 "+name2);
                                 showToast("Contact Details Added");
-
                                 list2 =new ArrayList<>();
                                 databaseHelper =new SQLite_Database_Helper(getApplicationContext());
                                 list2=databaseHelper.getData2();
                                 adapter2 = new SQLite_Adapter_ForeignKey_Table2(list2);
                                 recyclerView2.setAdapter(adapter2);
-
                                 edtName2.setText("");
                             }
                             else
