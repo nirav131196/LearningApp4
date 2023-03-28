@@ -46,6 +46,7 @@ public class SQLite_Select_Record extends BaseActivity   {
         {
             post = getIntent().getStringExtra("POST");
         }
+
         recyclerView =(RecyclerView)findViewById(R.id.ShowEmpData);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false));
         employeelist =new ArrayList<>();
