@@ -23,6 +23,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.VibrationEffect;
 import android.os.Vibrator;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -43,7 +44,7 @@ public class PushNotoficationActivity extends BaseActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-      //  createNotificationChannel();
+        createNotificationChannel();
         initView();
         ClickEventButton();
     }
@@ -72,33 +73,45 @@ public class PushNotoficationActivity extends BaseActivity {
                     }
                     else
                     {
+                        Log.e("LOG","LOG 1");
                         Intent i = new Intent(PushNotoficationActivity.this,WelcomeActivity.class);
                         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK |  Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         PendingIntent  pi = PendingIntent.getActivity(getApplicationContext(), 0, i, PendingIntent.FLAG_IMMUTABLE);
-
+                        Log.e("LOG","LOG 2");
                         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.googlelogo);
+                        Log.e("LOG","LOG 3");
+
+                        // For sound
+                        Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
                         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext(), CHANNEL_ID)
                                 .setSmallIcon(R.drawable.googlelogo)
                                 .setContentTitle(title)
                                 .setContentText(description)
                                 .setContentIntent(pi)
+                                .setSound(alarmSound)
+                                .setStyle(new NotificationCompat.BigPictureStyle()
+                                        .bigPicture(bitmap)
+                                        .bigLargeIcon(null))
                                 .setLargeIcon(bitmap)
                                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-                       /* Vibrator phone = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                        Log.e("LOG","LOG 4");
+                        //For vibration
+                        Vibrator phone = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
                         // Vibrate for 500 milliseconds
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                             phone.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE));
                         } else {
                             //deprecated in API 26
                             phone.vibrate(500);
-                        }*/
-                        Notification notification = builder.build();
+                        }
+                        // For sound
+                    /*    Notification notification = builder.build();
                         notification.sound = Uri.parse("android.resource://"
                                 + getApplicationContext().getPackageName() + "/" + R.raw.sound2);
 
                         notification.defaults |= Notification.DEFAULT_SOUND;
-
+*/
                         NotificationManagerCompat notif = NotificationManagerCompat.from(getApplicationContext());
                         if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
                             // TODO: Consider calling
@@ -112,6 +125,7 @@ public class PushNotoficationActivity extends BaseActivity {
                             return;
                         }
                         notif.notify(0, builder.build());
+                        Log.e("LOG","LOG 5");
 
                         edtTitle.setText("");
                         edtDescription.setText("");
@@ -142,7 +156,7 @@ public class PushNotoficationActivity extends BaseActivity {
         try {
             // Create the NotificationChannel, but only on API 26+ because
             // the NotificationChannel class is new and not in the support library
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 CharSequence name = getString(R.string.CHANNEL_NAME);
                 String description = getString(R.string.CHANNEL_DESCRIPTION);
                 int importance = NotificationManager.IMPORTANCE_DEFAULT;

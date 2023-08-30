@@ -1,5 +1,7 @@
 package com.example.loginapp;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -7,6 +9,7 @@ import android.view.View;
 import android.view.Menu;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.Toolbar;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -29,6 +32,7 @@ public class Dashboard_Activity_p9 extends AppCompatActivity {
     private ActivityDashboardP9Binding binding;
     Button btnDrinkOrder,btnFoodOrder;
     TextView txtViewEvents,txtViewSocialMedia;
+    AlertDialog.Builder builder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,10 +49,10 @@ public class Dashboard_Activity_p9 extends AppCompatActivity {
         BottomNavigationView bottomNavigationView =findViewById(R.id.bottom_navigation);
 
         //set order id selected
-     /*   bottomNavigationView.setSelectedItemId(R.id.orderlist);
+        bottomNavigationView.setSelectedItemId(R.id.orderlist);
         bottomNavigationView.setSelectedItemId(R.id.favourite);
         bottomNavigationView.setSelectedItemId(R.id.history);
-        bottomNavigationView.setSelectedItemId(R.id.notification);*/
+        bottomNavigationView.setSelectedItemId(R.id.notification);
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -75,12 +79,10 @@ public class Dashboard_Activity_p9 extends AppCompatActivity {
                         startActivity(i4);
                         finish();
                         return true;
-
                 }
                 return false;
             }
         });
-
         setSupportActionBar(binding.appBarDashboardActivityP9.toolbar);
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
@@ -90,7 +92,7 @@ public class Dashboard_Activity_p9 extends AppCompatActivity {
                 R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
                 .setOpenableLayout(drawer)
                 .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_dashboard_activity_p9);
+        NavController navController = Navigation.findNavController(this, R.id.nav_home);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -128,11 +130,9 @@ public class Dashboard_Activity_p9 extends AppCompatActivity {
                 Intent i =new Intent(Dashboard_Activity_p9.this, FoodOrderMenu_Activity.class);
                 startActivity(i);
                 finish();
-
             }
         });
     }
-
     private void ClickEventDrinkOrder() {
         btnDrinkOrder.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -149,6 +149,8 @@ public class Dashboard_Activity_p9 extends AppCompatActivity {
         btnFoodOrder = (Button)findViewById(R.id.Food_Order_button);
         txtViewEvents = (TextView)findViewById(R.id.TextView_Viewmore);
         txtViewSocialMedia = (TextView)findViewById(R.id.TextView_Viewmore_SM);
+
+        builder = new AlertDialog.Builder(this);
     }
     private void setSupportActionBar(Toolbar toolbar) {
     }
@@ -178,8 +180,31 @@ public class Dashboard_Activity_p9 extends AppCompatActivity {
 
     @Override
     public boolean onSupportNavigateUp() {
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_dashboard_activity_p9);
+        NavController navController = Navigation.findNavController(this, R.id.nav_home);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+    @Override
+    public void onBackPressed() {
+
+        builder.setMessage("Do you want to Log out ?").setTitle("Do you want to Log out ?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+                        Toast.makeText(getApplicationContext(), "Logged out successfully.", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                        //  Toast.makeText(getApplicationContext(), "you choose no action for alertbox", Toast.LENGTH_SHORT).show();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.setTitle("Log out");
+        alert.show();
     }
 }

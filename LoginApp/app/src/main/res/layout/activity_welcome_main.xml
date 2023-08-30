@@ -9,7 +9,7 @@
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbarlayout4"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -27,12 +27,12 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/QR_AND_CAMERA"
         android:layout_width="350dp"
+        android:layout_height="wrap_content"
         android:layout_margin="15dp"
         android:background="@drawable/editext_design3"
         android:text="@string/qr_and_camera"
         android:textColor="@color/white"
         android:textSize="17dp"
-        android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appbarlayout4" />
@@ -40,12 +40,12 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/LOCATION"
         android:layout_width="350dp"
+        android:layout_height="wrap_content"
         android:layout_margin="15dp"
         android:background="@drawable/editext_design3"
         android:text="@string/location"
         android:textColor="@color/white"
         android:textSize="17dp"
-        android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/QR_AND_CAMERA" />
@@ -53,26 +53,40 @@
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/PUSH_NOTIFICATION"
         android:layout_width="350dp"
+        android:layout_height="wrap_content"
         android:layout_margin="15dp"
         android:background="@drawable/editext_design3"
         android:text="@string/push_notification"
         android:textColor="@color/white"
         android:textSize="17dp"
-        android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/LOCATION" />
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/SQLITE_CONNECTIVITY"
         android:layout_width="350dp"
+        android:layout_height="wrap_content"
         android:layout_margin="15dp"
         android:background="@drawable/editext_design3"
         android:text="@string/sqlite_connectivity"
         android:textColor="@color/white"
         android:textSize="17dp"
-        android:layout_height="wrap_content"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/PUSH_NOTIFICATION" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/Dialogbox"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp"
+        android:background="@drawable/editext_design3"
+        android:text="Android Tasks"
+        android:textColor="@color/white"
+        android:textSize="17dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/SQLITE_CONNECTIVITY" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

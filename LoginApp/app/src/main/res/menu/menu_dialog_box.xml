@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/search"
+        android:title="Search"
+        android:icon="@drawable/search_icon"
+        app:showAsAction="always"/>
+
+    <item android:id="@+id/mail"
+        android:title="E-mail"
+        android:icon="@drawable/p9smalllogo"
+        app:showAsAction="always"/>
+
+    <item android:id="@+id/upload"
+        android:title="Upload"
+        android:icon="@drawable/fullheart"
+        app:showAsAction="always"/>
+
+    <item android:id="@+id/share"
+        android:title="Share"
+        android:icon="@drawable/download_logo"
+        app:showAsAction="always"/>
+
+    <item android:id="@+id/i1" android:title="Menu 1">
+        <menu>
+            <item android:id="@+id/s11" android:title="sub-menu-item 1" />
+            <item android:id="@+id/s12" android:title="sub-menu-item 2" />
+            <item android:id="@+id/s13" android:title="sub-menu-item 3"  />
+        </menu>
+    </item>
+    <item android:id="@+id/i2" android:title="Menu 2">
+        <menu>
+            <item android:id="@+id/s21" android:title="sub-menu-item-4" />
+            <item android:id="@+id/s22" android:title="sub-menu-item-5"  />
+        </menu>
+    </item>
+</menu>

@@ -29,7 +29,7 @@
                 android:textStyle="bold"
                 android:textColor="@color/white"
                 android:layout_gravity="center"
-                android:id="@+id/toolbar_title" />
+                android:id="@+id/toolbar_title"/>
         </androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -38,6 +38,7 @@
         android:layout_width="350dp"
         android:paddingLeft="15dp"
         android:layout_height="50dp"
+        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
         android:textColor="@color/yellow"
         android:background="@drawable/editext_design2"
         android:ems="10"
@@ -52,6 +53,7 @@
     <EditText
         android:id="@+id/editEmpSurname"
         android:layout_width="350dp"
+        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
         android:paddingLeft="15dp"
         android:layout_height="50dp"
         android:textColor="@color/yellow"
@@ -64,17 +66,14 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:layout_margin="15dp"/>
-    <EditText
+    <Spinner
         android:id="@+id/editEmpPost"
         android:layout_width="350dp"
         android:paddingLeft="15dp"
         android:layout_height="50dp"
-        android:textColor="@color/yellow"
+        android:textColor="#F59700"
         android:background="@drawable/editext_design2"
         android:ems="10"
-        android:inputType="text"
-        android:hint="@string/emppost"
-        android:textColorHint="@color/lightyellow"
         app:layout_constraintTop_toBottomOf="@+id/editEmpSurname"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -87,7 +86,8 @@
         android:textColor="@color/yellow"
         android:background="@drawable/editext_design2"
         android:ems="10"
-        android:inputType="date|datetime"
+        android:inputType="none"
+        android:focusable="false"
         android:hint="@string/empdob"
         android:textColorHint="@color/lightyellow"
         app:layout_constraintTop_toBottomOf="@+id/editEmpPost"
@@ -102,7 +102,8 @@
         android:textColor="@color/yellow"
         android:background="@drawable/editext_design2"
         android:ems="10"
-        android:inputType="date|datetime"
+        android:inputType="none"
+        android:focusable="false"
         android:hint="@string/empjoiningdate"
         android:textColorHint="@color/lightyellow"
         app:layout_constraintTop_toBottomOf="@+id/editEmpDOB"
@@ -115,6 +116,7 @@
         android:paddingLeft="15dp"
         android:layout_height="50dp"
         android:textColor="@color/yellow"
+        android:digits="0123456789"
         android:background="@drawable/editext_design2"
         android:ems="10"
         android:inputType="phone"
@@ -131,6 +133,7 @@
         android:layout_height="50dp"
         android:textColor="@color/yellow"
         android:background="@drawable/editext_design2"
+        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789,- "
         android:ems="10"
         android:inputType="text"
         android:hint="@string/empaddress"
@@ -146,6 +149,7 @@
         android:layout_height="50dp"
         android:textColor="@color/yellow"
         android:background="@drawable/editext_design2"
+        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
         android:ems="10"
         android:inputType="text"
         android:hint="@string/empcity"

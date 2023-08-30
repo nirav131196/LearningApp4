@@ -7,7 +7,7 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/app_bar_dashboard_activity_p9">
     <fragment
-        android:id="@+id/nav_host_fragment_content_dashboard_activity_p9"
+        android:id="@+id/nav_home"
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -52,7 +52,7 @@
                 android:padding="8dp"
                 android:text="Drink Order"
                 android:textSize="17dp"
-                android:textColor="#FFFFFF" />
+                android:textColor="#FFFFFF"/>
 
             <pl.droidsonroids.gif.GifImageView
                 android:id="@+id/GIF_IMAGE"
@@ -72,7 +72,6 @@
                 android:textSize="17dp"
                 android:textColor="#FFFFFF"/>
         </LinearLayout>
-
             <TextView
                 android:id="@+id/TextView_Event"
                 android:layout_width="wrap_content"
@@ -141,7 +140,6 @@
                 android:textColor="#e3e6e4"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/TextView_SocialMedia" />
-
             <TextView
                 android:id="@+id/TextView_Viewmore_SM"
                 android:layout_width="wrap_content"
@@ -151,7 +149,6 @@
                 android:textColor="@color/black"
                 app:layout_constraintLeft_toRightOf="@+id/TextView_line_SM"
                 app:layout_constraintTop_toBottomOf="@+id/TextView_SocialMedia" />
-
         </LinearLayout>
             <ImageView
                 android:id="@+id/imagesilder_image"

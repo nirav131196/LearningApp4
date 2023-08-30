@@ -5,9 +5,8 @@
     <stroke
         android:color="@color/white"
         android:width="2dp"></stroke>
-
     <corners
-        android:radius="30dp" />
+        android:radius="20dp"/>
     <solid
-        android:color="#FCA510"></solid>
+        android:color="@color/button_color"></solid>
 </shape>

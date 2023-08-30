@@ -8,7 +8,9 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -39,6 +41,8 @@ public class DrinkOrderMenu_Activity extends BaseActivity implements SelectListe
     RecyclerAdapter adapter;
     RecyclerView recyclerView;
 
+    String access_token;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,8 +53,13 @@ public class DrinkOrderMenu_Activity extends BaseActivity implements SelectListe
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
-        token();
+     //   token();
 
+        // using token of login activity
+        SharedPreferences sh = getSharedPreferences("MyToken", Context.MODE_PRIVATE);
+        access_token = sh.getString("token","");
+
+        getProductData(access_token);
         recyclerView =(RecyclerView) findViewById(R.id.product_data);
     }
     @Override

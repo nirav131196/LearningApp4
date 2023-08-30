@@ -88,18 +88,22 @@ public class WelcomeActivity extends BaseActivity {
             @Override
             public void onClick(View v)
             {
+                Log.e("Log","LOG 1");
                 String STORAGE_PERMISSION = Manifest.permission.WRITE_EXTERNAL_STORAGE;
                     try
                     {
+                        Log.e("Log","LOG 2");
                         if(ContextCompat.checkSelfPermission(getApplicationContext(),STORAGE_PERMISSION) == PackageManager.PERMISSION_GRANTED)  // GRANTED
                         {
-
+                            Log.e("Log","LOG 3");
                             // IMAGE STORAGE METHOD
                             saveImage();
+                            Log.e("Log","LOG 4");
 
                         }
                         else  // NOT GRANTED
                         {
+                            Log.e("Log","LOG 5");
                             ActivityCompat.requestPermissions(WelcomeActivity.this,new String[] {STORAGE_PERMISSION},STORAGE_PERMISSION_CODE);
                         }
                     }
@@ -112,30 +116,37 @@ public class WelcomeActivity extends BaseActivity {
     }
     public void saveImage()
     {
+        Log.e("Log","LOG 3.1");
         BitmapDrawable drawable =(BitmapDrawable) IVQRCodeGenerator.getDrawable();
         Bitmap bitmap = drawable.getBitmap();
-
-        if(bitmap == null)
+        Log.e("Log","LOG 3.2");
+        if(bitmap != null)
         {
+            Log.e("Log","LOG 3.3");
             File filepath = Environment.getExternalStorageDirectory();
             File dir = new File(filepath.getAbsolutePath()+"/Demo/");
             dir.mkdir();
             File file = new File(dir,System.currentTimeMillis()+".jpg");
+            Log.e("Log","LOG 3.4");
             try
             {
+                Log.e("Log","LOG 3.5");
                 outputStream = new FileOutputStream(file);
+                Log.e("Log","LOG 3.6");
             }
             catch (FileNotFoundException fe)
             {
+                Log.e("Log","LOG 3.7");
                 fe.printStackTrace();
             }
             bitmap.compress(Bitmap.CompressFormat.JPEG,100,outputStream);
             showToast("Image Successfully Saved");
             IVQRCodeGenerator.setImageResource(R.drawable.editext_design4);
+            Log.e("Log","LOG 3.8");
         }
         else
         {
-
+            Log.e("Log","ELSE PART");
         }
     }
 

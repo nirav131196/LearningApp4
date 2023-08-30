@@ -2,18 +2,30 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-feature
-        android:name="android.hardware.camera"
-        android:required="false" />
-
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission
+        android:name="android.permission.READ_PRIVILEGED_PHONE_STATE"
+        tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_PHONE_NUMBERS" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.telephony"
+        android:required="false" />
 
     <application
         android:allowBackup="true"
@@ -25,36 +37,116 @@
         android:theme="@style/Theme.LoginApp"
         tools:targetApi="31">
         <activity
-            android:name=".SQLite_Insert_ContactData_Activity"
-            android:exported="false">
+            android:name=".Adapter_Activity"
+            android:exported="false" />
+        <activity
+            android:name=".ImageAPI"
+            android:exported="false" />
+        <activity
+            android:name=".FliterAPI_Activity"
+            android:exported="false" />
+        <activity
+            android:name=".StateList_with_buttons_Activity"
+            android:exported="false" />
+        <activity
+            android:name=".State_List_Activity"
+            android:exported="false" />
+        <activity
+            android:name=".RecyclerAndListView_Activity"
+            android:exported="false" />
+        <activity
+            android:name=".Calcy"
+            android:exported="false" />
+        <activity
+            android:name=".RegistrationAPIActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CalculatorActivity2"
+            android:exported="false" />
+        <activity
+            android:name=".CalculatorActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FirstActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
+        <activity
+            android:name=".SplashScreen"
+            android:exported="false" />
+        <activity
+            android:name=".Linear_Layout_Activity"
+            android:exported="false" />
+        <activity
+            android:name=".Relative_Layout_Activity"
+            android:exported="false" />
+        <activity
+            android:name=".HoldStateActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Create_DownLoad_Pdf_Activity"
+            android:exported="false" />
+        <activity
+            android:name=".CreateDownLoadPdf"
+            android:exported="false" />
+        <activity
+            android:name=".RangeSlider"
+            android:exported="false" />
+        <activity
+            android:name=".FingerPrintAuth"
+            android:exported="false" />
+        <activity
+            android:name=".FaceAuthentication"
+            android:exported="false" />
+        <activity
+            android:name=".PdfDownload"
+            android:exported="false" />
+        <activity
+            android:name=".DarkModeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CustomInputLayout"
+            android:exported="false" />
+        <activity
+            android:name=".AudioRecord"
+            android:exported="false" />
+        <activity
+            android:name=".SpleshActivity"
+            android:exported="false" />
+        <activity
+            android:name=".TabLayoutActivity"
+            android:exported="false" />
+        <activity
+            android:name=".DialogBox"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SQLite_Insert_ContactData_Activity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".SQLiteFilterDate"
             android:exported="false" />
         <activity
             android:name=".SQLite_Select_All_Records"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".SQLite_Select_Record"
             android:exported="false"
-            android:screenOrientation="portrait">
-        </activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".SQLite_Update_Activity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".SQLite_Insert_Activity"
-            android:exported="true"
-            android:screenOrientation="portrait">
-
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
-        </activity>
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".FoodOrderCategory_Items"
             android:exported="false"
@@ -90,7 +182,8 @@
         <activity
             android:name=".MainActivity2"
             android:exported="false"
-            android:label="@string/title_activity_main2" />
+            android:label="@string/title_activity_main2"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Dashboard_Activity_p9"
             android:exported="false"

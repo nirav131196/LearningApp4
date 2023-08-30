@@ -5,12 +5,13 @@ import static android.content.ContentValues.TAG;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -96,7 +97,7 @@ public class LoginActivity extends BaseActivity implements  AuthenticationListen
     String access_token;
     FirebaseAuth firebaseAuth;  // FOR TWITTER
 
-
+    AlertDialog.Builder builder;
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -105,6 +106,7 @@ public class LoginActivity extends BaseActivity implements  AuthenticationListen
         setContentView(R.layout.activity_login);
 
       //  firebaseAuth = FirebaseAuth.getInstance();  // FOR TWITTER
+
 
         initView();
         FaceBookManager();
@@ -206,9 +208,10 @@ public class LoginActivity extends BaseActivity implements  AuthenticationListen
         IVFacebooklogo =findViewById(R.id.facebooklogo);
         IVInstagramlogo = findViewById(R.id.instagramlogo);
         IVTwitterlogo = findViewById(R.id.twitterlogo);
-
-
         spinner = findViewById(R.id.spinner_language);
+
+        builder = new AlertDialog.Builder(this);
+
     }
     private void SpinnerForLanguage() {
         try
@@ -282,7 +285,7 @@ public class LoginActivity extends BaseActivity implements  AuthenticationListen
                             {
                                 if(password_login.length() > 7 && password_login.length() < 25)
                                 {
-                                    token();
+                                    tokenForAuthenticate();
                                 }
                                 else
                                 {
@@ -407,6 +410,7 @@ public class LoginActivity extends BaseActivity implements  AuthenticationListen
         {
             String url = "https://admin.p9bistro.com/index.php/SignIn";
 
+            // Sending Request to server...,
             JSONObject req = new JSONObject();
             try
             {
@@ -481,7 +485,7 @@ public class LoginActivity extends BaseActivity implements  AuthenticationListen
             Toast.makeText(LoginActivity.this, "Error 3 : "+ex, Toast.LENGTH_SHORT).show();
         }
     }
-    private void token()
+    private void tokenForAuthenticate()
     {
         String url = "https://admin.p9bistro.com/index.php/generate_auth_token";
         Log.e("checklog", url + "");
@@ -558,19 +562,21 @@ public class LoginActivity extends BaseActivity implements  AuthenticationListen
     }
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
-            GoogleSignInAccount account = completedTask.getResult(ApiException.class);
+         //   GoogleSignInAccount account = completedTask.getResult(ApiException.class);
 
             GoogleSignInAccount acct = GoogleSignIn.getLastSignedInAccount(this);
-            if (acct != null)
+            if(acct != null)
             {
-                String personGivenName = acct.getGivenName();
+                String personGivenName = acct.getEmail();
                 showToast("Welcome "+personGivenName);
+                startActivity(new Intent(LoginActivity.this,Welcome_Main.class));
             }
-            startActivity(new Intent(LoginActivity.this,Welcome_Main.class));
-
+            else {
+                showToast("NULL");
+            }
             // Signed in successfully, show authenticated UI.
 
-        } catch (ApiException e) {
+        } catch (Exception e) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
             Log.e(TAG, "Message" + e.toString());
@@ -649,5 +655,30 @@ public class LoginActivity extends BaseActivity implements  AuthenticationListen
         {
             showToast("Exception : "+ex);
         }
+    }
+    @Override
+    public void onBackPressed() {
+
+
+
+        builder.setMessage("Do you want to Exit ?").setTitle("Do you want to Exit ?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        finish();
+
+                    }
+                })
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                      //  Toast.makeText(getApplicationContext(), "you choose no action for alertbox", Toast.LENGTH_SHORT).show();
+                    }
+                });
+        AlertDialog alert = builder.create();
+        alert.setTitle("Exit");
+        alert.show();
     }
 }

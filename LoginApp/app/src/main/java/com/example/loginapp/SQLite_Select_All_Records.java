@@ -36,6 +36,7 @@ public class SQLite_Select_All_Records extends AppCompatActivity {
 
         employeefulllist =new ArrayList<>();
         databaseHelper =new SQLite_Database_Helper(this);
+
         employeefulllist=databaseHelper.getEmployeeALlData(newstring);
         adapter = new SQLite_RecyclerAdapter_Full_Data(employeefulllist);
         recyclerView.setAdapter(adapter);

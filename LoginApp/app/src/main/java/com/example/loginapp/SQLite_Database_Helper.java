@@ -263,8 +263,9 @@ public class SQLite_Database_Helper extends SQLiteOpenHelper {
         Cursor cursor =db.rawQuery(SQL,null);
         if(cursor.moveToFirst())
         {
+            SQLiteEmpData data = new SQLiteEmpData();
+
             do {
-                SQLiteEmpData data = new SQLiteEmpData();
                 data.setId(cursor.getString(0));
                 data.setMobileno(cursor.getString(1));
                 data.setGroupid(cursor.getString(2));

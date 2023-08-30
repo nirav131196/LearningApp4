@@ -23,7 +23,7 @@
     <string name="email_address">Email Address</string>
     <string name="username">Username</string>
     <string name="mobile_no">Mobile No</string>
-    <string name="password_register">password</string>
+    <string name="password_register">Password</string>
     <string name="register">REGISTER</string>
     <string name="already_have_an_account">Already Have an Account ?</string>
     <string name="login_here">Login Here</string>
@@ -79,4 +79,13 @@
     <string name="empmobileno">Enter Mobile No</string>
     <string name="empemailid">Enter Email Id</string>
     <string name="insertContactbutton2">Add</string>
+    <string name="dialog">Dialog Box</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Algorithm</string>
+
+    <string-array name="markArray11">
+        <item>800</item>
+        <item>2000</item>
+    </string-array>
+
 </resources>

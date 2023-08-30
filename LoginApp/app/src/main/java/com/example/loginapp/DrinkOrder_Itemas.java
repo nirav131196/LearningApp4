@@ -62,11 +62,12 @@ public class DrinkOrder_Itemas extends BaseActivity {
         // using token of login activity
         SharedPreferences sh = getSharedPreferences("MyToken", Context.MODE_PRIVATE);
         token = sh.getString("token","");
+
         // using api key of login activity
         SharedPreferences sh2 = getApplicationContext().getSharedPreferences("MySharedPref", MODE_PRIVATE);
         api = sh2.getString("apiKey","");
 
-        //Calling method for sub category items
+        //Calling api method for sub category items
         getSubCategoryItemsData(token);
 
         recyclerView =(RecyclerView) findViewById(R.id.drinkOrderIteams);
@@ -198,7 +199,6 @@ public class DrinkOrder_Itemas extends BaseActivity {
                 try {
                     if (response.getBoolean("status")) {
                         String message = response.getString("message");
-
 
                         JSONObject jsonData = response.getJSONObject("data");  // responses which we got after successful run
 

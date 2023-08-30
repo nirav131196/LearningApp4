@@ -58,7 +58,7 @@ public class FoodOrderCategory_Items extends BaseActivity {
         {
             CAT_ID = getIntent().getStringExtra("CAT_ID");
         }
-        //setting shared preference
+        //setting shared preference for using login token
         SharedPreferences sh = getApplicationContext().getSharedPreferences("MyToken", Context.MODE_PRIVATE);
         token = sh.getString("token","");
 

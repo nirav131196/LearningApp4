@@ -39,6 +39,7 @@
         android:id="@+id/image1"
         android:layout_width="80dp"
         android:layout_height="80dp"
+        android:layout_marginTop="20dp"
         app:srcCompat="@drawable/p9smalllogo"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -73,6 +74,7 @@
     <EditText
         android:id="@+id/edittextmobileno"
         android:layout_width="350dp"
+        android:layout_height="50dp"
         android:layout_margin="15dp"
         android:background="@drawable/editext_design2"
         android:textColor="@color/yellow"
@@ -81,7 +83,6 @@
         android:hint="@string/mobile_no"
         android:paddingLeft="15dp"
         android:inputType="phone"
-        android:layout_height="50dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edittextusername" />
@@ -97,7 +98,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edittextmobileno"
-            android:layout_height="wrap_content">
+            android:layout_height="50dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edittextpassword"
@@ -150,13 +151,14 @@
             app:layout_constraintTop_toBottomOf="@+id/registerbutton" />
         <TextView
             android:id="@+id/linkforlogin2"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_marginTop="15dp"
             android:text="@string/login_here"
             android:textSize="15dp"
             android:textStyle="bold"
+            android:padding="5dp"
             android:textColor="@color/yellow"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             app:layout_constraintLeft_toRightOf="@+id/linkforlogin"
             app:layout_constraintTop_toBottomOf="@+id/registerbutton" />
     </LinearLayout>
@@ -195,8 +197,8 @@
 
             <ImageView
                 android:id="@+id/facebooklogo"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_width="40dp"
+                android:layout_height="35dp"
                 android:layout_margin="10dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -217,8 +219,8 @@
 
             <ImageView
                 android:id="@+id/googlelogo"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="40dp"
+                android:layout_height="35dp"
                 android:layout_margin="10dp"
                 app:srcCompat="@drawable/facelogo"
                 app:layout_constraintLeft_toLeftOf="parent"

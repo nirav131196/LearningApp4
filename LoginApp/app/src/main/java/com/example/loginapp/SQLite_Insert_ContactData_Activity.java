@@ -114,7 +114,7 @@ public class SQLite_Insert_ContactData_Activity extends BaseActivity {
                     }
                     else
                     {
-                        showToast("Enter Name");
+                        showToast("Enter Mobile No");
                     }
             }
         });

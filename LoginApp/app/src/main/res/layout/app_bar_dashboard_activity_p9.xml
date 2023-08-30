@@ -8,20 +8,17 @@
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:navigationIcon="?attr/homeAsUpIndicator"
-            app:title="Dashboard"
-            android:background="@drawable/backgroundimage2"/>
+            app:title="Dashboard"/>
 
     </com.google.android.material.appbar.AppBarLayout>
 
     <include layout="@layout/content_dashboard_activity_p9" />
-
-
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -165,7 +165,6 @@ public class MainActivity extends BaseActivity
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url,req, new Response.Listener<JSONObject>() {
 
             @Override
-
             public void onResponse(JSONObject response)
             {
                 try
@@ -185,6 +184,11 @@ public class MainActivity extends BaseActivity
                         String api_key = jsonData.getString("api_key");
 
                         Log.e("Data",id + username + mobile_no + email + profile + api_key);
+
+                        Toast.makeText(getApplicationContext(),"Registered Successfully",Toast.LENGTH_LONG).show();
+                        Intent i =new Intent(MainActivity.this,LoginActivity.class);
+                        startActivity(i);
+                        finish();
 
                         edtUsername.setText("");
                         edtPassword.setText("");
@@ -247,14 +251,14 @@ public class MainActivity extends BaseActivity
             public void onErrorResponse(VolleyError error) {
 
                 Log.e("checklog",error + "");
-                Toast.makeText(getApplicationContext(), "Timeout Error", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Timeout Error "+error, Toast.LENGTH_LONG).show();
             }
         }){
             @Override
             public Map<String,String> getHeaders() throws AuthFailureError
             {
                 HashMap<String,String> headers = new HashMap<>();
-                headers.put("x-api-key","XABRTYUX@123YTUFGB");
+                headers.put("x-api-key", "SHXVDFTRWSQ@!TYUS");
                 return headers;
             }
         };

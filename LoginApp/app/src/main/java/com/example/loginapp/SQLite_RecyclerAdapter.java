@@ -60,7 +60,6 @@ public class SQLite_RecyclerAdapter extends RecyclerView.Adapter<SQLite_Recycler
             }
         });
     }
-
     @Override
     public int getItemCount() {
         return data.size();

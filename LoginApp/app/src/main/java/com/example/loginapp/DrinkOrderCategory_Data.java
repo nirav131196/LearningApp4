@@ -2,12 +2,10 @@ package com.example.loginapp;
 
 public class DrinkOrderCategory_Data {
 
-
     String subCategoryName;
     String subCategoryDescription;
     String price;
     String productid;
-
     boolean isfourite;
 
     public DrinkOrderCategory_Data(String subCategoryName, String subCategoryDescription, String price,String productid) {

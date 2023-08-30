@@ -5,6 +5,8 @@ import static com.example.loginapp.SQLite_Database_Helper.TABLE_NAME;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -13,22 +15,36 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
+
+import java.util.Calendar;
 
 public class SQLite_Update_Activity extends BaseActivity {
 
     String updateid;
-    EditText edtId,edtName,edtSurname,edtPost,edtDob,edtJoinDate,edtSalary,edtAddress,edtCity;
+    EditText edtId,edtName,edtSurname,edtDob,edtJoinDate,edtSalary,edtAddress,edtCity;
+    Spinner edtPost;
     Button btnUpdate;
     SQLite_Database_Helper databaseHelper;
-
     SQLiteDatabase db;
+
+    // For calender
+    private Calendar calander;
+    private int year,month,day;
+    // For Spinner
+    String[] items2 = {"Select Designation","IOS","Angular","REACT NATIVE","ANDROID","FLUTTER","PYTHON","C#","JAVA","UI DESIGNER","PHP","LARAVEL"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sqlite_update);
+
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE,WindowManager.LayoutParams.FLAG_SECURE);
 
         databaseHelper = new SQLite_Database_Helper(this);
 
@@ -37,8 +53,15 @@ public class SQLite_Update_Activity extends BaseActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
+        calander =Calendar.getInstance();
+        year = calander.get(Calendar.YEAR);
+        month = calander.get(Calendar.MONTH);
+        day = calander.get(Calendar.DAY_OF_MONTH);
+
         initView();
         ClickUpdateButton();
+        ClickDobEdtText();
+        ClickJoinEdtText();
         Bundle extra =getIntent().getExtras();
         if(extra != null)
         {
@@ -46,6 +69,12 @@ public class SQLite_Update_Activity extends BaseActivity {
         }
         edtId.setText(updateid);
         edtId.setEnabled(false);
+
+        // For Spinner
+        ArrayAdapter ad = new ArrayAdapter(this, android.R.layout.simple_spinner_item, items2);
+        ad.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        edtPost.setAdapter(ad);
+
       /*  SharedPreferences sh = getSharedPreferences("TABLENAME", Context.MODE_PRIVATE);
         String MYTABLE = sh.getString("table","");*/
 
@@ -69,7 +98,7 @@ public class SQLite_Update_Activity extends BaseActivity {
                 edtId.setText(id);
                 edtName.setText(name);
                 edtSurname.setText(surname);
-                edtPost.setText(post);
+                edtPost.getSelectedItem();
                 edtDob.setText(DOB);
                 edtJoinDate.setText(Joindate);
                 edtSalary.setText(salary);
@@ -79,6 +108,58 @@ public class SQLite_Update_Activity extends BaseActivity {
             } while(cursor.moveToNext());
         }
     }
+    private void ClickJoinEdtText() {
+
+        edtJoinDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialog(990);
+            }
+        });
+
+    }
+    private void ClickDobEdtText() {
+
+        edtDob.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDialog(999);
+            }
+        });
+    }
+    protected Dialog onCreateDialog(int id)
+    {
+        if(id==999)
+        {
+            return new DatePickerDialog(this,myDatelistener,year,month,day);
+        }
+        else if(id==990)
+        {
+            return new DatePickerDialog(this,myDatelistener2,year,month,day);
+        }
+        return null;
+    }
+    private DatePickerDialog.OnDateSetListener myDatelistener = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+            showDate(year,month+1,dayOfMonth);
+        }
+    };
+    private DatePickerDialog.OnDateSetListener myDatelistener2 = new DatePickerDialog.OnDateSetListener() {
+        @Override
+        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+
+            showDate2(year,month+1,dayOfMonth);
+        }
+    };
+    private void showDate(int year, int month,int day)
+    {
+        edtDob.setText(new StringBuilder().append(day).append("/").append(month).append("/").append(year));
+    }
+    private void showDate2(int year, int month,int day)
+    {
+        edtJoinDate.setText(new StringBuilder().append(day).append("/").append(month).append("/").append(year));
+    }
     private void ClickUpdateButton() {
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,14 +168,14 @@ public class SQLite_Update_Activity extends BaseActivity {
                 String id = edtId.getText().toString().trim();
                 String name = edtName.getText().toString().trim();
                 String surname =edtSurname.getText().toString().trim();
-                String post =edtPost.getText().toString().trim();
+                String post =edtPost.getSelectedItem().toString().trim();
                 String DOB =edtDob.getText().toString().trim();
                 String JoinDate =edtJoinDate.getText().toString().trim();
                 String Salary =edtSalary.getText().toString().trim();
                 String Address =edtAddress.getText().toString().trim();
                 String City =edtCity.getText().toString().trim();
 
-                if(name.length() > 0 && surname.length() > 0 && post.length() > 0 && DOB.length() > 0 && JoinDate.length() > 0 && Salary.length() > 0 && Address.length() > 0 && City.length() > 0)
+                if(name.length() > 0 && surname.length() > 0 && !post.equals("Select Designation") && DOB.length() > 0 && JoinDate.length() > 0 && Salary.length() > 0 && Address.length() > 0 && City.length() > 0)
                 {
                     try {
                             Log.e("DATA : ","DATA "+name+surname+post+DOB+JoinDate+Salary+Address+City);
@@ -128,7 +209,7 @@ public class SQLite_Update_Activity extends BaseActivity {
         edtId =(EditText) findViewById(R.id.edtUpdateID);
         edtName =(EditText) findViewById(R.id.edtEmpName);
         edtSurname =(EditText) findViewById(R.id.editEmpSurname);
-        edtPost =(EditText) findViewById(R.id.editEmpPost);
+        edtPost =(Spinner) findViewById(R.id.editEmpPost);
         edtDob =(EditText) findViewById(R.id.editEmpDOB);
         edtJoinDate =(EditText) findViewById(R.id.editEmpJoiningDate);
         edtSalary =(EditText) findViewById(R.id.editEmpSalary);

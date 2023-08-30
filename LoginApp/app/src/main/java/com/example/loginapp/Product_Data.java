@@ -9,8 +9,6 @@ public class Product_Data {
     String cat_name;
     String image;
 
-
-
     public Product_Data(String cat_name,String image,String category_id) {
        /* this.product_id = product_id;
 
