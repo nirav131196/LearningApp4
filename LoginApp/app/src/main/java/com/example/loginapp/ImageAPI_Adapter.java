@@ -34,8 +34,8 @@ public class ImageAPI_Adapter extends RecyclerView.Adapter{
     String defaultImage;
 
 
-    public ImageAPI_Adapter(Context context, ArrayList<Model_ImageAPI> model) {
-        this.context = context;
+    public ImageAPI_Adapter(ArrayList<Model_ImageAPI> model) {
+
         this.model = model;
     }
 

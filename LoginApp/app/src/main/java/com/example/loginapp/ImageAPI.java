@@ -29,18 +29,16 @@ import java.util.Map;
 public class ImageAPI extends AppCompatActivity {
 
     RecyclerView rvImageAPI;
-
     ImageAPI_Adapter adapter;
-
     ArrayList<Model_ImageAPI> myarray;
-
     String access_token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        myarray = new ArrayList<Model_ImageAPI>();
+        myarray = new ArrayList<>();
+        rvImageAPI = findViewById(R.id.rvImageAPI);
         generateAccessTokenEvent();
     }
     private void generateAccessTokenEvent() {
@@ -127,9 +125,9 @@ public class ImageAPI extends AppCompatActivity {
                                     myarray.add(model);
 
                                 }
-                                rvImageAPI = findViewById(R.id.rvImageAPI);
-                                rvImageAPI.setLayoutManager(new LinearLayoutManager(ImageAPI.this,  LinearLayoutManager.HORIZONTAL, false));
-                                adapter = new ImageAPI_Adapter(ImageAPI.this,myarray);
+
+                                rvImageAPI.setLayoutManager(new LinearLayoutManager(ImageAPI.this,LinearLayoutManager.HORIZONTAL,false));
+                                adapter = new ImageAPI_Adapter(myarray);
                                 rvImageAPI.setAdapter(adapter);
                             }
                             else
