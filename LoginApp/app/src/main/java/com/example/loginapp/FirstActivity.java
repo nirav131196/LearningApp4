@@ -1,5 +1,6 @@
 package com.example.loginapp;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -10,8 +11,8 @@ import android.widget.Button;
 public class FirstActivity extends AppCompatActivity {
 
 
-    Button btnSQLite,btnCalculator,btnCalculator2,btnRegisterAPIVolley,btnRecyclerAndListButton,btnFliterAPI,btnImageAPI;
-
+    Button btnSQLite,btnCalculator,btnCalculator2,btnRegisterAPIVolley,btnRecyclerAndListButton,btnFliterAPI,btnImageAPI,btnJSON,btnSplashscreen,btnButtonDesign;
+    Button btnAlertDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +78,38 @@ public class FirstActivity extends AppCompatActivity {
 
             }
         });
+        btnJSON.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(FirstActivity.this, JSON_DATA.class);
+                startActivity(i);
+
+            }
+        });
+        btnSplashscreen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(FirstActivity.this, SplashScreen2.class);
+                startActivity(i);
+
+            }
+        });
+        btnButtonDesign.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(FirstActivity.this, Button_Design.class);
+                startActivity(i);
+
+            }
+        });
+        btnAlertDialog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(FirstActivity.this, AlertDialogAndProgressbar.class);
+                startActivity(i);
+
+            }
+        });
     }
 
     private void initView() {
@@ -88,6 +121,10 @@ public class FirstActivity extends AppCompatActivity {
         btnRecyclerAndListButton = findViewById(R.id.btnRecyclerAndList);
         btnFliterAPI = findViewById(R.id.btnFliterAPI);
         btnImageAPI = findViewById(R.id.btnImageAPI);
+        btnJSON = findViewById(R.id.btnJSON);
+        btnSplashscreen = findViewById(R.id.btnSplashscreen);
+        btnButtonDesign = findViewById(R.id.btnButtonDesign);
+        btnAlertDialog = findViewById(R.id.btnAlertDialog);
 
     }
 }

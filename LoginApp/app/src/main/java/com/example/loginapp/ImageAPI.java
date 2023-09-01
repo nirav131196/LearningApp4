@@ -36,6 +36,7 @@ public class ImageAPI extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_image_api);
 
         myarray = new ArrayList<>();
         rvImageAPI = findViewById(R.id.rvImageAPI);
@@ -125,8 +126,7 @@ public class ImageAPI extends AppCompatActivity {
                                     myarray.add(model);
 
                                 }
-
-                                rvImageAPI.setLayoutManager(new LinearLayoutManager(ImageAPI.this,LinearLayoutManager.HORIZONTAL,false));
+                                rvImageAPI.setLayoutManager(new LinearLayoutManager(ImageAPI.this, LinearLayoutManager.HORIZONTAL,false));
                                 adapter = new ImageAPI_Adapter(myarray);
                                 rvImageAPI.setAdapter(adapter);
                             }

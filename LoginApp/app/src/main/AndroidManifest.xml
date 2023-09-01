@@ -37,6 +37,18 @@
         android:theme="@style/Theme.LoginApp"
         tools:targetApi="31">
         <activity
+            android:name=".AlertDialogAndProgressbar"
+            android:exported="false" />
+        <activity
+            android:name=".Button_Design"
+            android:exported="false" />
+        <activity
+            android:name=".SplashScreen2"
+            android:exported="false" />
+        <activity
+            android:name=".JSON_DATA"
+            android:exported="false" />
+        <activity
             android:name=".Adapter_Activity"
             android:exported="false" />
         <activity

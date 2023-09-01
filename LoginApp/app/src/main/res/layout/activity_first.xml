@@ -78,6 +78,38 @@
                 android:layout_marginTop="15dp"
                 android:textColor="@color/grayS"
                 android:background="@drawable/custom_button" />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnJSON"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="JSON DATA"
+                android:layout_marginTop="15dp"
+                android:textColor="@color/grayS"
+                android:background="@drawable/custom_button" />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnSplashscreen"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Splash Screen"
+                android:layout_marginTop="15dp"
+                android:textColor="@color/grayS"
+                android:background="@drawable/custom_button" />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnButtonDesign"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Button Design"
+                android:layout_marginTop="15dp"
+                android:textColor="@color/grayS"
+                android:background="@drawable/custom_button" />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnAlertDialog"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Alert Dialog and Progress dialog"
+                android:layout_marginTop="15dp"
+                android:textColor="@color/grayS"
+                android:background="@drawable/custom_button" />
 
         </LinearLayout>
     </ScrollView>
