@@ -99,7 +99,7 @@ public class HomeActivity extends AppCompatActivity {
         builder.setMessage("Do you want to exit ?");
         builder.setTitle("Alert !");
         builder.setCancelable(false);
-        
+
         builder.setPositiveButton("Yes", (DialogInterface.OnClickListener) (dialog, which) -> {
             Toast.makeText(this, "App is closed", Toast.LENGTH_SHORT).show();
             finish();

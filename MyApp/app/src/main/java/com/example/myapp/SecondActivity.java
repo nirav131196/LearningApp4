@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 public class SecondActivity extends AppCompatActivity {
 
-    Dialog dialog_backPress;
+    Dialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,17 +26,17 @@ public class SecondActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_second);
 
-        dialog_backPress = new Dialog(SecondActivity.this);
-        dialog_backPress.setContentView(R.layout.back_ui);
-        dialog_backPress.setCancelable(false);
-        dialog_backPress.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        dialog_backPress.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        dialog = new Dialog(SecondActivity.this);
+        dialog.setContentView(R.layout.back_ui);
+        dialog.setCancelable(false);
+        dialog.getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        TextView yes, no;
+        TextView yes,no;
 
-        yes = dialog_backPress.findViewById(R.id.bt_yes);
+        yes = dialog.findViewById(R.id.bt_yes);
 
-        no = dialog_backPress.findViewById(R.id.bt_no);
+        no = dialog.findViewById(R.id.bt_no);
 
         yes.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,20 +52,20 @@ public class SecondActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                dialog_backPress.dismiss();
+                dialog.dismiss();
                 Toast.makeText(getApplicationContext(), "You need to allow for selecting images", Toast.LENGTH_SHORT).show();
                 finish();
             }
         });
 
-        dialog_backPress.show();
+        dialog.show();
 
     }
     @Override
     public void onBackPressed() {
 
 
-        dialog_backPress.dismiss();
+        dialog.dismiss();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(SecondActivity.this);
         builder.setMessage("Do you want to exit ?");
