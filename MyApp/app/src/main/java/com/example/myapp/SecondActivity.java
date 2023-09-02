@@ -49,7 +49,7 @@ public class SecondActivity extends AppCompatActivity {
             }
         });
         no.setOnClickListener(new View.OnClickListener() {
-            @Override
+            @Override  
             public void onClick(View v) {
 
                 dialog.dismiss();
