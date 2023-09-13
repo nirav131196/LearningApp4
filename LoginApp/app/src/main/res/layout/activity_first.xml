@@ -118,6 +118,46 @@
                 android:layout_marginTop="15dp"
                 android:textColor="@color/grayS"
                 android:background="@drawable/custom_button" />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnService"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Service"
+                android:layout_marginTop="15dp"
+                android:textColor="@color/grayS"
+                android:background="@drawable/custom_button" />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnPushNotification"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Push Notification"
+                android:layout_marginTop="15dp"
+                android:textColor="@color/grayS"
+                android:background="@drawable/custom_button"/>
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnImageview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="ImageView"
+                android:layout_marginTop="15dp"
+                android:textColor="@color/grayS"
+                android:background="@drawable/custom_button" />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Spinner"
+                android:layout_marginTop="15dp"
+                android:textColor="@color/grayS"
+                android:background="@drawable/custom_button" />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnNavigation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Navigation Bar Activity"
+                android:layout_marginTop="15dp"
+                android:textColor="@color/grayS"
+                android:background="@drawable/custom_button" />
 
 
         </LinearLayout>

@@ -37,6 +37,7 @@
         <item name="labelStyle">@style/TooltipStyle</item>
         <item name="materialThemeOverlay">@style/ThemeOverlay.Slider</item>
     </style>
+
     <style name="TooltipStyle" parent="Widget.MaterialComponents.Tooltip">
         <!-- background color of the Tooltip -->
         <item name="backgroundTint">@android:color/transparent</item>

@@ -87,5 +87,11 @@
         <item>800</item>
         <item>2000</item>
     </string-array>
+    <string name="title_activity_navigation">NavigationActivity</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
 
 </resources>
