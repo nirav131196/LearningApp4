@@ -1,0 +1,99 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-kapt'
+}
+
+android {
+    namespace 'com.loyaltywork.johnsoncustomertask'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.loyaltywork.johnsoncustomertask"
+        minSdk 23
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        //Demo URL
+        buildConfigField "String", "BaseUrl", "\"https://hrjdemoserv.loyltwo3ks.com/\""
+        buildConfigField "String", "RegistrationUrl", "\"https://hrjdemoserv.loyltwo3ks.com/\""
+        buildConfigField("String", "PROMO_IMAGE_BASE", "\"https://hrjohnson.loyltwo3ks.com/\"")
+        buildConfigField("String", "PROFILE_IMAGE_BASE", "\"https://hrjohnson.loyltwo3ks.com/UploadFiles/CustomerImage/\"")
+        buildConfigField("String", "CATALOGUE_IMAGE_BASE", "\"https://hrjohnson.loyltwo3ks.com//UploadFiles/CatalogueImages/\"")
+
+        buildConfigField("String", "token_url", "\"https://hrjdemoserv.loyltwo3ks.com/token\"")
+        buildConfigField("String", "token_request", "\"grant_type=password&UserName=HRjohnson&Password=hftst\$gdf#wd\$eg\"")
+        buildConfigField "String", "MerchantName", "\"HRJohnsonDemo\""
+
+        buildConfigField "String", "IsLoggedIn", "\"IsLoggedIn\""
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        viewBinding true
+    }
+}
+
+dependencies {
+
+    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.10.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
+    def moshiVersion = '1.13.0'
+    def retrofit2_version = '2.9.0'
+    def okhttp3_version = '4.9.0'
+    def kotlinCoroutineVersion = '1.4.0'
+
+    //Moshi
+    implementation "com.squareup.moshi:moshi-kotlin:$moshiVersion"
+    kapt("com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion")
+
+
+    //Okhttp3
+    implementation "com.squareup.okhttp3:okhttp:$okhttp3_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttp3_version"
+
+    //Retrofit2
+    implementation "com.squareup.retrofit2:retrofit:$retrofit2_version"
+    implementation "com.squareup.retrofit2:converter-moshi:$retrofit2_version"
+    implementation "com.jakewharton.retrofit:retrofit2-kotlin-coroutines-adapter:0.9.2"
+
+    //Kotlin Coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinCoroutineVersion"
+    api "org.jetbrains.kotlinx:kotlinx-coroutines-core:$kotlinCoroutineVersion"
+    api "org.jetbrains.kotlinx:kotlinx-coroutines-android:$kotlinCoroutineVersion"
+
+    //Below dependancy is required in ApiService object
+    implementation 'com.github.vidheyMB:AuthenticationLibrary:c37020f001'
+
+    //Lottie animation
+    implementation 'com.airbnb.android:lottie:5.2.0'
+
+    implementation 'androidx.navigation:navigation-fragment:2.5.3'
+    implementation 'androidx.navigation:navigation-ui:2.3.5'
+
+
+
+
+
+}

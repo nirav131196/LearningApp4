@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".LoginFragment">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_margin="10dp"
+        android:inputType="number"
+        android:maxLength="10"
+        android:textSize="15dp"
+        android:paddingRight="10dp"
+        android:paddingLeft="10dp"
+        android:background="@drawable/design_login_fragment_edittext"
+        android:hint="Enter Mobile Number"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="200dp"
+        android:layout_height="35dp"
+        android:text="Generate OTP"
+        android:textSize="15dp"
+        android:textColor="#f5fffa"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/design_login_fragment_btn"
+        android:layout_gravity="center"
+        android:textAllCaps="false"/>
+
+</LinearLayout>
