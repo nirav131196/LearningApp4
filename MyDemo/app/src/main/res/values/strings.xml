@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">My Demo</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="userName">NIRAV</string>
+    <string name="nirav_girnari">NIRAV GIRNARI</string>
+    <string name="iididdi">iididdi</string>
 </resources>
